@@ -1,10 +1,10 @@
-package com.bmstu.testing_system.repositiry
+package com.bmstu.testingsystem.repositiry
 
-import com.bmstu.testing_system.model.User
+import com.bmstu.testingsystem.domain.User
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
 interface UserRepository : CrudRepository<User, Long> {
-    fun findByLogin(name: String): User?
+    fun findByUsername(name: String): User?
 }

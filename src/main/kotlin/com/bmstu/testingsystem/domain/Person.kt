@@ -1,11 +1,12 @@
-package com.bmstu.testing_system.model
+package com.bmstu.testingsystem.domain
 
 import java.util.*
 import javax.persistence.*
 
 @Entity
+@Table(name = "person_data")
 data class Person (
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @GeneratedValue
         @Id
         val id: UUID,
 

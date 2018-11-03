@@ -1,4 +1,4 @@
-package com.bmstu.testing_system
+package com.bmstu.testingsystem
 
 import org.junit.Test
 import org.junit.runner.RunWith

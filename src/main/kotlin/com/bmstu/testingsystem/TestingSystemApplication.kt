@@ -1,4 +1,4 @@
-package com.bmstu.testing_system
+package com.bmstu.testingsystem
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
