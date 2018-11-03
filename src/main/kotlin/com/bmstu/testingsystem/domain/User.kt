@@ -7,9 +7,6 @@ import javax.persistence.*
 @Entity
 @Table(name = "user_data")
 data class User (
-        @GeneratedValue
-        @Id
-        val id: UUID,
 
         val username: String,
 
@@ -17,6 +14,10 @@ data class User (
 
         val password: String,
 
+        @GeneratedValue
+        @Id
+        val id: UUID = UUID.randomUUID(),
+
         @Enumerated(EnumType.STRING)
-        val role: UserRole
+        val role: UserRole = UserRole.USER
 )

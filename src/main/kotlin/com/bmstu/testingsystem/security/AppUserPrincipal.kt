@@ -2,9 +2,7 @@ package com.bmstu.testingsystem.security
 
 
 import com.bmstu.testingsystem.domain.User
-import com.bmstu.testingsystem.domain.UserRole
 import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 
