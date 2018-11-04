@@ -9,6 +9,7 @@ class Index {
 
     @GetMapping("/")
     fun index(authentication: Authentication?): String {
+        val username = authentication?.name
         return "index"
     }
 

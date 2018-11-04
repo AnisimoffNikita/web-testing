@@ -35,13 +35,14 @@ class WebSecurityConfig(context: ConfigurableApplicationContext) : WebSecurityCo
                 .authenticationProvider(authenticationProvider())
                 .jdbcAuthentication()
                 .dataSource(dataSource)
+
     }
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/sign_up").permitAll()
+                .antMatchers("/", "/sign_up", "/css/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
