@@ -1,16 +1,34 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Sign up</title>
+        <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Регистрация</title>
+
+        <!-- Bootstrap core CSS -->
+        <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="/css/auth.css" rel="stylesheet">
+
     </head>
-    <body>
-        <h1>Form</h1>
-        <form th:action="@{/sign_up}" th:object="${registration_data}" method="post">
-            <p>Username: <input type="text" th:field="*{username}" /></p>
-            <p>Email: <input type="email" th:field="*{email}" /></p>
-            <p>Password: <input type="password" th:field="*{password}" /></p>
-            <p><input type="submit" value="Sign up" /> <input type="reset" value="Reset" /></p>
-        </form>
+    <body class="text-center">
+    <form class="form-signin" th:action="@{/sign_up}" th:object="${registration_data}" method="post">
+        <h1 class="h3 mb-4 font-weight-normal">Регистрация</h1>
+        <label for="inputUsername" class="sr-only">Имя пользователя</label>
+        <input type="text" th:field="*{username}" id="inputUsername" class="form-control" placeholder="Имя пользователя" required autofocus>
+        <label for="inputEmail" class="sr-only">Эл. адрес</label>
+        <input type="email" th:field="*{email}" id="inputEmail" class="form-control" placeholder="Эл. адрес" required>
+        <label for="inputPassword" class="sr-only">Пароль</label>
+        <input type="password" th:field="*{password}" id="inputPassword" class="form-control" placeholder="Пароль" required>
+        <button class="btn my-4 btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
+        <label> Есть аккаунт?
+            <a href = "sign_in">Вход</a>
+        </label>
+    </form>>
     </body>
 </html>

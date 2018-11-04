@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Тест</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/common.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="get">
+        <input class="form-control mr-lg-2" name="keyword" id="inputKeyword" type="text" placeholder="Поиск">
+        <button class="btn btn-light my-2 my-lg-0" id="searchButton" type="submit">Найти</button>
+    </form>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="mainpage">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="createtest">Создать тест</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="mytests">Мои тесты</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
+                    <span class="caret"></span>
+                    Мой профиль
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="editprofile">Редактировать</a>
+                    <a class="dropdown-item" href="sign_in">Выход</a>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+    <h2 class="display-6 mt-3 mb-4">Название теста</h2>
+    <h5 class="mt-3 mb-4">Описание теста. многаааааааааааааабуккккккккквввввввввв ваааааааааааааааааааааааааааа</h5>
+</div>
+
+
+<form>
+    <div class="container">
+        <div class="card-deck mb-3 text-left">
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mt-0 mb-3 font-weight-normal">Название</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Ответ 1
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                        <label class="form-check-label" for="defaultCheck2">
+                            Ответ 2
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                        <label class="form-check-label" for="defaultCheck3">
+                            Ответ 3
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck4">
+                        <label class="form-check-label" for="defaultCheck4">
+                            Ответ 4
+                        </label>
+                    </div>
+
+                    <hr>
+
+                    <h4 class="card-title mt-0 mb-3 font-weight-normal">Название</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="">
+                        <label class="form-check-label" for="exampleRadios1">
+                            Ответ 1
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Ответ 2
+                        </label>
+                    </div>
+                    <div class="form-check disabled">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="">
+                        <label class="form-check-label" for="exampleRadios3">
+                            Ответ 3
+                        </label>
+                    </div>
+
+                    <hr>
+
+                    <h4 class="card-title mt-0 mb-3 font-weight-normal">Название</h4>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ответ">
+                    </div>
+
+                    <hr>
+
+                    <p>
+                        <button type="submit" class="btn btn-success mr-3">Отправить</button>
+                        <button type="button" class="btn btn-secondary">Отмена</button>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

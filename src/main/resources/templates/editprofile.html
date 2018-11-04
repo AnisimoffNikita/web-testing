@@ -1,0 +1,180 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Редактирование профиля</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/common.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="get">
+        <input class="form-control mr-lg-2" name="keyword" id="inputKeyword" type="text" placeholder="Поиск">
+        <button class="btn btn-light my-2 my-lg-0" id="searchButton" type="submit">Найти</button>
+    </form>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="mainpage">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="createtest">Создать тест</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="mytests">Мои тесты</a>
+            </li>
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
+                    <span class="caret"></span>
+                    Мой профиль
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#">Редактировать</a>
+                    <a class="dropdown-item" href="sign_in">Выход</a>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+    <h2 class="display-6 mt-3 mb-4">Редактирование профиля</h2>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 mb-4">
+            <div class="text-center">
+                <img src="/img/avatar.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                <input type="file" class="text-center center-block file-upload">
+            </div>
+        </div>
+
+        <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+            <form class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">Имя</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value="">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Фамилия</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value="Кек">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="username">Имя пользователя</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
+                        </div>
+                        <input type="text" class="form-control" id="username" placeholder="Имя пользователя" value="Кек"
+                               required>
+                        <div class="invalid-feedback" style="width: 100%;">
+                            Обязательное поле: имя пользователя
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="username">Пароль</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">*</span>
+                        </div>
+                        <input type="text" class="form-control" id="password" placeholder="********" value="Кек"
+                               required>
+                        <div class="invalid-feedback" style="width: 100%;">
+                            Обязательное поле: пароль
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputEmail">Эл. адрес</label>
+                    <input type="email" class="form-control" id="inputEmail" placeholder="you@example.com" value="">
+                    <div class="invalid-feedback" style="width: 100%;">
+                        Обязательное поле: эл. адрес
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="birthday">Дата рождения</label>
+                    <input type="text" class="form-control" id="birthday"
+                           placeholder="Пока низя, соре, я не могу прикрутить календарь" value="">
+                </div>
+
+                <hr class="mb-4">
+
+                <button class="btn btn-success mr-3" type="submit">Сохранить</button>
+                <button class="btn btn-secondary" type="button">Отмена</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="/js/holder.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="/js/upload_avatar.js"></script>
+</body>
