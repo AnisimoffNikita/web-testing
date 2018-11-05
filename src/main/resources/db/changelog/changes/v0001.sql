@@ -25,7 +25,7 @@ INSERT INTO person_data (id, user_id, first_name, last_name) VALUES (0, 0, 'admi
 INSERT INTO person_data (id, user_id, first_name, last_name) VALUES (1, 1, 'admin2', 'admin2');
 
 
-CREATE TYPE test_status AS ENUM ('PENDING', 'APPROVED');
+CREATE TYPE test_status AS ENUM ('PENDING', 'APPROVED', 'REJECTED');
 
 CREATE TABLE test_data (
   id BIGSERIAL PRIMARY KEY NOT NULL,

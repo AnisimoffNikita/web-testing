@@ -4,7 +4,8 @@ import org.springframework.security.core.GrantedAuthority
 
 enum class TestStatus : GrantedAuthority {
     PENDING,
-    APPROVED;
+    APPROVED,
+    REJECTED;
 
     override fun getAuthority(): String {
         return this.name
