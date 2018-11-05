@@ -42,7 +42,7 @@ class WebSecurityConfig(context: ConfigurableApplicationContext) : WebSecurityCo
     override fun configure(http: HttpSecurity) {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/sign_up", "/css/**").permitAll()
+                .antMatchers("/", "/sign_up", "/bootstrap/**", "/css/**", "/js/**", "/img/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

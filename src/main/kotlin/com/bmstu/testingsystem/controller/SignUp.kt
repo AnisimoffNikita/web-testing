@@ -32,7 +32,7 @@ class SignUp {
     fun registrationSubmit(@ModelAttribute rd: RegistrationData, request: HttpServletRequest): String {
         val isExist = userRepository.findByUsername(rd.username!!)
         if (isExist != null) {
-            return "redirect:/login"
+            return "redirect:/login" // тут точно login?
         }
         val user = fromRegistrationData(rd)
         userRepository.save(user)

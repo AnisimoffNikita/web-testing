@@ -1,0 +1,13 @@
+/* Move down content because we have a fixed navbar that is 3.5rem tall */
+body {
+  padding-top: 3.5rem;
+  background-image: url(/img/24.png);
+}
+
+.nav-item {
+    color: white;
+}
+
+.navbar {
+ background-color: #457C99;
+}
