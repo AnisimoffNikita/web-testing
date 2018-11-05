@@ -19,10 +19,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder
 @Configuration
 @EnableWebSecurity
 @ComponentScan("com.bmstu.testingsystem")
-class WebSecurityConfig(context: ConfigurableApplicationContext) : WebSecurityConfigurerAdapter() {
+class WebSecurityConfig: WebSecurityConfigurerAdapter() {
 
-    @Autowired
-    private lateinit var dataSource: DataSource
 
     @Autowired
     private lateinit var userDetailsService: SimpleUserDetailService
@@ -33,8 +31,6 @@ class WebSecurityConfig(context: ConfigurableApplicationContext) : WebSecurityCo
                 .userDetailsService(userDetailsService)
                 .and()
                 .authenticationProvider(authenticationProvider())
-                .jdbcAuthentication()
-                .dataSource(dataSource)
 
     }
 
@@ -46,7 +42,7 @@ class WebSecurityConfig(context: ConfigurableApplicationContext) : WebSecurityCo
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/sign_in").permitAll()
+                .loginPage("/sign_in").defaultSuccessUrl("/mainpage").permitAll()
                 .and()
                 .logout().permitAll()
     }
