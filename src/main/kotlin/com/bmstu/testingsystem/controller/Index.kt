@@ -17,7 +17,6 @@ class Index {
     fun index(authentication: Authentication?): String {
         val username = authentication?.name
 
-        val x = userRepository.findByUsername("admin");
 
         return "index"
     }
@@ -27,6 +26,7 @@ class Index {
 
     @GetMapping("/mainpage")
     fun getMainpage(model: Model?): String {
+        val x = userRepository.findByUsername("admin");
         model?.addAttribute("testname", "Название")
         model?.addAttribute("creationDate", "01.01.1900")
         model?.addAttribute("authorName", "Имя")

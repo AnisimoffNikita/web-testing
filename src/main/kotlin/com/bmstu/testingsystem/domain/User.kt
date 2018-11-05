@@ -29,5 +29,10 @@ data class User (
         @OneToMany(fetch = FetchType.LAZY,
                 cascade = [CascadeType.ALL],
                 mappedBy = "user")
-        val test: List<Test> = emptyList()
+        val test: List<Test> = emptyList(),
+
+        @OneToMany(fetch = FetchType.LAZY,
+                cascade = [CascadeType.ALL],
+                mappedBy = "user")
+        val results: List<TestResult> = emptyList()
 )

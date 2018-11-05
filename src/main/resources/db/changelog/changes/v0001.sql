@@ -9,6 +9,8 @@ CREATE TABLE user_data (
 );
 
 INSERT INTO user_data (id, username, email, password, role) VALUES (0, 'admin', 'admin', 'admin', 'ADMIN');
+INSERT INTO user_data (id, username, email, password, role) VALUES (1, 'admin2', 'admin2', 'admin2', 'ADMIN');
+
 
 CREATE TABLE person_data (
   id BIGSERIAL PRIMARY KEY NOT NULL,
@@ -19,7 +21,8 @@ CREATE TABLE person_data (
   avatar VARCHAR(150)
 );
 
-INSERT INTO person_data (user_id, first_name, last_name) VALUES (0, 'admin', 'admin');
+INSERT INTO person_data (id, user_id, first_name, last_name) VALUES (0, 0, 'admin', 'admin');
+INSERT INTO person_data (id, user_id, first_name, last_name) VALUES (1, 1, 'admin2', 'admin2');
 
 
 CREATE TYPE test_status AS ENUM ('PENDING', 'APPROVED');
@@ -35,4 +38,21 @@ CREATE TABLE test_data (
 );
 
 INSERT INTO test_data (id, user_id, name, description, status, created_at, questions)
-    VALUES (0, 0, 'testtest', 'test', 'APPROVED', now(), '{"question":"q"}'::json);
+    VALUES (0, 0, 'testtest', 'test', 'APPROVED', now(), '[{"question":"q"}]'::json);
+INSERT INTO test_data (id, user_id, name, description, status, created_at, questions)
+    VALUES (1, 1, 'testtest2', 'test2', 'APPROVED', now(), '[{"question":"q2"}]'::json);
+
+
+CREATE TABLE test_result_data (
+  id BIGSERIAL PRIMARY KEY NOT NULL,
+  user_id BIGINT NOT NULL REFERENCES user_data(id),
+  test_id BIGINT NOT NULL REFERENCES test_data(id),
+  result VARCHAR(50),
+  passed_at DATE
+);
+
+INSERT INTO test_result_data (id, user_id, test_id, result, passed_at)
+    VALUES (0, 0, 0, '11', now());
+
+INSERT INTO test_result_data (id, user_id, test_id, result, passed_at)
+    VALUES (1, 1, 1, '12', now());
