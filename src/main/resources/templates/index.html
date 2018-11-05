@@ -12,11 +12,15 @@
     <body>
         <h1 th:inline="text">Hello!</h1>
         <div th:switch="${username}">
-            <p th:case="null">
-                <a href="/sign_in">Sign in</a>
-                <a href="/sign_up">Sign up</a>
-            </p>
-            <p th:case="*">What's up [[${username}]]</p>
+            <div th:case="null">
+                <p>
+                    <a href="/sign_in">Sign in</a>
+                    <a href="/sign_up">Sign up</a>
+                </p>
+            </div>
+            <div>
+                <p th:case="*">What's up [[${username}]]</p>
+            </div>
         </div>
     </body>
 </html>

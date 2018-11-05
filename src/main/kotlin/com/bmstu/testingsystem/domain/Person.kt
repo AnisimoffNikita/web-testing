@@ -8,10 +8,10 @@ import javax.persistence.*
 data class Person (
         @GeneratedValue
         @Id
-        val id: UUID,
+        val id: Long,
 
-        @OneToOne
-        @JoinColumn(name = "user_id")
+        @OneToOne(fetch = FetchType.LAZY, optional = false)
+        @JoinColumn(name = "user_id", nullable = false)
         val user: User,
 
         val firstName: String?,

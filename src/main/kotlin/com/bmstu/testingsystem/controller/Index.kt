@@ -1,5 +1,7 @@
 package com.bmstu.testingsystem.controller
 
+import com.bmstu.testingsystem.repositiry.UserRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -8,9 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping
 @Controller
 class Index {
 
+    @Autowired
+    lateinit var userRepository: UserRepository
+
     @GetMapping("/")
     fun index(authentication: Authentication?): String {
         val username = authentication?.name
+
+
         return "index"
     }
 
@@ -19,6 +26,7 @@ class Index {
 
     @GetMapping("/mainpage")
     fun getMainpage(model: Model?): String {
+        val x = userRepository.findByUsername("admin");
         model?.addAttribute("testname", "Название")
         model?.addAttribute("creationDate", "01.01.1900")
         model?.addAttribute("authorName", "Имя")

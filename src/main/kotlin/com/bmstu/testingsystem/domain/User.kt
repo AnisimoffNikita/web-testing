@@ -16,8 +16,23 @@ data class User (
 
         @GeneratedValue
         @Id
-        val id: UUID = UUID.randomUUID(),
+        val id: Long = 0,
 
         @Enumerated(EnumType.STRING)
-        val role: UserRole = UserRole.USER
+        val role: UserRole = UserRole.USER,
+
+        @OneToOne(fetch = FetchType.LAZY,
+                cascade = [CascadeType.ALL],
+                mappedBy = "user")
+        val person: Person? = null,
+
+        @OneToMany(fetch = FetchType.LAZY,
+                cascade = [CascadeType.ALL],
+                mappedBy = "user")
+        val test: List<Test> = emptyList(),
+
+        @OneToMany(fetch = FetchType.LAZY,
+                cascade = [CascadeType.ALL],
+                mappedBy = "user")
+        val results: List<TestResult> = emptyList()
 )
