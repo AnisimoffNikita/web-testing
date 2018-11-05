@@ -38,9 +38,9 @@ CREATE TABLE test_data (
 );
 
 INSERT INTO test_data (id, user_id, name, description, status, created_at, questions)
-    VALUES (0, 0, 'testtest', 'test', 'APPROVED', now(), '[{"question":"q"}]'::json);
+    VALUES (0, 0, 'testtest', 'test', 'APPROVED', now(), '[]'::json);
 INSERT INTO test_data (id, user_id, name, description, status, created_at, questions)
-    VALUES (1, 1, 'testtest2', 'test2', 'APPROVED', now(), '[{"question":"q2"}]'::json);
+    VALUES (1, 1, 'testtest2', 'test2', 'APPROVED', now(), '[]'::json);
 
 
 CREATE TABLE test_result_data (
