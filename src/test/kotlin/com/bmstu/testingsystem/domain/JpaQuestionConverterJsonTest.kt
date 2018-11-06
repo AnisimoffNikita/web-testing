@@ -1,5 +1,6 @@
 package com.bmstu.testingsystem.domain
 
+import com.bmstu.testingsystem.helper.JpaQuestionConverterJson
 import org.junit.Test
 
 

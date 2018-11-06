@@ -1,35 +1,39 @@
 CREATE TYPE user_role AS ENUM ('USER', 'ADMIN');
 
-CREATE TABLE user_data (
-  id BIGSERIAL PRIMARY KEY NOT NULL,
-  username VARCHAR(50) NOT NULL,
-  email VARCHAR(50) NOT NULL,
-  password VARCHAR(50) NOT NULL,
-  role user_role NOT NULL
-);
-
-INSERT INTO user_data (id, username, email, password, role) VALUES (0, 'admin', 'admin', 'admin', 'ADMIN');
-INSERT INTO user_data (id, username, email, password, role) VALUES (1, 'admin2', 'admin2', 'admin2', 'ADMIN');
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 
 CREATE TABLE person_data (
-  id BIGSERIAL PRIMARY KEY NOT NULL,
-  user_id BIGINT NOT NULL REFERENCES user_data(id),
+  id UUID PRIMARY KEY NOT NULL,
   first_name VARCHAR(50),
   last_name VARCHAR(50),
   birthday DATE,
   avatar VARCHAR(150)
 );
 
-INSERT INTO person_data (id, user_id, first_name, last_name) VALUES (0, 0, 'admin', 'admin');
-INSERT INTO person_data (id, user_id, first_name, last_name) VALUES (1, 1, 'admin2', 'admin2');
+INSERT INTO person_data (id, first_name, last_name) VALUES ('e22e6ce8-406e-4618-9d9e-44114ac13697', 'admin', 'admin');
+INSERT INTO person_data (id, first_name, last_name) VALUES ('833f9d04-9d81-4983-9dae-b69a89d9efe7', 'admin2', 'admin2');
+
+
+CREATE TABLE user_data (
+  id UUID PRIMARY KEY NOT NULL,
+  person_id UUID NOT NULL REFERENCES person_data(id),
+  username VARCHAR(50) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  password VARCHAR(50) NOT NULL,
+  role user_role NOT NULL
+);
+
+INSERT INTO user_data (id, person_id, username, email, password, role) VALUES ('12412cdb-398f-4def-9cec-325b11968b56', 'e22e6ce8-406e-4618-9d9e-44114ac13697', 'admin', 'admin', 'admin', 'ADMIN');
+INSERT INTO user_data (id, person_id, username, email, password, role) VALUES ('7c803c41-ca5f-4e66-9483-7e361db72917', '833f9d04-9d81-4983-9dae-b69a89d9efe7', 'admin2', 'admin2', 'admin2', 'ADMIN');
+
 
 
 CREATE TYPE test_status AS ENUM ('PENDING', 'APPROVED', 'REJECTED');
 
 CREATE TABLE test_data (
-  id BIGSERIAL PRIMARY KEY NOT NULL,
-  user_id BIGINT NOT NULL REFERENCES user_data(id),
+  id UUID PRIMARY KEY NOT NULL,
+  user_id UUID NOT NULL REFERENCES user_data(id),
   name VARCHAR(50),
   description VARCHAR(50),
   status test_status NOT NULL,
@@ -38,21 +42,21 @@ CREATE TABLE test_data (
 );
 
 INSERT INTO test_data (id, user_id, name, description, status, created_at, questions)
-    VALUES (0, 0, 'testtest', 'test', 'APPROVED', now(), '[]'::json);
+    VALUES ('0596c2c0-a70a-47dd-81c8-31411a5b132a', '12412cdb-398f-4def-9cec-325b11968b56', 'testtest', 'test', 'APPROVED', now(), '[]'::json);
 INSERT INTO test_data (id, user_id, name, description, status, created_at, questions)
-    VALUES (1, 1, 'testtest2', 'test2', 'APPROVED', now(), '[]'::json);
+    VALUES ('66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '7c803c41-ca5f-4e66-9483-7e361db72917', 'testtest2', 'test2', 'APPROVED', now(), '[]'::json);
 
 
 CREATE TABLE test_result_data (
-  id BIGSERIAL PRIMARY KEY NOT NULL,
-  user_id BIGINT NOT NULL REFERENCES user_data(id),
-  test_id BIGINT NOT NULL REFERENCES test_data(id),
+  id UUID PRIMARY KEY NOT NULL,
+  user_id UUID NOT NULL REFERENCES user_data(id),
+  test_id UUID NOT NULL REFERENCES test_data(id),
   result VARCHAR(50),
   passed_at DATE
 );
 
 INSERT INTO test_result_data (id, user_id, test_id, result, passed_at)
-    VALUES (0, 0, 0, '11', now());
+    VALUES ('18c4f984-22bd-4edd-ae66-6fb157328337', '12412cdb-398f-4def-9cec-325b11968b56', '0596c2c0-a70a-47dd-81c8-31411a5b132a', '11', now());
 
 INSERT INTO test_result_data (id, user_id, test_id, result, passed_at)
-    VALUES (1, 1, 1, '12', now());
+    VALUES ('9d7c4fc9-56bb-4e39-b359-f23d56c3bfe2', '7c803c41-ca5f-4e66-9483-7e361db72917', '66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '12', now());

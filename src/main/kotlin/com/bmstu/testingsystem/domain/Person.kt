@@ -6,19 +6,16 @@ import javax.persistence.*
 @Entity
 @Table(name = "person_data")
 data class Person (
-        @GeneratedValue
-        @Id
-        val id: Long,
+        var firstName: String? = null,
 
-        @OneToOne(fetch = FetchType.LAZY, optional = false)
-        @JoinColumn(name = "user_id", nullable = false)
-        val user: User,
+        var lastName: String? = null,
 
-        val firstName: String?,
+        var birthday: Date? = null,
 
-        val lastName: String?,
+        var avatar: String? = null
+) {
 
-        val birthday: Date?,
-
-        val avatar: String?
-)
+    @GeneratedValue
+    @Id
+    val id: UUID = UUID.randomUUID()
+}

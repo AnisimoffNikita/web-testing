@@ -1,75 +1,46 @@
 package com.bmstu.testingsystem.domain
 
 
+import com.bmstu.testingsystem.helper.JpaQuestionConverterJson
 import java.util.*
 import javax.persistence.*
-import java.io.IOException
-import com.fasterxml.jackson.core.JsonProcessingException
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
-import javax.persistence.AttributeConverter
 
 
 @Entity
 @Table(name = "test_data")
 data class Test (
-        @GeneratedValue
-        @Id
-        val id: Long,
 
-        @ManyToOne(fetch = FetchType.LAZY, optional = false)
-        @JoinColumn(name = "user_id", nullable = false)
-        val user: User,
+//        @ManyToOne(fetch = FetchType.LAZY)
+//        @JoinColumn(name = "user_id")
+//        var user: User,
 
         val name: String,
 
         val description: String,
 
-        @Enumerated(EnumType.STRING)
-        val status: TestStatus,
-
         val createdAt: Date,
 
-
         @Convert(converter = JpaQuestionConverterJson::class)
-        val questions: List<Question>,
+        val questions: List<Question>
 
-        @OneToMany(fetch = FetchType.LAZY,
-                cascade = [CascadeType.ALL],
-                mappedBy = "test")
-        val results: List<TestResult> = emptyList()
-);
+) {
+    @GeneratedValue
+    @Id
+    val id: UUID = UUID.randomUUID()
 
-data class Question (
-        val question: String? = null
-)
+    @Enumerated(EnumType.STRING)
+    var status: TestStatus = TestStatus.PENDING
 
+//    @OneToMany(
+//            fetch = FetchType.LAZY,
+//            cascade = [CascadeType.ALL],
+//            mappedBy = "test")
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JoinColumn(name="test_id", referencedColumnName="id")
+    val results: MutableList<TestResult> = arrayListOf()
 
-@Converter(autoApply = true)
-class JpaQuestionConverterJson : AttributeConverter<List<Question>, String> {
-
-    override fun convertToDatabaseColumn(meta: List<Question>): String? {
-        try {
-            return objectMapper.writeValueAsString(meta)
-        } catch (ex: JsonProcessingException) {
-            return null
-        }
-
-    }
-
-    override fun convertToEntityAttribute(dbData: String): List<Question>? {
-        try {
-            return objectMapper.readValue(dbData, object : TypeReference<List<Question>>() {})
-        } catch (ex: IOException) {
-            return null
-        }
-
-    }
-
-    companion object {
-
-        private val objectMapper = ObjectMapper()
-    }
 
 }
+
+
 
