@@ -26,7 +26,7 @@ class Index {
     // тестила thymeleaf и mapping
     // можно удалить
 
-    @GetMapping("/mainpage")
+    /*@GetMapping("/mainpage")
     fun getMainpage(model: Model?): String {
         val x = userRepository.findByUsername("admin");
 
@@ -65,6 +65,6 @@ class Index {
     @GetMapping("/mytests")
     fun getMyTests(model: Model?): String {
         return "mytests"
-    }
+    }*/
 
 }
