@@ -1,5 +1,6 @@
 package com.bmstu.testingsystem.controller
 
+import com.bmstu.testingsystem.domain.Person
 import com.bmstu.testingsystem.domain.User
 import com.bmstu.testingsystem.repositiry.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,6 +10,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
+import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.ServletException
 
@@ -45,12 +47,12 @@ class SignUp {
     }
 
     data class RegistrationData (
-            val username: String? = null,
-            val email: String? = null,
-            val password: String? = null
+        var username: String = "",
+        var email: String = "",
+        var password: String = ""
     )
 
     fun fromRegistrationData(rd: RegistrationData): User =
-        User(rd.username!!, rd.email!!, rd.password!!)
+        User(rd.username, rd.email, rd.password)
 
 }
