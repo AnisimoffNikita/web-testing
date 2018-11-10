@@ -65,26 +65,25 @@
 
 <div class="container">
     <div class="row row-eq-height" id="row">
-        <div class="card-deck mb-3 text-left">
+        <div class="card-deck mb-3 text-left" th:each="test : ${tests}">
             <!-- todo: косяки со столбцами -->
-            <!-- todo: тут должен быть фор -->
             <div class="col">
                 <div class="card mb-4 border-ellipse border-secondary">
                     <div class="card-body">
                         <h4 class="card-title font-weight-normal">
-                            <span th:text="${testName}"></span>
+                            <span th:text="${test.name}"></span>
                         </h4>
                         <div class="my-0 card-text">
-                            <span th:text="'Дата создания: ' + ${creationDate}"></span>
+                            <span th:text="'Дата создания: ' + ${#dates.format(test.createdAt, 'yyyy-MM-dd')}"></span>
                         </div>
                         <div class="my-0 card-text">Автор:
-                            <a href=""><span th:text="${authorName}"></span></a>
+                            <a href=""><span th:text="${test.user.username}"></span></a>
                         </div>
                         <div class="my-0 card-text">
-                            <span th:text="${testDescription}"></span>
+                            <span th:text="${test.description}"></span>
                         </div>
-                        <a href="/testpage">Пройти</a>
-                        <span class="pass-count-value mt-3 float-right" th:text="${passCount}"></span>
+                        <a th:href="@{'/testpage/' + ${test.id}}">Пройти</a>
+                        <span class="pass-count-value mt-3 float-right" th:text="${test.passCount}"></span>
                         <span class="pass-count-icon mt-3 float-right" title="Количество прохождений"></span>
                     </div>
                 </div>

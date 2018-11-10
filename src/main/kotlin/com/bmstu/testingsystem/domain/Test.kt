@@ -10,9 +10,9 @@ import javax.persistence.*
 @Table(name = "test_data")
 data class Test (
 
-//        @ManyToOne(fetch = FetchType.LAZY)
-//        @JoinColumn(name = "user_id")
-//        var user: User,
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "user_id")
+        var user: User,
 
         val name: String,
 
@@ -28,6 +28,8 @@ data class Test (
     @Id
     val id: UUID = UUID.randomUUID()
 
+    val passCount: Int = 0
+
     @Enumerated(EnumType.STRING)
     var status: TestStatus = TestStatus.PENDING
 
@@ -38,8 +40,6 @@ data class Test (
     @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name="test_id", referencedColumnName="id")
     val results: MutableList<TestResult> = arrayListOf()
-
-
 }
 
 

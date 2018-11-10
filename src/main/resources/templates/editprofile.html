@@ -73,15 +73,17 @@
         </div>
 
         <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-            <form class="needs-validation" th:object="${user}" th:action="@{/editprofile}" method="post" novalidate>
+            <form class="needs-validation" th:action="@{/editprofile}" th:object="${user}" method="post" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstName">Имя</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="">
+                        <input type="text" th:field="*{person.firstName}" class="form-control" id="firstName"
+                               placeholder="" th:value="*{person.firstName}">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="lastName">Фамилия</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="">
+                        <input type="text" th:field="*{person.lastName}" class="form-control" id="lastName"
+                               placeholder="" th:value="*{person.lastName}">
                     </div>
                 </div>
 
@@ -91,7 +93,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">@</span>
                         </div>
-                        <input type="text" class="form-control" id="username" placeholder="Имя пользователя" th:value="*{username}"
+                        <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="Имя пользователя"
+                               th:value="*{username}"
                                required>
                         <div class="invalid-feedback" style="width: 100%;">
                             Обязательное поле: имя пользователя
@@ -100,13 +103,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="username">Пароль</label>
+                    <label for="password">Пароль</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">*</span>
                         </div>
-                        <input type="password" class="form-control" id="password" placeholder="********" th:value="*{password}"
-                               required>
+                        <input type="text" th:field="*{password}" class="form-control" id="password" placeholder="********"
+                               th:value="*{password}" required>
                         <div class="invalid-feedback" style="width: 100%;">
                             Обязательное поле: пароль
                         </div>
@@ -115,16 +118,17 @@
 
                 <div class="mb-3">
                     <label for="inputEmail">Эл. адрес</label>
-                    <input type="email" class="form-control" id="inputEmail" placeholder="you@example.com" th:value="*{email}">
+                    <input type="email" th:field="*{email}" class="form-control" id="inputEmail" placeholder="you@example.com"
+                           th:value="*{email}" required>
                     <div class="invalid-feedback" style="width: 100%;">
-                        Обязательное поле: эл. адрес
+                        Обязательное поле: эл. адрес вида you@example.com
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="birthday">Дата рождения</label>
-                    <input type="text" class="form-control" id="birthday"
-                           placeholder="Пока низя, соре, я не могу прикрутить календарь">
+                    <input type="date" th:field="*{person.birthday}" class="form-control" id="birthday"
+                           placeholder="" th:value="*{person.birthday}">
                 </div>
 
                 <hr class="mb-4">
