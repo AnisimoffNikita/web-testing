@@ -36,15 +36,16 @@ CREATE TABLE test_data (
   user_id UUID NOT NULL REFERENCES user_data(id),
   name VARCHAR(50),
   description VARCHAR(50),
+  pass_count INT NOT NULL,
   status test_status NOT NULL,
   created_at DATE,
   questions JSON
 );
 
-INSERT INTO test_data (id, user_id, name, description, status, created_at, questions)
-    VALUES ('0596c2c0-a70a-47dd-81c8-31411a5b132a', '12412cdb-398f-4def-9cec-325b11968b56', 'testtest', 'test', 'APPROVED', now(), '[]'::json);
-INSERT INTO test_data (id, user_id, name, description, status, created_at, questions)
-    VALUES ('66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '7c803c41-ca5f-4e66-9483-7e361db72917', 'testtest2', 'test2', 'APPROVED', now(), '[]'::json);
+INSERT INTO test_data (id, user_id, name, description, pass_count, status, created_at, questions)
+    VALUES ('0596c2c0-a70a-47dd-81c8-31411a5b132a', '12412cdb-398f-4def-9cec-325b11968b56', 'testtest', 'test', 0, 'APPROVED', now(), '[]'::json);
+INSERT INTO test_data (id, user_id, name, description, pass_count, status, created_at, questions)
+    VALUES ('66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '7c803c41-ca5f-4e66-9483-7e361db72917', 'testtest2', 'test2', 0, 'APPROVED', now(), '[]'::json);
 
 
 CREATE TABLE test_result_data (

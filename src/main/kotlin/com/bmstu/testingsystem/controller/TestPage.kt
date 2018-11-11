@@ -5,8 +5,6 @@ import com.bmstu.testingsystem.repositiry.TestRepository
 import com.bmstu.testingsystem.repositiry.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.propertyeditors.CustomDateEditor
-import org.springframework.context.annotation.Bean
-import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -16,11 +14,8 @@ import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 @Controller
 class TestPage {
@@ -38,7 +33,7 @@ class TestPage {
         )
     }
 
-    @GetMapping("testpage/**")
+    @GetMapping("testpage/{id}")
     fun getTestPage(model: Model, authentication: Authentication?): String {
         val username = authentication?.name
         val user = userRepository.findByUsername(username!!)

@@ -1,7 +1,7 @@
 package com.bmstu.testingsystem.controller
 
 import com.bmstu.testingsystem.domain.User
-import com.bmstu.testingsystem.repositiry.UserRepository
+import com.bmstu.testingsystem.services.UserServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.propertyeditors.CustomDateEditor
 import org.springframework.security.core.Authentication
@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat
 class EditProfile {
 
     @Autowired
-    lateinit var userRepository: UserRepository
+    private lateinit var userService: UserServiceImpl
 
     @InitBinder
     fun initBinder(binder: WebDataBinder) {
@@ -31,16 +31,37 @@ class EditProfile {
 
     @GetMapping("/editprofile")
     fun getEditProfile(model: Model, authentication: Authentication?): String {
-        val username = authentication?.name;
-        val user = userRepository.findByUsername(username!!);
-        model.addAttribute("user", user)
+        if (authentication == null) {
+            return "redirect:/"
+        }
+        val username = authentication.name
+        val user = userService.findByUsername(username) ?: return "redirect:/"
+        model.addAttribute("user", fromUser(user))
         return "editprofile"
     }
 
     @PostMapping("/editprofile")
-    fun postEditProfile(@ModelAttribute user: User, model: Model, authentication: Authentication?): String {
-        // добавить обновление данных в бд
-        model.addAttribute("user", user)
+    fun postEditProfile(@ModelAttribute userData: UserData, model: Model, authentication: Authentication?): String {
+        if (authentication == null) {
+            return "redirect:/"
+        }
+        val username = authentication.name
+        val oldUser = userService.findByUsername(username) ?: return "redirect:/"
+        userService.updateUser(oldUser, userData)
+        model.addAttribute("user", userData)
         return "editprofile"
     }
+
+    data class UserData (
+            var username: String = "",
+            var email: String = "",
+            var password: String = "",
+            var firstName: String? = "",
+            var lastName: String? = "",
+            var avatar: String? = "",
+            var birthday: Date? = Date()
+    )
+        fun fromUser(user: User) : UserData = UserData(user.username, user.email, user.password,
+                    user.person.firstName, user.person.lastName, user.person.avatar, user.person.birthday)
+
 }

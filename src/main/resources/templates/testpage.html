@@ -63,6 +63,13 @@
 
     <form th:action="@{'/testpage/' + ${test.id}}" method="post" th:object="${userAnswers}">
 
+        <!-- <input type="hidden" th:field="${test.id}" th:value="${test.id}" />
+        <input type="hidden" th:field="${test.name}" th:value="${test.name}" />
+        <input type="hidden" th:field="${test.description}" th:value="${test.description}" />
+        <input type="hidden" th:field="${test.user}" th:value="${test.user}" />
+        <input type="hidden" th:field="${test.createdAt}" th:value="${test.createdAt}" /> -->
+
+
         <div class="container">
             <div class="card-deck mb-3 text-left">
                 <div class="card mb-4">
