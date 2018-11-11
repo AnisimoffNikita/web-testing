@@ -18,7 +18,6 @@ data class User (
 
         var password: String
 
-
 ) {
     @GeneratedValue
     @Id

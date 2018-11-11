@@ -56,95 +56,67 @@
 
 </nav>
 
-
-<div class="container">
-    <h2 class="display-6 mt-3 mb-4">Название теста</h2>
-    <h5 class="mt-3 mb-4">Описание теста. многаааааааааааааабуккккккккквввввввввв ваааааааааааааааааааааааааааа</h5>
-</div>
-
-
-<form>
     <div class="container">
-        <div class="card-deck mb-3 text-left">
+        <h2 class="display-6 mt-3 mb-4"><span th:text="${test.name}"></span></h2>
+        <h5 class="mt-3 mb-4"><span th:text="${test.description}"></span></h5>
+    </div>
 
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h4 class="card-title mt-0 mb-3 font-weight-normal">Название</h4>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Ответ 1
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-                        <label class="form-check-label" for="defaultCheck2">
-                            Ответ 2
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
-                        <label class="form-check-label" for="defaultCheck3">
-                            Ответ 3
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck4">
-                        <label class="form-check-label" for="defaultCheck4">
-                            Ответ 4
-                        </label>
-                    </div>
+    <form th:action="@{'/testpage/' + ${test.id}}" method="post" th:object="${userAnswers}">
 
-                    <hr>
+        <div class="container">
+            <div class="card-deck mb-3 text-left">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div th:each="question, stat: ${test.questions}"}>
+                            <div th:if="${question.type.toString() != 'NO_ANSWER'}">
+                                <h4 class="card-title mt-0 mb-3 font-weight-normal"
+                                    th:text="${question.questionText}"></h4>
+                                <div class="form-check" th:each="variant : ${question.variants}">
+                                    <input class="form-check-input" th:name="${question.id}"
+                                           th:type="${question.type.toString() == 'SINGLE_ANSWER' ? 'radio' : 'checkbox'}"
+                                           value="">
+                                    <label class="form-check-label"> <span
+                                            th:text="${variant.answerText}"></span></label>
+                                </div>
+                                <hr>
+                            </div>
+                            <div th:if="${question.type.toString() == 'NO_ANSWER'}">
+                                <h4 class="card-title mt-0 mb-3 font-weight-normal"
+                                    th:text="${question.questionText}"></h4>
+                                <div class="form-group">
+                                    <input type="text" class="form-control"
+                                           th:value="*{list[__${stat.index}__].inputAnswer}"
+                                           name="|list[${stat.index}]|" placeholder="Ответ"
+                                           th:field="*{list[__${stat.index}__].inputAnswer}" />
+                                    <input type="hidden"
+                                           th:field="*{list[__${stat.index}__].questionId}"
+                                           name="|list[${stat.index}]|"
+                                           th:value="${question.id}" />
+                                </div>
+                                <hr>
+                            </div>
+                            </div>
 
-                    <h4 class="card-title mt-0 mb-3 font-weight-normal">Название</h4>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="">
-                        <label class="form-check-label" for="exampleRadios1">
-                            Ответ 1
-                        </label>
+
+                        <p>
+                            <button type="submit" class="btn btn-success mr-3">Отправить</button>
+                            <button type="button" class="btn btn-secondary">Отмена</button>
+                        </p>
+
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="">
-                        <label class="form-check-label" for="exampleRadios2">
-                            Ответ 2
-                        </label>
-                    </div>
-                    <div class="form-check disabled">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="">
-                        <label class="form-check-label" for="exampleRadios3">
-                            Ответ 3
-                        </label>
-                    </div>
-
-                    <hr>
-
-                    <h4 class="card-title mt-0 mb-3 font-weight-normal">Название</h4>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ответ">
-                    </div>
-
-                    <hr>
-
-                    <p>
-                        <button type="submit" class="btn btn-success mr-3">Отправить</button>
-                        <button type="button" class="btn btn-secondary">Отмена</button>
-                    </p>
-
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>
