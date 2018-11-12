@@ -38,7 +38,7 @@ class WebSecurityConfig: WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/sign_up", "/bootstrap/**", "/css/**", "/js/**", "/img/**").permitAll()
+                .antMatchers("/", "/sign_up", "/bootstrap/**", "/css/**", "/js/**", "/img/**", "/java").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
