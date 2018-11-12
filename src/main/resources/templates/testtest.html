@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Тест</title>
+</head>
+
+<body>
+
+<form class="form-signin" th:action="@{/java}" th:object="${values}" method="post">
+    <th:block th:each="value,i : ${values.items}">
+        <input type="text" th:field="*{items[__${i.index}__].text}" />
+        <input type="hidden" th:value="${i.index}" th:attr="name=items[__${i.index}__].id"  /><br />
+    </th:block>
+    <button class="btn my-4 btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
+    <!--<h1 class="h3 mb-4 font-weight-normal">Регистрация</h1>-->
+    <!--<label for="inputUsername" class="sr-only">Имя пользователя</label>-->
+    <!--<input type="text" th:field="*{username}" id="inputUsername" class="form-control" placeholder="Имя пользователя" required autofocus>-->
+    <!--<label for="inputEmail" class="sr-only">Эл. адрес</label>-->
+    <!--<input type="email" th:field="*{email}" id="inputEmail" class="form-control" placeholder="Эл. адрес" required>-->
+    <!--<label for="inputPassword" class="sr-only">Пароль</label>-->
+    <!--<input type="password" th:field="*{password}" id="inputPassword" class="form-control" placeholder="Пароль" required>-->
+    <!--<button class="btn my-4 btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>-->
+    <!--<label> Есть аккаунт?-->
+        <!--<a href = "sign_in">Вход</a>-->
+    <!--</label>-->
+</form>>
+
+</body>
+</html>

@@ -37,15 +37,15 @@ class TestPage {
     fun getTestPage(model: Model, authentication: Authentication?): String {
         val username = authentication?.name
         val user = userRepository.findByUsername(username!!)
-        val ql: ArrayList<Question> = arrayListOf()
+        val ql: MutableList<Question> = arrayListOf()
 
-        val al1: ArrayList<Answer> = arrayListOf()
-        al1.add(Answer(1, "2"))
-        al1.add(Answer(2, "4"))
+        val al1: MutableList<String> = arrayListOf()
+        al1.add("2")
+        al1.add("4")
 
-        val al2: ArrayList<Answer> = arrayListOf()
-        al2.add(Answer(3, "2"))
-        al2.add(Answer(4, "4"))
+        val al2: MutableList<String> = arrayListOf()
+        al2.add("2")
+        al2.add("4")
 
         val question = Question(1,"2*2", QuestionType.SINGLE_ANSWER, al1)
         val question2 = Question(2,"3*2", QuestionType.MULTIPLE_ANSWER, al2)
@@ -57,10 +57,10 @@ class TestPage {
 
         val test = Test(user!!,"test1", "decsr1", Date(), ql)
 
-        val ual: ArrayList<UserAnswer> = arrayListOf()
-        for (q: Question in test.questions)
+        val ual: MutableList<UserAnswer> = arrayListOf()
+        for (q in test.questions)
             ual.add(UserAnswer())
-        val ua = UserAnswers(ual)
+        val ua = UserAnswers(arrayOfNulls<UserAnswer>(3).toMutableList())
 
         model.addAttribute("userAnswers",  ua)
         model.addAttribute("test", test)

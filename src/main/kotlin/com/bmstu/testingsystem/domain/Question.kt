@@ -10,7 +10,7 @@ data class Question (
         val type: QuestionType,
 
         // если есть варианты
-        val variants: List<Answer>? = arrayListOf(),
+        val variants: List<String>? = arrayListOf(),
 
         val correctVariantsId: List<Int>? = arrayListOf(),
 
@@ -18,11 +18,11 @@ data class Question (
         val correctInputAnswer: String? = ""
 
 )
-
-data class Answer (
-
-        val id: Int,
-
-        val answerText: String
-
-)
+//
+//data class Answer (
+//
+//        val id: Int,
+//
+//        val answerText: String
+//
+//)

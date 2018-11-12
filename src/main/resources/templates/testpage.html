@@ -74,31 +74,31 @@
             <div class="card-deck mb-3 text-left">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <div th:each="question, stat: ${test.questions}"}>
-                            <div th:if="${question.type.toString() != 'NO_ANSWER'}">
-                                <h4 class="card-title mt-0 mb-3 font-weight-normal"
-                                    th:text="${question.questionText}"></h4>
-                                <div class="form-check" th:each="variant : ${question.variants}">
-                                    <input class="form-check-input" th:name="${question.id}"
-                                           th:type="${question.type.toString() == 'SINGLE_ANSWER' ? 'radio' : 'checkbox'}"
-                                           value="">
-                                    <label class="form-check-label"> <span
-                                            th:text="${variant.answerText}"></span></label>
-                                </div>
-                                <hr>
-                            </div>
+                        <div th:each="question, stat: ${test.questions}">
+                            <!--<div th:if="${question.type.toString() != 'NO_ANSWER'}">-->
+                                <!--<h4 class="card-title mt-0 mb-3 font-weight-normal"-->
+                                    <!--th:text="${question.questionText}"></h4>-->
+                                <!--<div class="form-check" th:each="variant : ${question.variants}">-->
+                                    <!--<input class="form-check-input"-->
+                                           <!--th:name="${question.id}"-->
+                                           <!--th:type="${question.type.toString() == 'SINGLE_ANSWER' ? 'radio' : 'checkbox'}"-->
+                                           <!--th:field="*{list[__${stat.index}__].inputAnswer}"-->
+                                           <!--value="${stat.index}">-->
+                                    <!--<label class="form-check-label"> <span-->
+                                            <!--th:text="${variant}"></span></label>-->
+                                <!--</div>-->
+                                <!--<hr>-->
+                            <!--</div>-->
                             <div th:if="${question.type.toString() == 'NO_ANSWER'}">
                                 <h4 class="card-title mt-0 mb-3 font-weight-normal"
                                     th:text="${question.questionText}"></h4>
                                 <div class="form-group">
-                                    <input type="text" class="form-control"
-                                           th:value="*{list[__${stat.index}__].inputAnswer}"
-                                           name="|list[${stat.index}]|" placeholder="Ответ"
-                                           th:field="*{list[__${stat.index}__].inputAnswer}" />
-                                    <input type="hidden"
-                                           th:field="*{list[__${stat.index}__].questionId}"
-                                           name="|list[${stat.index}]|"
-                                           th:value="${question.id}" />
+                                    <input type="text" class="form-control" placeholder="Ответ"
+                                           th:field="*{list[__${stat.index}__]}" />
+                                    <!--<input type="hidden"-->
+                                           <!--th:field="*{list[__${stat.index}__].questionId}"-->
+                                           <!--name="|list[${stat.index}]|"-->
+                                            <!--value="${question.id}"/>-->
                                 </div>
                                 <hr>
                             </div>
