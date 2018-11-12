@@ -29,7 +29,11 @@ class UserServiceImpl : UserService {
         return newUser
     }
 
-    override fun updateUser(user: User, newUserData: EditProfile.UserData) {
+    override fun updateUser(user: User, newUserData: EditProfile.UserData): Boolean {
+        val findByUsername = userRepository.findByUsername(newUserData.username)
+        if (findByUsername != null && findByUsername.id != user.id)
+            return false
+
         if (!user.username.equals(newUserData.username))
             user.username = newUserData.username
 
@@ -55,5 +59,6 @@ class UserServiceImpl : UserService {
             oldPerson.birthday = newPerson.birthday
 
         userRepository.save(user)
+        return true
     }
 }

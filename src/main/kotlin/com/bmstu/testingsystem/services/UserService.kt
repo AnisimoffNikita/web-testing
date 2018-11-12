@@ -11,5 +11,5 @@ interface UserService {
 
     fun registerUser(registrationData: SignUp.RegistrationData): User?
 
-    fun updateUser(user: User, newUserData: EditProfile.UserData)
+    fun updateUser(user: User, newUserData: EditProfile.UserData): Boolean
 }

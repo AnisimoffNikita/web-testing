@@ -7,7 +7,7 @@ import com.bmstu.testingsystem.domain.User
 import java.util.UUID
 
 interface TestService {
-    fun findById(id: String): Test?
+    fun findById(id: UUID): Test?
 
     fun findByKeyword(keyword: String): Iterable<Test>
 

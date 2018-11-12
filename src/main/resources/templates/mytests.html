@@ -62,7 +62,35 @@
     <h2 class="display-6 mt-3 mb-4">Мои тесты</h2>
 </div>
 
-<h4>Страница в разработке...</h4>
+<div class="container">
+    <div class="row" id="row">
+        <div class="card-deck mb-3 text-left" th:each="test: ${tests}">
+
+            <div class="col-lg-12 col-sm-12 col-md-12 col-12 col-xl-12">
+                <div class="card mb-4 gradient border-secondary">
+                    <div class="card-body">
+                        <p>
+                            <span class="card-title font-weight-normal" style="font-size: 24px" th:text="${test.name}"></span>
+                            <a th:href="@{'/mytests/delete/' + ${test.id}}" class="float-right">Удалить</a>
+                        </p>
+                        <div class="my-0 card-text">
+                            <span th:text="'Дата создания: ' + ${#dates.format(test.createdAt, 'yyyy-MM-dd')}"></span>
+                        </div>
+                        <div class="my-0 card-text">
+                            <span th:text="'Статус: ' + ${test.status}"></span>
+                        </div>
+                        <div class="my-0 card-text">
+                            <span th:text="'Описание: ' + ${test.description}"></span>
+                        </div>
+                        <a th:href="@{'/testpage/' + ${test.id}}" class="test-link mr-4">Пройти</a>
+                        <a th:href="@{'/mytests/statistic/' + ${test.id}}" class="test-link">Просмотреть статистику</a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 
 

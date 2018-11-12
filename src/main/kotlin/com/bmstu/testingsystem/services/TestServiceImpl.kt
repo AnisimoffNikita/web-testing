@@ -13,8 +13,8 @@ class TestServiceImpl : TestService {
     @Autowired
     private lateinit var testRepository: TestRepository
 
-    override fun findById(id: String): Test? {
-        val test = testRepository.findById(UUID.fromString(id))
+    override fun findById(id: UUID): Test? {
+        val test = testRepository.findById(id)
         if (!test.isPresent)
             return null
         return test.get()
