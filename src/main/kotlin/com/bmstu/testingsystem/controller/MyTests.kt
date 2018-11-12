@@ -30,6 +30,7 @@ class MyTests {
         return "mytests"
     }
 
+    // todo не удаляется тест
     @GetMapping("/mytests/delete/{id}")
     fun deleteTest(@PathVariable id: UUID, model: Model, authentication: Authentication?): String {
         if (authentication == null) {

@@ -3,30 +3,18 @@ package com.bmstu.testingsystem.domain
 
 data class UserAnswers (
 
-        var list: MutableList<UserAnswer?> = arrayListOf()
+        var list: MutableList<UserAnswer?>? = null
 
 ) {
-//    fun addAnswer(ans: UserAnswer) : UserAnswer {
-//        list.add(ans)
-//        return ans
-//    }
-//
-//    fun findByQuestionId(id: Int) : UserAnswer? {
-//        for (ua in list) {
-//            if (ua?.questionId == id)
-//                return ua
-//        }
-//        return null
-//    }
 }
 
 data class UserAnswer (
 
-        //val questionId: Int? = null,
+        var questionId: Int? = null,
 
-        val checkedVariants: List<Int>? = null, // если есть варианты ответа
+        var checkedVariants: MutableList<Int>? = null, // если есть варианты ответа
 
-        val inputAnswer: String? = null // если нет вариантов
+        var inputAnswer: String? = null // если нет вариантов
 
 ) {
 
