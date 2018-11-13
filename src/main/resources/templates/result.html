@@ -7,10 +7,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Главная страница</title>
+    <title>Результат</title>
 
     <!-- Bootstrap core CSS -->
-    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/css/common.css" rel="stylesheet">
@@ -23,7 +23,6 @@
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="get">
         <input class="form-control mr-lg-2" name="keyword" id="inputKeyword" type="text" placeholder="Поиск">
         <button class="btn btn-light my-2 my-lg-0" id="searchButton" type="submit">Найти</button>
@@ -32,13 +31,13 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="mainpage">Главная</a>
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/mainpage'}">Главная</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="createtest">Создать тест</a>
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/createtest'}">Создать тест</a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="#">Мои тесты</a>
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/mytests'}">Мои тесты</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
@@ -47,8 +46,8 @@
                     Мой профиль
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="editprofile">Редактировать</a>
-                    <a class="dropdown-item" href="sign_in">Выход</a>
+                    <a class="dropdown-item" th:href="@{'/editprofile'}">Редактировать</a>
+                    <a class="dropdown-item" th:href="@{'/sign_in'}">Выход</a>
                 </ul>
             </li>
         </ul>
@@ -57,40 +56,11 @@
 
 </nav>
 
-
 <div class="container">
-    <h2 class="display-6 mt-3 mb-4">Мои тесты</h2>
+    <h2 class="display-6 mt-3 mb-4">Результат теста</h2>
+    <span th:text="'Ваш результат: ' + ${res.result}"></span>
+    <a th:href="@{'/testpage/' + ${res.testId}}">Пройти еще раз</a>
 </div>
-
-<div class="container">
-    <div class="row" id="row">
-        <div class="card-deck mb-3 text-left" th:each="test: ${tests}">
-
-            <div class="col-lg-12 col-sm-12 col-md-12 col-12 col-xl-12">
-                <div class="card mb-4 gradient border-secondary">
-                    <div class="card-body">
-                        <p>
-                            <span class="card-title font-weight-normal" style="font-size: 24px" th:text="${test.name}"></span>
-                            <a th:href="@{'/mytests/delete/' + ${test.id}}" class="float-right">Удалить</a>
-                        </p>
-                        <div class="my-0 card-text">
-                            <span th:text="'Дата создания: ' + ${#dates.format(test.createdAt, 'yyyy-MM-dd')}"></span>
-                        </div>
-                        <div class="my-0 card-text">
-                            <span th:text="'Статус: ' + ${test.status}"></span>
-                        </div>
-                        <div class="my-0 card-text">
-                            <span th:text="'Описание: ' + ${test.description}"></span>
-                        </div>
-                        <a th:href="@{'/testpage/' + ${test.id}}" class="test-link mr-4">Пройти</a>
-                        <a th:href="@{'/mytests/statistic/' + ${test.id}}" class="test-link">Просмотреть статистику</a>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
 
 
 
