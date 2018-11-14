@@ -16,13 +16,13 @@ data class Exam (
         val name: String,
 
         val description: String,
-
-        val createdAt: Date,
-
         @Convert(converter = JpaQuestionConverterJson::class)
         val questions: List<Question> 
 
 ) {
+
+    var createdAt: Date = Date()
+
     @GeneratedValue
     @Id
     val id: UUID = UUID.randomUUID()

@@ -21,7 +21,7 @@ data class User (
 ) {
     @GeneratedValue
     @Id
-    val id: UUID = UUID.randomUUID()
+    var id: UUID = UUID.randomUUID()
 
     @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name="person_id")

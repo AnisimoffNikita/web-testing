@@ -16,5 +16,5 @@ data class Person (
 ) {
     @GeneratedValue
     @Id
-    val id: UUID = UUID.randomUUID()
+    var id: UUID = UUID.randomUUID()
 }
