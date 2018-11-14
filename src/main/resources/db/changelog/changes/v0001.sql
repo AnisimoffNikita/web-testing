@@ -48,7 +48,7 @@ CREATE TABLE test_data (
 INSERT INTO test_data (id, user_id, name, description, pass_count, status, created_at, questions)
     VALUES ('0596c2c0-a70a-47dd-81c8-31411a5b132a', '12412cdb-398f-4def-9cec-325b11968b56', 'тест главный', 'большое описание со словом математика', 0, 'APPROVED', to_timestamp(1195333200), '[]'::json);
 INSERT INTO test_data (id, user_id, name, description, pass_count, status, created_at, questions)
-    VALUES ('66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '7c803c41-ca5f-4e66-9483-7e361db72917', 'дичь какая то', 'еще что то, на пофиг', 0, 'APPROVED', to_timestamp(1195333200), '[]'::json);
+    VALUES ('66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '7c803c41-ca5f-4e66-9483-7e361db72917', 'тест номер два', 'описание теста номер два', 0, 'APPROVED', to_timestamp(1195333200), '[]'::json);
 
 
 CREATE TABLE test_result_data (

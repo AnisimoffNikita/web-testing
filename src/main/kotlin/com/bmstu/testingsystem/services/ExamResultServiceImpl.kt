@@ -29,7 +29,7 @@ class ExamResultServiceImpl : ExamResultService {
             }
         } ?. filter { it == true } ?. count().toString() + "/" + exam.questions.count().toString()
 
-        val result = ExamResult(resultString, Date(), exam.id, user.id)
+        val result = ExamResult(resultString, java.sql.Date(System.currentTimeMillis()), exam.id, user.id)
         examResultRepository.save(result)
         return result
     }

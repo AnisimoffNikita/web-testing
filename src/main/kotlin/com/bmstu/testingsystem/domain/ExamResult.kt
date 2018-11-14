@@ -1,5 +1,6 @@
 package com.bmstu.testingsystem.domain
 
+import java.sql.Date
 import java.util.*
 import javax.persistence.*
 

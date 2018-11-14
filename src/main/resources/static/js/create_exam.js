@@ -147,7 +147,7 @@ function onAddQuestionClick () {
 
     var input = document.createElement('input');
     input.type = "text";
-    input.className = "form-control";
+    input.className = "form-control questionText";
     input.placeholder = "Текст вопроса";
 
     col9.appendChild(input);
