@@ -15,6 +15,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 import java.util.*
+import java.sql.Date
 
 @RunWith(MockitoJUnitRunner::class)
 class ExamServiceImplTest {
@@ -31,11 +32,11 @@ class ExamServiceImplTest {
     init {
         val user = User("username", "email", "password")
         val q1 = Question(0, "q1", QuestionType.NO_ANSWER, emptyList(), emptyList(), "ans")
-        val exam1 = com.bmstu.testingsystem.domain.Exam(user,"тест", "небольшое описание", listOf(q1))
+        val exam1 = com.bmstu.testingsystem.domain.Exam(user,"тест", "небольшое описание", Date(123),  listOf(q1))
         exam1.passCount = 1
-        val exam2 = com.bmstu.testingsystem.domain.Exam(user,"иное задание", "большое описание", listOf(q1))
+        val exam2 = com.bmstu.testingsystem.domain.Exam(user,"иное задание", "большое описание",  Date(123), listOf(q1))
         exam2.passCount = 5
-        val exam3 = com.bmstu.testingsystem.domain.Exam(user,"экзамен", "много заданий", listOf(q1))
+        val exam3 = com.bmstu.testingsystem.domain.Exam(user,"экзамен", "много заданий", Date(123), listOf(q1))
         exam3.passCount = 10
         exams = listOf(exam1, exam2, exam3)
         id1 = exam1.id

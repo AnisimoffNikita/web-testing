@@ -2,7 +2,8 @@ package com.bmstu.testingsystem.domain
 
 
 import com.bmstu.testingsystem.helper.JpaQuestionConverterJson
-import java.util.*
+import java.util.UUID
+import java.sql.Date
 import javax.persistence.*
 
 
@@ -16,12 +17,14 @@ data class Exam (
         val name: String,
 
         val description: String,
+
+        var createdAt: Date,
+
         @Convert(converter = JpaQuestionConverterJson::class)
         val questions: List<Question> 
 
 ) {
 
-    var createdAt: Date = Date()
 
     @GeneratedValue
     @Id
