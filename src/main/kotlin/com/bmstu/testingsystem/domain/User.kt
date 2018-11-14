@@ -21,29 +21,19 @@ data class User (
 ) {
     @GeneratedValue
     @Id
-    val id: UUID = UUID.randomUUID()
-
+    var id: UUID = UUID.randomUUID()
 
     @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name="person_id")
     var person: Person = Person()
 
-
-//    @OneToMany(
-//            fetch = FetchType.LAZY,
-//            cascade = [CascadeType.ALL],
-//            mappedBy = "user")
     @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name="user_id", referencedColumnName="id")
-    val tests: MutableList<Test> = arrayListOf()
+    val exams: MutableList<Exam> = arrayListOf()
 
-//    @OneToMany(
-//            fetch = FetchType.LAZY,
-//            cascade = [CascadeType.ALL],
-//            mappedBy = "user")
     @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name="user_id", referencedColumnName="id")
-    val results: MutableList<TestResult> = arrayListOf()
+    val results: MutableList<ExamResult> = arrayListOf()
 
     @Enumerated(EnumType.STRING)
     val role: UserRole = UserRole.USER

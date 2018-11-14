@@ -57,17 +57,17 @@
 </nav>
 
     <div class="container">
-        <h2 class="display-6 mt-3 mb-4"><span th:text="${test.name}"></span></h2>
-        <h5 class="mt-3 mb-4"><span th:text="${test.description}"></span></h5>
+        <h2 class="display-6 mt-3 mb-4"><span th:text="${exam.name}"></span></h2>
+        <h5 class="mt-3 mb-4"><span th:text="${exam.description}"></span></h5>
     </div>
 
-    <form th:action="@{'/testpage/' + ${test.id}}" th:object="${userAnswers}" method="post">
+    <form th:action="@{'/testpage/' + ${exam.id}}" th:object="${userAnswers}" method="post">
 
         <div class="container">
             <div class="card-deck mb-3 text-left">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <th:block th:each="question, i: ${test.questions}">
+                        <th:block th:each="question, i: ${exam.questions}">
                             <div th:if="${question.type.toString() != 'NO_ANSWER'}">
                                 <h4 class="card-title mt-0 mb-3 font-weight-normal"
                                     th:text="${question.questionText}"></h4>

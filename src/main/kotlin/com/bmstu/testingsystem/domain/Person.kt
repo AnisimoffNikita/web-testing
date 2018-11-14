@@ -14,8 +14,7 @@ data class Person (
 
         var avatar: String? = null
 ) {
-
     @GeneratedValue
     @Id
-    val id: UUID = UUID.randomUUID()
+    var id: UUID = UUID.randomUUID()
 }

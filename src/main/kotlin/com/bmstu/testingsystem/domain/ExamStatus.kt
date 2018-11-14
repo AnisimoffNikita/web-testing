@@ -2,7 +2,7 @@ package com.bmstu.testingsystem.domain
 
 import org.springframework.security.core.GrantedAuthority
 
-enum class TestStatus : GrantedAuthority {
+enum class ExamStatus : GrantedAuthority {
     PENDING,
     APPROVED,
     REJECTED;

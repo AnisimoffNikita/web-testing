@@ -34,28 +34,28 @@ class UserServiceImpl : UserService {
         if (findByUsername != null && findByUsername.id != user.id)
             return false
 
-        if (!user.username.equals(newUserData.username))
+        if (user.username != newUserData.username)
             user.username = newUserData.username
 
-        if (!user.email.equals(newUserData.email))
+        if (user.email != newUserData.email)
             user.email = newUserData.email
 
-        if (!user.password.equals(newUserData.password))
+        if (user.password != newUserData.password)
             user.password = newUserData.password
 
         val newPerson = Person(newUserData.firstName, newUserData.lastName, newUserData.birthday, newUserData.avatar)
         val oldPerson = user.person
 
-        if (!oldPerson.firstName.equals(newPerson.firstName))
+        if (oldPerson.firstName != newPerson.firstName)
             oldPerson.firstName = newPerson.firstName
 
-        if (!oldPerson.lastName.equals(newPerson.lastName))
+        if (oldPerson.lastName != newPerson.lastName)
             oldPerson.lastName = newPerson.lastName
 
-        if (!oldPerson.avatar.equals(newPerson.avatar))
+        if (oldPerson.avatar != newPerson.avatar)
             oldPerson.avatar = newPerson.avatar
 
-        if (oldPerson.birthday == null || !oldPerson.birthday!!.equals(newPerson.birthday))
+        if (oldPerson.birthday == null || oldPerson.birthday != newPerson.birthday)
             oldPerson.birthday = newPerson.birthday
 
         userRepository.save(user)

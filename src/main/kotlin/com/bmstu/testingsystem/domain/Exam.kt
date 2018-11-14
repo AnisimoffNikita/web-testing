@@ -8,8 +8,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "test_data")
-data class Test (
-
+data class Exam (
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id")
         var user: User,
@@ -17,29 +16,25 @@ data class Test (
         val name: String,
 
         val description: String,
-
-        val createdAt: Date,
-
         @Convert(converter = JpaQuestionConverterJson::class)
-        val questions: List<Question> //? = null
+        val questions: List<Question> 
 
 ) {
+
+    var createdAt: Date = Date()
+
     @GeneratedValue
     @Id
     val id: UUID = UUID.randomUUID()
 
-    val passCount: Int = 0
+    var passCount: Int = 0
 
     @Enumerated(EnumType.STRING)
-    var status: TestStatus = TestStatus.PENDING
+    var status: ExamStatus = ExamStatus.PENDING
 
-//    @OneToMany(
-//            fetch = FetchType.LAZY,
-//            cascade = [CascadeType.ALL],
-//            mappedBy = "test")
     @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name="test_id", referencedColumnName="id")
-    val results: MutableList<TestResult> = arrayListOf()
+    val results: MutableList<ExamResult> = arrayListOf()
 }
 
 
