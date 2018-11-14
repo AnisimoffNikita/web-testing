@@ -46,9 +46,9 @@ CREATE TABLE test_data (
 );
 
 INSERT INTO test_data (id, user_id, name, description, pass_count, status, created_at, questions)
-    VALUES ('0596c2c0-a70a-47dd-81c8-31411a5b132a', '12412cdb-398f-4def-9cec-325b11968b56', 'тест главный', 'большое описание со словом математика', 0, 'APPROVED', to_timestamp(1195374767), '[]'::json);
+    VALUES ('0596c2c0-a70a-47dd-81c8-31411a5b132a', '12412cdb-398f-4def-9cec-325b11968b56', 'тест главный', 'большое описание со словом математика', 0, 'APPROVED', to_timestamp(1195333200), '[]'::json);
 INSERT INTO test_data (id, user_id, name, description, pass_count, status, created_at, questions)
-    VALUES ('66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '7c803c41-ca5f-4e66-9483-7e361db72917', 'дичь какая то', 'еще что то, на пофиг', 0, 'APPROVED', to_timestamp(1195374767), '[]'::json);
+    VALUES ('66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '7c803c41-ca5f-4e66-9483-7e361db72917', 'дичь какая то', 'еще что то, на пофиг', 0, 'APPROVED', to_timestamp(1195333200), '[]'::json);
 
 
 CREATE TABLE test_result_data (
@@ -60,7 +60,7 @@ CREATE TABLE test_result_data (
 );
 
 INSERT INTO test_result_data (id, user_id, test_id, result, passed_at)
-    VALUES ('18c4f984-22bd-4edd-ae66-6fb157328337', '12412cdb-398f-4def-9cec-325b11968b56', '0596c2c0-a70a-47dd-81c8-31411a5b132a', '11', to_timestamp(1195374767));
+    VALUES ('18c4f984-22bd-4edd-ae66-6fb157328337', '12412cdb-398f-4def-9cec-325b11968b56', '0596c2c0-a70a-47dd-81c8-31411a5b132a', '11', to_timestamp(1195333200));
 
 INSERT INTO test_result_data (id, user_id, test_id, result, passed_at)
-    VALUES ('9d7c4fc9-56bb-4e39-b359-f23d56c3bfe2', '7c803c41-ca5f-4e66-9483-7e361db72917', '66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '12', to_timestamp(1195374767));
+    VALUES ('9d7c4fc9-56bb-4e39-b359-f23d56c3bfe2', '7c803c41-ca5f-4e66-9483-7e361db72917', '66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '12', to_timestamp(1195333200));

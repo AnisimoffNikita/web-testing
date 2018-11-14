@@ -18,6 +18,7 @@ import org.springframework.context.annotation.PropertySource
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.transaction.annotation.Transactional
+import java.sql.Date
 import java.sql.Timestamp
 import java.util.*
 import javax.persistence.EntityManager
@@ -92,13 +93,14 @@ class UserRepositoryTest {
     @Test
     fun findByUsernameWithExams() {
         val user = User("admin","admin","admin")
-        val exam = Exam(user,  "тест главный", "большое описание со словом математика", emptyList())
+        val exam = Exam(user,  "тест главный", "большое описание со словом математика", Date(1195333200000), emptyList())
 
         val fromDbUser = userRepository.findByUsername("admin")
 
         assertNotNull(fromDbUser)
         fromDbUser!!
         assertEquals(user, fromDbUser)
-        assertEquals(fromDbUser.exams.toList(), listOf(exam))
+        val dbExam = fromDbUser.exams.first()
+        assertEquals(dbExam.createdAt, exam.createdAt)
     }
 }

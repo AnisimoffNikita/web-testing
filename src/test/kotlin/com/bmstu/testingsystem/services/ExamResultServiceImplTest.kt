@@ -13,6 +13,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 import java.util.*
+import java.sql.Date
 
 @RunWith(MockitoJUnitRunner::class)
 class ExamResultServiceImplTest {
@@ -31,7 +32,7 @@ class ExamResultServiceImplTest {
         val q1 = Question(0, "q1", QuestionType.NO_ANSWER, emptyList(), emptyList(), "ans")
         val q2 = Question(1, "q2", QuestionType.SINGLE_ANSWER, listOf("1","2","3"), listOf(0), "")
         val q3 = Question(2, "q2", QuestionType.MULTIPLE_ANSWER, listOf("1","2","3"), listOf(1,2),"")
-        exam = com.bmstu.testingsystem.domain.Exam(user,"тест", "небольшое описание", listOf(q1, q2, q3))
+        exam = com.bmstu.testingsystem.domain.Exam(user,"тест", "небольшое описание", Date(123), listOf(q1, q2, q3))
     }
 
     @Test
