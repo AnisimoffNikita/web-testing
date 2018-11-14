@@ -1,6 +1,6 @@
 package com.bmstu.testingsystem.controller
 
-import com.bmstu.testingsystem.services.TestServiceImpl
+import com.bmstu.testingsystem.services.ExamServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping
 class MainPage {
 
     @Autowired
-    private lateinit var testService: TestServiceImpl
+    private lateinit var testService: ExamServiceImpl
 
-    @GetMapping("/mainpage")
+    @GetMapping("/main_page")
     fun getMainPage(model: Model): String {
-        model.addAttribute("tests", testService.getTopPopularTest(10))
-        return "mainpage"
+        model.addAttribute("exams", testService.getTopPopularExam(10))
+        return "main_page"
     }
 }

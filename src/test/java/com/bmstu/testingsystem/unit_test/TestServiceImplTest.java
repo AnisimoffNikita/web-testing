@@ -1,14 +1,8 @@
 package com.bmstu.testingsystem.unit_test;
 
 import com.bmstu.testingsystem.domain.User;
-import com.bmstu.testingsystem.repositiry.TestRepository;
-import com.bmstu.testingsystem.services.TestServiceImpl;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Date;
 
 // todo как-то подсунуть тестам фейковую бд
 

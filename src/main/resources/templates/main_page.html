@@ -14,6 +14,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/common.css" rel="stylesheet">
+    <link href="/css/mainpage.css" rel="stylesheet">
 </head>
 
 <body>
@@ -31,14 +32,14 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="mainpage">Главная</a>
+            <li class="nav-item active">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="#">Главная</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="createtest">Создать тест</a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="#">Мои тесты</a>
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="mytests">Мои тесты</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
@@ -59,32 +60,31 @@
 
 
 <div class="container">
-    <h2 class="display-6 mt-3 mb-4">Мои тесты</h2>
+    <h2 class="display-6 mt-3 mb-4">Популярные тесты</h2>
 </div>
 
 <div class="container">
-    <div class="row" id="row">
-        <div class="card-deck mb-3 text-left" th:each="test: ${tests}">
-
-            <div class="col-lg-12 col-sm-12 col-md-12 col-12 col-xl-12">
-                <div class="card mb-4 gradient border-secondary">
+    <div class="row row-eq-height" id="row">
+        <div class="card-deck mb-3 text-left" th:each="exam : ${tests}">
+            <!-- todo: косяки со столбцами -->
+            <div class="col">
+                <div class="card mb-4 border-ellipse border-secondary">
                     <div class="card-body">
-                        <p>
-                            <span class="card-title font-weight-normal" style="font-size: 24px" th:text="${test.name}"></span>
-                            <a th:href="@{'/mytests/delete/' + ${test.id}}" class="float-right">Удалить</a>
-                        </p>
+                        <h4 class="card-title font-weight-normal">
+                            <span th:text="${exam.name}"></span>
+                        </h4>
                         <div class="my-0 card-text">
-                            <span th:text="'Дата создания: ' + ${#dates.format(test.createdAt, 'yyyy-MM-dd')}"></span>
+                            <span th:text="'Дата создания: ' + ${#dates.format(exam.createdAt, 'yyyy-MM-dd')}"></span>
+                        </div>
+                        <div class="my-0 card-text">Автор:
+                            <a href=""><span th:text="${exam.user.username}"></span></a>
                         </div>
                         <div class="my-0 card-text">
-                            <span th:text="'Статус: ' + ${test.status}"></span>
+                            <span th:text="${exam.description}"></span>
                         </div>
-                        <div class="my-0 card-text">
-                            <span th:text="'Описание: ' + ${test.description}"></span>
-                        </div>
-                        <a th:href="@{'/testpage/' + ${test.id}}" class="test-link mr-4">Пройти</a>
-                        <a th:href="@{'/mytests/statistic/' + ${test.id}}" class="test-link">Просмотреть статистику</a>
-
+                        <a th:href="@{'/testpage/' + ${exam.id}}">Пройти</a>
+                        <span class="pass-count-value mt-3 float-right" th:text="${exam.passCount}"></span>
+                        <span class="pass-count-icon mt-3 float-right" title="Количество прохождений"></span>
                     </div>
                 </div>
             </div>
@@ -92,6 +92,7 @@
         </div>
     </div>
 
+</div> <!-- /container -->
 
 
 <!-- Bootstrap core JavaScript

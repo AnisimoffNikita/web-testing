@@ -1,7 +1,7 @@
 package com.bmstu.testingsystem.unit_test;
 
-import com.bmstu.testingsystem.repositiry.TestResultRepository;
-import com.bmstu.testingsystem.services.TestResultServiceImpl;
+import com.bmstu.testingsystem.repositiry.ExamResultRepository;
+import com.bmstu.testingsystem.services.ExamResultServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,10 +15,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class TestResultServiceImplTest {
 
     @Mock
-    private TestResultRepository repositoryMock;
+    private ExamResultRepository repositoryMock;
 
     @InjectMocks
-    private TestResultServiceImpl testResultService;
+    private ExamResultServiceImpl testResultService;
 
 
     @Before

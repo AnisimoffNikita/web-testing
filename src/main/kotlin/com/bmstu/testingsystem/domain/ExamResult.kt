@@ -5,7 +5,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "test_result_data")
-data class TestResult (
+data class ExamResult (
         val result: String,
 
         val passedAt: Date,

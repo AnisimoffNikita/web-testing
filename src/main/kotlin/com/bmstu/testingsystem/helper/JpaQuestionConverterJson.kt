@@ -30,9 +30,6 @@ class JpaQuestionConverterJson : AttributeConverter<List<Question>, String> {
 
     }
 
-    companion object {
-
-        private val objectMapper = ObjectMapper()
-    }
+    private val objectMapper = ObjectMapper()
 
 }

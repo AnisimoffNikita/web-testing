@@ -3,11 +3,11 @@ package com.bmstu.testingsystem.domain
 
 data class Question (
 
-        val id: Int,
+        val id: Int = 0,
 
-        val questionText: String,
+        val questionText: String = "",
 
-        val type: QuestionType,
+        val type: QuestionType = QuestionType.SINGLE_ANSWER,
 
         // если есть варианты
         val variants: List<String>? = arrayListOf(),
@@ -18,11 +18,3 @@ data class Question (
         val correctInputAnswer: String? = ""
 
 )
-//
-//data class Answer (
-//
-//        val id: Int,
-//
-//        val answerText: String
-//
-//)

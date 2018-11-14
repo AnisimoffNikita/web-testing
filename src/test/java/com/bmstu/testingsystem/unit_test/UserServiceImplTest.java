@@ -66,8 +66,9 @@ public class UserServiceImplTest {
         User newUser = userService.registerUser(registrationData);
 
         Assert.assertEquals(user, newUser);
+        Mockito.verify(repositoryMock, Mockito.times(1)).findByUsername(registrationData.getUsername());
         Mockito.verify(repositoryMock, Mockito.times(1)).save(Mockito.any(User.class));
-       // Mockito.verifyNoMoreInteractions(repositoryMock); todo не проходит
+        Mockito.verifyNoMoreInteractions(repositoryMock);
     }
 
     @Test
@@ -78,8 +79,9 @@ public class UserServiceImplTest {
         User newUser = userService.registerUser(registrationData);
 
         Assert.assertNull(newUser);
+        Mockito.verify(repositoryMock, Mockito.times(1)).findByUsername(registrationData.getUsername());
         Mockito.verify(repositoryMock, Mockito.times(0)).save(Mockito.any(User.class));
-        //Mockito.verifyNoMoreInteractions(repositoryMock); todo не проходит
+        Mockito.verifyNoMoreInteractions(repositoryMock);
     }
 
     @Test
@@ -99,8 +101,9 @@ public class UserServiceImplTest {
         Assert.assertEquals("newPassword", user.getPassword());
         Assert.assertTrue(res);
 
+        Mockito.verify(repositoryMock, Mockito.times(1)).findByUsername(userData.getUsername());
         Mockito.verify(repositoryMock, Mockito.times(1)).save(Mockito.any(User.class));
-        //Mockito.verifyNoMoreInteractions(repositoryMock);
+        Mockito.verifyNoMoreInteractions(repositoryMock);
     }
 
     @Test
@@ -115,8 +118,9 @@ public class UserServiceImplTest {
 
         Assert.assertFalse(res);
 
+        Mockito.verify(repositoryMock, Mockito.times(1)).findByUsername(userData.getUsername());
         Mockito.verify(repositoryMock, Mockito.times(0)).save(Mockito.any(User.class));
-        //Mockito.verifyNoMoreInteractions(repositoryMock);
+        Mockito.verifyNoMoreInteractions(repositoryMock);
     }
 
     @Test
@@ -137,7 +141,8 @@ public class UserServiceImplTest {
         Assert.assertEquals("newAvatar", user.getPerson().getAvatar());
         Assert.assertEquals(date, user.getPerson().getBirthday());
 
+        Mockito.verify(repositoryMock, Mockito.times(1)).findByUsername(userData.getUsername());
         Mockito.verify(repositoryMock, Mockito.times(1)).save(Mockito.any(User.class));
-        //Mockito.verifyNoMoreInteractions(repositoryMock);
+        Mockito.verifyNoMoreInteractions(repositoryMock);
     }
 }
