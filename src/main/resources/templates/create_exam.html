@@ -65,16 +65,18 @@
 </div>
 
 
-<form>
-    <div class="container">
+<div class="container">
 
-        <div class="row">
+    <div class="row">
 
-            <div class="col col-lg-offset-4 well">
+        <div class="col col-lg-offset-4 well">
 
-                <input type="text" class="form-control mb-3" id="testName" placeholder="Название теста">
-                <textarea class="form-control mb-3" id="text" name="text" placeholder="Описание теста"
-                          rows="5"></textarea>
+            <form th:object="${test}" th:action="@{'createtest'}" method="post">
+                <input type="text" class="form-control mb-3" id="testName" placeholder="Название теста"
+                       th:field="*{name}">
+                <textarea class="form-control mb-3"
+                          id="text" placeholder="Описание теста" th:field="*{description}" rows="5">
+                </textarea>
 
 
                 <div id="questionList">
@@ -84,7 +86,7 @@
 
                                 <div class="row">
                                     <div class="col-9">
-                                        <input type="text" class="form-control" id="inputQuestion"
+                                        <input type="text" class="form-control questionText"
                                                placeholder="Текст вопроса">
                                     </div>
                                     <div class="col-3">
@@ -121,15 +123,15 @@
 
                 <hr>
                 <p>
-                    <button type="submit" class="btn btn-success mr-3">Предложить тест</button>
+                    <button type="submit" class="btn btn-success mr-3" onclick="prepareForm()">Предложить тест</button>
                     <button type="button" class="btn btn-secondary">Отмена</button>
                 </p>
+            </form>
 
-            </div><!-- /.col-lg-4 col-lg-offset-4 well -->
-        </div><!-- /.row -->
+        </div><!-- /.col-lg-4 col-lg-offset-4 well -->
+    </div><!-- /.row -->
 
-    </div><!-- /.container -->
-</form>
+</div><!-- /.container -->
 
 
 <!-- Bootstrap core JavaScript
@@ -141,5 +143,21 @@
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 
 <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+<script>
+    function prepareForm () {
+        var questions = document.getElementsByClassName("question");
+        for (var i = 0; i < questions.length; i++) {
+            var text = questions[i].getElementsByClassName("questionText")[0];
+            text.setAttribute('name', 'questions[' + i + '].questionText');
+
+            // правильный ответ
+            var input = questions[i].getElementsByClassName("answer-input");
+            if (input.length != 0)
+                input[0].setAttribute('name', 'questions[' + i + '].correctInputAnswer');
+
+        }
+    }
+</script>
 
 </body>
