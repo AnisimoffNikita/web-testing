@@ -1,9 +1,12 @@
 package com.bmstu.testingsystem.services
 
+import com.bmstu.testingsystem.controller.ExamData
 import com.bmstu.testingsystem.domain.Exam
+import com.bmstu.testingsystem.domain.User
 import com.bmstu.testingsystem.repositiry.ExamRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.lang.IllegalArgumentException
 
 import java.util.UUID
 
@@ -32,8 +35,10 @@ class ExamServiceImpl : ExamService {
         } . take(count)
     }
 
-    override fun addExam(exam: Exam) {
-        examRepository.save(exam)
+    override fun addExam(exam: ExamData, owner: User?) : Exam {
+        if (owner == null)
+            throw IllegalArgumentException()
+        return examRepository.save(exam.toExam(owner))
     }
 
     override fun removeExam(exam: Exam) {

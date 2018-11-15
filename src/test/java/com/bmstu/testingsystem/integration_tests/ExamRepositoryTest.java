@@ -37,7 +37,8 @@ public class ExamRepositoryTest {
 
     @Test
     public void save() {
-        Exam exam = new Exam(user, "some name", "some description", new java.sql.Date(1195333200000L), new ArrayList<>());
+        Exam exam = new Exam(user, "some name", "some description",
+                new java.sql.Date(1195333200000L), new ArrayList<>());
         Exam toDBExam = examRepository.save(exam);
 
         UUID id = toDBExam.getId();
@@ -65,7 +66,6 @@ public class ExamRepositoryTest {
         exam.setStatus(ExamStatus.REJECTED);
 
         examRepository.save(exam);
-
         Optional<Exam> updatedDBExam = examRepository.findById(id);
 
         assertEquals(Optional.of(exam), updatedDBExam);
@@ -76,9 +76,9 @@ public class ExamRepositoryTest {
         UUID id = UUID.fromString("66bcd4a3-a3d5-409e-9a38-e0d7b029a020");
         examRepository.deleteById(id);
 
-        Optional<Exam> fromDBExam = examRepository.findById(id);
-
         Optional<Exam> emptyExam = Optional.empty();
+
+        Optional<Exam> fromDBExam = examRepository.findById(id);
 
         assertEquals(emptyExam, fromDBExam);
     }
@@ -94,6 +94,7 @@ public class ExamRepositoryTest {
 
         Optional<Exam> fromDbExam = examRepository.findById(examId);
         Exam getExam = fromDbExam.get();
+
         assertEquals(exam, getExam);
         assertArrayEquals(getExam.getResults().toArray(), Arrays.asList(result).toArray());
     }

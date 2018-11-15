@@ -14,8 +14,9 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/common.css" rel="stylesheet">
+    <link href="/css/create_exam.css" rel="stylesheet">
 
-    <script src="/js/createtest.js"></script>
+    <script src="/js/create_exam.js"></script>
 </head>
 
 <body>
@@ -34,13 +35,13 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="mainpage">Главная</a>
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="main_page">Главная</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="#">Создать тест</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="mytests">Мои тесты</a>
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="my_exams">Мои тесты</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
@@ -71,7 +72,7 @@
 
         <div class="col col-lg-offset-4 well">
 
-            <form th:object="${test}" th:action="@{'createtest'}" method="post">
+            <form th:object="${exam}" th:action="@{'create_exam'}" method="post">
                 <input type="text" class="form-control mb-3" id="testName" placeholder="Название теста"
                        th:field="*{name}">
                 <textarea class="form-control mb-3"
@@ -152,10 +153,34 @@
             text.setAttribute('name', 'questions[' + i + '].questionText');
 
             // правильный ответ
-            var input = questions[i].getElementsByClassName("answer-input");
-            if (input.length != 0)
-                input[0].setAttribute('name', 'questions[' + i + '].correctInputAnswer');
+            var inputs = questions[i].getElementsByClassName("right-answer-input");
+            if (inputs.length !== 0) {
+                var input = inputs[0];
+                input.setAttribute('name', 'questions[' + i + '].correctInputAnswer');
+            }
 
+            // варианты ответа
+            var variants = questions[i].getElementsByClassName("variant");
+            if (variants.length !== 0) {
+                for (var j = 0; j < variants.length; j++) {
+                    var variant = variants[j];
+                    variant.setAttribute('name', 'questions[' + i + '].variants[' + j + ']');
+                }
+            }
+
+            // правильные варианты
+            var rightVariants = questions[i].getElementsByClassName("form-check-input");
+            if (rightVariants.length !== 0) {
+                for (var j = 0; j < rightVariants.length; j++) {
+                    var correctVariant = rightVariants[j];
+                    correctVariant.setAttribute('name', 'questions[' + i + '].correctVariants');
+                    correctVariant.setAttribute('value', j);
+                }
+            }
+
+            // тип вопроса
+            var types = questions[i].getElementsByTagName("select")[0];
+            types.setAttribute('name', 'questions[' + i + '].type');
         }
     }
 </script>

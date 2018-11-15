@@ -98,9 +98,9 @@ function onAddAnswerClick(questionId){
     if (answer === "")
         return;
 
-    var divCheck = document.createElement('div');
     var checkbox = document.createElement('input');
     checkbox.className = "form-check-input";
+    checkbox.setAttribute('name', questionId);
 
     var selectedIndex = questionCard.getElementsByTagName('select')[0].options.selectedIndex;
     if (selectedIndex === 0)
@@ -110,15 +110,14 @@ function onAddAnswerClick(questionId){
 
 
     var div = document.createElement('div');
-    div.className = "form-check";
+    div.className = "form-check mb-1";
 
-    var h5 = document.createElement('h5');
-    h5.className = "font-weight-normal";
-    h5.innerHTML = answer;
+    var v = document.createElement('input');
+    v.className = "form-control variant";
+    v.value = answer;
 
-    divCheck.appendChild(checkbox);
-    divCheck.appendChild(h5);
-    div.appendChild(divCheck);
+    div.appendChild(checkbox);
+    div.appendChild(v);
 
     questionCard.getElementsByClassName("answers-list")[0].appendChild(div);
 

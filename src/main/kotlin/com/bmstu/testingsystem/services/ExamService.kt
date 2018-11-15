@@ -1,6 +1,8 @@
 package com.bmstu.testingsystem.services
 
+import com.bmstu.testingsystem.controller.ExamData
 import com.bmstu.testingsystem.domain.Exam
+import com.bmstu.testingsystem.domain.User
 
 import java.util.UUID
 
@@ -11,7 +13,7 @@ interface ExamService {
 
     fun getTopPopularExam(count: Int): List<Exam>
 
-    fun addExam(exam: Exam)
+    fun addExam(exam: ExamData, owner: User?) : Exam
 
     fun removeExam(exam: Exam)
 

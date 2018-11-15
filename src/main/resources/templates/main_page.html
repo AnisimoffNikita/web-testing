@@ -36,7 +36,7 @@
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="#">Главная</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="createtest">Создать тест</a>
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="create_exam">Создать тест</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" href="my_exams">Мои тесты</a>
@@ -82,7 +82,7 @@
                         <div class="my-0 card-text">
                             <span th:text="${exam.description}"></span>
                         </div>
-                        <a th:href="@{'/testpage/' + ${exam.id}}">Пройти</a>
+                        <a th:href="@{'/exam_page/' + ${exam.id}}">Пройти</a>
                         <span class="pass-count-value mt-3 float-right" th:text="${exam.passCount}"></span>
                         <span class="pass-count-icon mt-3 float-right" title="Количество прохождений"></span>
                     </div>

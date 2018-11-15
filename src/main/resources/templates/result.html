@@ -34,7 +34,7 @@
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/main_page'}">Главная</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/createtest'}">Создать тест</a>
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/create_exam'}">Создать тест</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/my_exams'}">Мои тесты</a>
@@ -59,7 +59,7 @@
 <div class="container">
     <h2 class="display-6 mt-3 mb-4">Результат теста</h2>
     <span th:text="'Ваш результат: ' + ${res.result}"></span>
-    <a th:href="@{'/testpage/' + ${res.testId}}">Пройти еще раз</a>
+    <a th:href="@{'/exam_page/' + ${res.testId}}">Пройти еще раз</a>
 </div>
 
 

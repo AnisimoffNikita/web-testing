@@ -34,7 +34,7 @@
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/main_page'}">Главная</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/createtest'}">Создать тест</a>
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/create_exam'}">Создать тест</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/my_exams'}">Мои тесты</a>
@@ -61,7 +61,7 @@
         <h5 class="mt-3 mb-4"><span th:text="${exam.description}"></span></h5>
     </div>
 
-    <form th:action="@{'/testpage/' + ${exam.id}}" th:object="${userAnswers}" method="post">
+    <form th:action="@{'/exam_page/' + ${exam.id}}" th:object="${userAnswers}" method="post">
 
         <div class="container">
             <div class="card-deck mb-3 text-left">

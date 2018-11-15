@@ -45,7 +45,7 @@ class ExamPage {
         val ua = UserAnswers(arrayOfNulls<UserAnswer>(test.questions.size).toMutableList())
 
         model.addAttribute("userAnswers",  ua)
-        model.addAttribute("test", test)
+        model.addAttribute("exam", test)
         return "exam_page"
     }
 
