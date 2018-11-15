@@ -42,7 +42,7 @@ class WebSecurityConfig: WebSecurityConfigurerAdapter() {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/sign_in").defaultSuccessUrl("/mainpage").permitAll()
+                .loginPage("/sign_in").defaultSuccessUrl("/main_page").permitAll()
                 .and()
                 .logout().permitAll()
     }
