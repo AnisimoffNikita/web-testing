@@ -38,8 +38,8 @@ class ExamResultServiceImplTest {
     @Test
     fun passTestGood() {
         val a1 = UserAnswer(0,null, "ans")
-        val a2 = UserAnswer(1, mutableListOf(0), "")
-        val a3 = UserAnswer(2,mutableListOf(1,2), "")
+        val a2 = UserAnswer(1, mutableListOf(0), null)
+        val a3 = UserAnswer(2,mutableListOf(1,2), null)
         val userAnswers = UserAnswers(mutableListOf(a1,a2,a3))
 
         val result = examResultService.passTest(exam, user, userAnswers)
@@ -52,8 +52,8 @@ class ExamResultServiceImplTest {
     @Test
     fun passTestBad() {
         val a1 = UserAnswer(0, null,"bad")
-        val a2 = UserAnswer(1, mutableListOf(1), "")
-        val a3 = UserAnswer(2, mutableListOf(1,2), "")
+        val a2 = UserAnswer(1, mutableListOf(1), null)
+        val a3 = UserAnswer(2, mutableListOf(1,2), null)
         val userAnswers = UserAnswers(mutableListOf(a1,a2,a3))
 
         val result = examResultService.passTest(exam, user, userAnswers)
