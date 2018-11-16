@@ -7,14 +7,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Главная страница</title>
+    <title th:text="${title}"></title>
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/css/common.css" rel="stylesheet">
-    <link href="/css/mainpage.css" rel="stylesheet">
 </head>
 
 <body>
@@ -32,13 +31,13 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'#'}">Главная</a>
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/main_page'}">Главная</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/create_exam'}">Создать тест</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">
                     <span class="caret"></span>
@@ -68,48 +67,45 @@
 
 
 <div class="container">
-    <h2 class="display-6 mt-3 mb-4">Популярные тесты</h2>
+    <h2 class="display-6 mt-3 mb-4" th:text="${title}"></h2>
 </div>
 
 <div class="container">
-    <div class="row row-eq-height" id="row">
-        <div class="card-deck mb-3 text-left" th:each="exam : ${exams}">
-            <!-- todo: косяки со столбцами -->
-            <div class="col">
-                <div class="card mb-4 border-ellipse border-secondary">
-                    <div class="card-body">
-                        <h4 class="card-title font-weight-normal">
-                            <span th:text="${exam.name}"></span>
-                        </h4>
-                        <div class="my-0 card-text">
-                            <span th:text="'Дата создания: ' + ${#dates.format(exam.createdAt, 'yyyy-MM-dd')}"></span>
-                        </div>
-                        <div class="my-0 card-text">Автор:
-                            <a href=""><span th:text="${exam.user.username}"></span></a>
-                        </div>
-                        <div class="my-0 card-text">
-                            <span th:text="${exam.description}"></span>
-                        </div>
-                        <a th:href="@{'/exam_page/' + ${exam.id}}">Пройти</a>
-                        <span class="pass-count-value mt-3 float-right" th:text="${exam.passCount}"></span>
-                        <span class="pass-count-icon mt-3 float-right" title="Количество прохождений"></span>
-                    </div>
-                </div>
-            </div>
+    <div class="row" id="row">
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th:block th:each="header : ${table.headers}">
+                    <th scope="col" th:text="${header}"></th>
+                </th:block>
+            </tr>
+            </thead>
 
-        </div>
+            <tbody>
+                <tr th:each="row, i : ${table.rows}">
+                <th scope="row" th:text="${i.count}"></th>
+                <th:block th:each="cell : ${row.cells}">
+                    <td th:if="${cell.link} != ''">
+                        <a th:href="@{${cell.link}}" th:text="${cell.data}"></a>
+                    </td>
+                    <td th:if="${cell.link} == ''" th:text="${cell.data}"></td>
+                </th:block>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
 
-</div> <!-- /container -->
 
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>
