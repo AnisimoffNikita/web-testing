@@ -36,16 +36,24 @@
             <li class="nav-item">
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/create_exam'}">Создать тест</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/my_exams'}">Мои тесты</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
+                    <span class="caret"></span>
+                    Мои тесты
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" th:href="@{'/my_exams'}">Созданные</a>
+                    <a class="dropdown-item" th:href="@{'/my_passed_exams'}">Пройденные</a>
+                </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown02" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">
                     <span class="caret"></span>
                     Мой профиль
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                <ul class="dropdown-menu" aria-labelledby="dropdown02">
                     <a class="dropdown-item" th:href="@{'/editprofile'}">Редактировать</a>
                     <a class="dropdown-item" th:href="@{'/sign_in'}">Выход</a>
                 </ul>

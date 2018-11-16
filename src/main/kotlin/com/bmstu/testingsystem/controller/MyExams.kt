@@ -43,7 +43,7 @@ class MyExams {
         return "my_exams"
     }
 
-    // todo пока так, чтобы не падало
+    // todo реализовать и перенести в контроллер для табличек
     @GetMapping("/my_exams/statistic/{id}")
     fun getStatistic(@PathVariable id: UUID, model: Model, authentication: Authentication?): String {
         if (authentication == null) {
