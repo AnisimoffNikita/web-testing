@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import javax.sql.DataSource
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
+
+
 
 
 @Configuration
@@ -34,11 +37,13 @@ class WebSecurityConfig: WebSecurityConfigurerAdapter() {
 
     }
 
+
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/sign_up", "/bootstrap/**", "/css/**", "/js/**", "/img/**").permitAll()
+                .antMatchers("/avatar/..").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

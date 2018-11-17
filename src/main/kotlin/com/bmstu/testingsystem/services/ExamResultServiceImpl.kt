@@ -20,7 +20,7 @@ class ExamResultServiceImpl : ExamResultService {
                     if (q.type == QuestionType.NO_ANSWER) {
                         if (ua.checkedVariants != null)
                             throw IllegalStateException()
-                        return@map q.correctInputAnswer == ua.inputAnswer
+                        return@map q.correctInputAnswer?.toLowerCase() == ua.inputAnswer?.toLowerCase()
                     }
                     if (ua.inputAnswer != null)
                         throw IllegalStateException()

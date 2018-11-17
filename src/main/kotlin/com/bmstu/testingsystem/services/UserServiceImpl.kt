@@ -65,4 +65,13 @@ class UserServiceImpl : UserService {
         userRepository.save(user)
         return true
     }
+
+    override fun updateAvatar(user: User, path: String) {
+        user.person.avatar = path
+        userRepository.save(user)
+    }
+
+    override fun getAvatar(user: User): String {
+        return "/avatar/" + (user.person.avatar ?: "avatar.png")
+    }
 }
