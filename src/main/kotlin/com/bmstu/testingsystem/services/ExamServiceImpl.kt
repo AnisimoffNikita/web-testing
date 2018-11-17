@@ -11,7 +11,7 @@ import java.lang.IllegalArgumentException
 
 import java.util.UUID
 
-@Service("testService")
+@Service("examService")
 class ExamServiceImpl : ExamService {
 
     @Autowired

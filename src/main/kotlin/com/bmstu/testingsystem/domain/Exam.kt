@@ -8,7 +8,7 @@ import javax.persistence.*
 
 
 @Entity
-@Table(name = "test_data")
+@Table(name = "exams")
 data class Exam (
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id")

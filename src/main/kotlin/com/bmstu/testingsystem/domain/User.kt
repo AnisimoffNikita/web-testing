@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue
 
 
 @Entity
-@Table(name = "user_data")
+@Table(name = "users")
 data class User (
 
         var username: String,
