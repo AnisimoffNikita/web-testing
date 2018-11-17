@@ -56,6 +56,7 @@ class ExamPage {
         val test = testService.findById(id) ?: return "redirect:/main_page"
 
         val testResult = resultService.passTest(test, user, userAnswers)
+        testService.incPasses(test)
 
         model.addAttribute("res", testResult)
         return "result"

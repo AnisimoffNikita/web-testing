@@ -12,4 +12,8 @@ interface UserService {
     fun registerUser(registrationData: SignUp.RegistrationData): User?
 
     fun updateUser(user: User, newUserData: EditProfile.UserData): Boolean
+
+    fun updateAvatar(user: User, path: String)
+
+    fun getAvatar(user: User): String
 }

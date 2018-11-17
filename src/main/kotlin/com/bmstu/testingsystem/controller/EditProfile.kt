@@ -3,6 +3,7 @@ package com.bmstu.testingsystem.controller
 import com.bmstu.testingsystem.domain.User
 import com.bmstu.testingsystem.security.AppUserPrincipal
 import com.bmstu.testingsystem.services.AuthenticationServiceImpl
+import com.bmstu.testingsystem.services.StorageService
 import com.bmstu.testingsystem.services.UserServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.propertyeditors.CustomDateEditor
@@ -16,6 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 import java.util.*
 import java.text.SimpleDateFormat
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.bind.annotation.RequestParam
+
+
 
 
 @Controller
@@ -26,6 +32,9 @@ class EditProfile {
 
     @Autowired
     private lateinit var authService: AuthenticationServiceImpl
+
+    @Autowired
+    private lateinit var storageService: StorageService
 
     @InitBinder
     fun initBinder(binder: WebDataBinder) {
@@ -38,6 +47,8 @@ class EditProfile {
     fun getEditProfile(model: Model, authentication: Authentication): String {
         val user = authService.getUser(authentication)
         model.addAttribute("user", fromUser(user))
+        val avatar = userService.getAvatar(user)
+        model.addAttribute("avatar", avatar)
         return "edit_profile"
     }
 
@@ -47,6 +58,16 @@ class EditProfile {
         userService.updateUser(oldUser, userData)
         model.addAttribute("user", userData)
         return "edit_profile"
+    }
+
+    @PostMapping("/edit_profile/avatar")
+    fun handleFileUpload(@RequestParam("file") file: MultipartFile, authentication: Authentication): String {
+
+        val user = authService.getUser(authentication)
+        val filename = storageService.storeAs(file, user.id.toString())
+        userService.updateAvatar(user, filename)
+
+        return "redirect:/edit_profile"
     }
 
     data class UserData (
