@@ -13,7 +13,7 @@ interface ExamService {
 
     fun getTopPopularExam(count: Int): List<Exam>
 
-    fun addExam(exam: ExamData, owner: User?) : Exam
+    fun addExam(exam: ExamData, owner: User) : Exam
 
     fun removeExam(exam: Exam)
 

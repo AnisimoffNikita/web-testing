@@ -4,6 +4,7 @@ import com.bmstu.testingsystem.domain.QuestionType
 import com.bmstu.testingsystem.domain.Exam
 import com.bmstu.testingsystem.domain.Question
 import com.bmstu.testingsystem.domain.User
+import com.bmstu.testingsystem.services.AuthenticationServiceImpl
 import com.bmstu.testingsystem.services.ExamResultServiceImpl
 import com.bmstu.testingsystem.services.ExamServiceImpl
 import com.bmstu.testingsystem.services.UserServiceImpl
@@ -27,7 +28,8 @@ class CreateTest {
     private lateinit var testService: ExamServiceImpl
 
     @Autowired
-    private lateinit var userService: UserServiceImpl
+    private lateinit var authService: AuthenticationServiceImpl
+
 
     @InitBinder
     fun initBinder(binder: WebDataBinder) {
@@ -37,20 +39,15 @@ class CreateTest {
     }
 
     @GetMapping("/create_exam")
-    fun getCreateTest(model: Model, authentication: Authentication?): String {
-        if (authentication == null)
-            return "redirect:/sign_in"
+    fun getCreateTest(model: Model, authentication: Authentication): String {
         model.addAttribute("exam", ExamData())
         return "create_exam"
     }
 
     @PostMapping("/create_exam")
-    fun postCreateTest(model: Model, @ModelAttribute exam: ExamData, authentication: Authentication?): String {
-        if (authentication == null)
-            return "redirect:/sign_in"
-        
-        val username = authentication.name
-        val  owner = userService.findByUsername(username)
+    fun postCreateTest(model: Model, @ModelAttribute exam: ExamData, authentication: Authentication): String {
+        val owner = authService.getUser(authentication)
+
         testService.addExam(exam, owner)
 
         model.addAttribute("exam", ExamData()) // временный фикс
@@ -59,44 +56,37 @@ class CreateTest {
 }
 
 data class ExamData (
-        var name: String = "",
-        var description: String = "",
-        var questions: MutableList<QuestionData> = arrayListOf()
+        var name: String? = null,
+        var description: String? = null,
+        var questions: MutableList<QuestionData>? = null
 ) {
     fun toExam(user: User) : Exam {
-        val i = 0
-        val questionList:  MutableList<Question> = arrayListOf()
-        for (q in questions) {
-            questionList.add(q.toQuestion(i))
-            i.inc()
-        }
-        return Exam(user, name, description, java.sql.Date(System.currentTimeMillis()), questionList);
+        name?: throw NullPointerException()
+        description?: throw NullPointerException()
+        questions?: throw NullPointerException()
+
+        val questionList = questions!!.mapIndexed { i, q -> q.toQuestion(i) }
+        return Exam(user, name!!, description!!, java.sql.Date(System.currentTimeMillis()), questionList)
     }
 }
 
 data class QuestionData (
-        var questionText: String = "",
-        var type: String = "",
-        var variants: MutableList<String>? = arrayListOf(),
-        var correctVariants: MutableList<Int>? = arrayListOf(),
-        var correctInputAnswer: String? = ""
+        var questionText: String? = null,
+        var type: QuestionType? = null,
+        var variants: MutableList<String>? = null,
+        var correctVariants: MutableList<Int>? = null,
+        var correctInputAnswer: String? = null
 ) {
     fun toQuestion(id: Int) : Question {
-        if (variants != null && variants!!.isEmpty())
-            variants = null
-        if (correctVariants != null && correctVariants!!.isEmpty())
-            correctVariants = null
-        if (correctInputAnswer != null && correctInputAnswer!!.isEmpty())
-            correctInputAnswer = null
-        val q = Question(id, questionText, convertType(), variants, correctVariants, correctInputAnswer)
-        return q
+        questionText?: throw NullPointerException()
+        type?: throw NullPointerException()
+        if (variants != null && correctInputAnswer != null)
+            throw IllegalStateException()
+        if (variants == null && correctVariants != null)
+            throw IllegalStateException()
+        if ((correctVariants == null && correctInputAnswer == null) ||
+                (correctVariants != null && correctInputAnswer != null))
+            throw IllegalStateException()
+        return Question(id, questionText!!, type!!, variants, correctVariants, correctInputAnswer)
     }
-
-    fun convertType() = when (type) {
-            "Один ответ" -> QuestionType.SINGLE_ANSWER
-            "Несколько ответов" -> QuestionType.MULTIPLE_ANSWER
-            "Без выбора ответа" -> QuestionType.NO_ANSWER
-            else -> throw IllegalArgumentException()
-        }
-
 }

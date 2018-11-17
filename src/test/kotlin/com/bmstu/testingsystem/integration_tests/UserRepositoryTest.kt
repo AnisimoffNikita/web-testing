@@ -2,31 +2,18 @@ package com.bmstu.testingsystem.integration_tests
 
 import com.bmstu.testingsystem.TestingSystemApplication
 import com.bmstu.testingsystem.domain.Exam
-import com.bmstu.testingsystem.domain.ExamStatus
-import com.bmstu.testingsystem.domain.Person
 import com.bmstu.testingsystem.domain.User
 import com.bmstu.testingsystem.repositiry.UserRepository
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.BeforeClass
-import org.junit.FixMethodOrder
-import org.junit.runners.MethodSorters
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.PropertySource
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.transaction.annotation.Transactional
 import java.sql.Date
-import java.sql.Timestamp
 import java.util.*
-import javax.persistence.EntityManager
-import javax.persistence.Persistence
-import javax.persistence.EntityManagerFactory
-import java.util.Locale
-import java.text.SimpleDateFormat
-import java.text.DateFormat
 
 
 

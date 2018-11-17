@@ -1,6 +1,7 @@
 package com.bmstu.testingsystem.controller
 
 import com.bmstu.testingsystem.domain.*
+import com.bmstu.testingsystem.services.AuthenticationServiceImpl
 import com.bmstu.testingsystem.services.ExamResultServiceImpl
 import com.bmstu.testingsystem.services.ExamServiceImpl
 import com.bmstu.testingsystem.services.UserServiceImpl
@@ -17,12 +18,6 @@ import java.util.*
 @Controller
 class ExamPage {
 
-    /*@Autowired
-    lateinit var userRepository: UserRepository
-
-    @Autowired
-    lateinit var testRepository: ExamRepository*/
-
     @Autowired
     lateinit var testService: ExamServiceImpl
 
@@ -32,6 +27,9 @@ class ExamPage {
     @Autowired
     lateinit var userService: UserServiceImpl
 
+    @Autowired
+    private lateinit var authService: AuthenticationServiceImpl
+
     @InitBinder
     fun initBinder(binder: WebDataBinder) {
         binder.registerCustomEditor(
@@ -40,7 +38,7 @@ class ExamPage {
     }
 
     @GetMapping("exam_page/{id}")
-    fun getTestPage(@PathVariable id: UUID, model: Model, authentication: Authentication?): String {
+    fun getTestPage(@PathVariable id: UUID, model: Model, authentication: Authentication): String {
         val test = testService.findById(id) ?: return "redirect:/main_page"
         val ua = UserAnswers(arrayOfNulls<UserAnswer>(test.questions.size).toMutableList())
 
@@ -52,14 +50,10 @@ class ExamPage {
     @PostMapping("exam_page/{id}")
     fun postTestPage(@PathVariable id: UUID,
                      @ModelAttribute userAnswers: UserAnswers,
-                     authentication: Authentication?,
+                     authentication: Authentication,
                      model: Model): String {
-
-        if (authentication == null)
-            return "redirect:/sign_in"
-
+        val user = authService.getUser(authentication)
         val test = testService.findById(id) ?: return "redirect:/main_page"
-        val user = userService.findByUsername(authentication.name) ?: return "redirect:/sign_in"
 
         val testResult = resultService.passTest(test, user, userAnswers)
 

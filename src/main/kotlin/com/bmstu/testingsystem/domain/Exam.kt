@@ -12,7 +12,7 @@ import javax.persistence.*
 data class Exam (
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id")
-        var user: User,
+        val user: User,
 
         val name: String,
 
@@ -21,11 +21,8 @@ data class Exam (
         var createdAt: Date,
 
         @Convert(converter = JpaQuestionConverterJson::class)
-        val questions: List<Question> 
-
+        val questions: List<Question>
 ) {
-
-
     @GeneratedValue
     @Id
     val id: UUID = UUID.randomUUID()
