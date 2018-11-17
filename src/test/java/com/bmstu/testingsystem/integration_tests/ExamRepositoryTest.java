@@ -105,7 +105,7 @@ public class ExamRepositoryTest {
                 new java.sql.Date(1195333200000L), new ArrayList<>());
         exam.setStatus(ExamStatus.DELETED);
         UUID id = UUID.fromString("0596c2c0-a70a-47dd-81c8-31411a5b132a");
-        examRepository.markDeleted(id);
+        examRepository.setDeletedById(id);
 
         Optional<Exam> fromDBExam = examRepository.findById(id);
 

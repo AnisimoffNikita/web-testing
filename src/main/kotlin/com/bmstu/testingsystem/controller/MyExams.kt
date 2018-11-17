@@ -1,5 +1,6 @@
 package com.bmstu.testingsystem.controller
 
+import com.bmstu.testingsystem.security.AppUserPrincipal
 import com.bmstu.testingsystem.services.AuthenticationServiceImpl
 import com.bmstu.testingsystem.services.ExamServiceImpl
 import com.bmstu.testingsystem.services.UserServiceImpl
@@ -25,6 +26,8 @@ class MyExams {
 
     @GetMapping("/my_exams")
     fun getMyTests(model: Model, authentication: Authentication): String {
+        val tst = (authentication.principal as AppUserPrincipal?)
+        println(tst?.authorities)
 
         val user = authService.getUser(authentication)
         model.addAttribute("exams", user.exams)

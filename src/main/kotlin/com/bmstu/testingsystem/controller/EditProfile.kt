@@ -1,6 +1,7 @@
 package com.bmstu.testingsystem.controller
 
 import com.bmstu.testingsystem.domain.User
+import com.bmstu.testingsystem.security.AppUserPrincipal
 import com.bmstu.testingsystem.services.AuthenticationServiceImpl
 import com.bmstu.testingsystem.services.UserServiceImpl
 import org.springframework.beans.factory.annotation.Autowired

@@ -13,9 +13,24 @@ import java.util.*
 interface ExamRepository : CrudRepository<Exam, UUID> {
     fun findByStatus(status: ExamStatus): List<Exam>
 
+//    хотелось по красоте, но не судьба :(
+//    @Modifying
+//    @Query("update exams set status = ?1 where id = ?2",
+//            nativeQuery = true)
+//    fun updateStateById(status: ExamStatus, id: UUID)
+
     @Modifying
-    @Transactional
     @Query("update exams set status = 'DELETED' where id = ?1",
             nativeQuery = true)
-    fun markDeleted(id: UUID)
+    fun setDeletedById(id: UUID)
+
+    @Modifying
+    @Query("update exams set status = 'APPROVED' where id = ?1",
+            nativeQuery = true)
+    fun setApprovedById(id: UUID)
+
+    @Modifying
+    @Query("update exams set status = 'REJECTED' where id = ?1",
+            nativeQuery = true)
+    fun setRejectedById(id: UUID)
 }
