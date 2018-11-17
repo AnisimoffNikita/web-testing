@@ -2,6 +2,7 @@ package com.bmstu.testingsystem.services
 
 import com.bmstu.testingsystem.controller.ExamData
 import com.bmstu.testingsystem.domain.Exam
+import com.bmstu.testingsystem.domain.ExamStatus
 import com.bmstu.testingsystem.domain.User
 import com.bmstu.testingsystem.repositiry.ExamRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,20 +25,18 @@ class ExamServiceImpl : ExamService {
     }
 
     override fun findByKeyword(keyword: String): List<Exam> {
-        return examRepository.findAll().filter {
+        return examRepository.findByStatus(ExamStatus.APPROVED).filter {
             it.name.contains(keyword) || it.description.contains(keyword)
         }
     }
 
     override fun getTopPopularExam(count: Int): List<Exam> {
-        return examRepository.findAll().sortedByDescending {
+        return examRepository.findByStatus(ExamStatus.APPROVED).sortedByDescending {
             it.passCount
         } . take(count)
     }
 
-    override fun addExam(exam: ExamData, owner: User?) : Exam {
-        if (owner == null)
-            throw IllegalArgumentException()
+    override fun addExam(exam: ExamData, owner: User) : Exam {
         return examRepository.save(exam.toExam(owner))
     }
 

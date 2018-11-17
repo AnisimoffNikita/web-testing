@@ -30,18 +30,22 @@ class UserServiceImpl : UserService {
     }
 
     override fun updateUser(user: User, newUserData: EditProfile.UserData): Boolean {
-        val findByUsername = userRepository.findByUsername(newUserData.username)
+        newUserData.username?: throw IllegalStateException()
+        newUserData.email?: throw IllegalStateException()
+        newUserData.password?: throw IllegalStateException()
+
+        val findByUsername = userRepository.findByUsername(newUserData.username!!)
         if (findByUsername != null && findByUsername.id != user.id)
             return false
 
         if (user.username != newUserData.username)
-            user.username = newUserData.username
+            user.username = newUserData.username!!
 
         if (user.email != newUserData.email)
-            user.email = newUserData.email
+            user.email = newUserData.email!!
 
         if (user.password != newUserData.password)
-            user.password = newUserData.password
+            user.password = newUserData.password!!
 
         val newPerson = Person(newUserData.firstName, newUserData.lastName, newUserData.birthday, newUserData.avatar)
         val oldPerson = user.person

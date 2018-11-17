@@ -58,7 +58,7 @@
                     Мой профиль
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown02">
-                    <a class="dropdown-item" th:href="@{'/editprofile'}">Редактировать</a>
+                    <a class="dropdown-item" th:href="@{'/edit_profile'}">Редактировать</a>
                     <a class="dropdown-item" th:href="@{'/sign_in'}">Выход</a>
                 </ul>
             </li>
@@ -99,12 +99,11 @@
                                     </div>
                                     <div class="col-3">
                                         <select class="form-control" onchange="onSelectChange(0)">
-                                            <option>Один ответ</option>
-                                            <option>Несколько ответов</option>
-                                            <option>Без выбора ответа</option>
+                                            <option value="SINGLE_ANSWER">Один ответ</option>
+                                            <option value="MULTIPLE_ANSWER">Несколько ответов</option>
+                                            <option value="NO_ANSWER">Без выбора ответа</option>
                                         </select>
                                     </div>
-
 
                                     <div class="col-12 mt-3 answers-list add-answer-block"></div>
                                     <div class="col-10 add-answer-block">

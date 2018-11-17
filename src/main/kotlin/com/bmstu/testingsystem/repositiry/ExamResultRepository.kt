@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface ExamResultRepository : CrudRepository<ExamResult, UUID> {
-
-}
+interface ExamResultRepository : CrudRepository<ExamResult, UUID>

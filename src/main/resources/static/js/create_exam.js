@@ -158,12 +158,15 @@ function onAddQuestionClick () {
     select.className = "form-control";
 
     var option1 = document.createElement('option');
+    option1.setAttribute('value','SINGLE_ANSWER')
     option1.innerHTML = "Один ответ";
 
     var option2 = document.createElement('option');
+    option2.setAttribute('value','MULTIPLE_ANSWER')
     option2.innerHTML = "Несколько ответов";
 
     var option3 = document.createElement('option');
+    option3.setAttribute('value','NO_ANSWER')
     option3.innerHTML = "Без выбора ответа";
 
     select.appendChild(option1);

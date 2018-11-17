@@ -1,6 +1,7 @@
 package com.bmstu.testingsystem.controller
 
 import com.bmstu.testingsystem.domain.User
+import com.bmstu.testingsystem.services.AuthenticationServiceImpl
 import com.bmstu.testingsystem.services.UserServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.propertyeditors.CustomDateEditor
@@ -22,6 +23,9 @@ class EditProfile {
     @Autowired
     private lateinit var userService: UserServiceImpl
 
+    @Autowired
+    private lateinit var authService: AuthenticationServiceImpl
+
     @InitBinder
     fun initBinder(binder: WebDataBinder) {
         binder.registerCustomEditor(
@@ -29,37 +33,29 @@ class EditProfile {
         )
     }
 
-    @GetMapping("/editprofile")
-    fun getEditProfile(model: Model, authentication: Authentication?): String {
-        if (authentication == null) {
-            return "redirect:/"
-        }
-        val username = authentication.name
-        val user = userService.findByUsername(username) ?: return "redirect:/"
+    @GetMapping("/edit_profile")
+    fun getEditProfile(model: Model, authentication: Authentication): String {
+        val user = authService.getUser(authentication)
         model.addAttribute("user", fromUser(user))
-        return "editprofile"
+        return "edit_profile"
     }
 
-    @PostMapping("/editprofile")
-    fun postEditProfile(@ModelAttribute userData: UserData, model: Model, authentication: Authentication?): String {
-        if (authentication == null) {
-            return "redirect:/"
-        }
-        val username = authentication.name
-        val oldUser = userService.findByUsername(username) ?: return "redirect:/"
+    @PostMapping("/edit_profile")
+    fun postEditProfile(@ModelAttribute userData: UserData, model: Model, authentication: Authentication): String {
+        val oldUser = authService.getUser(authentication)
         userService.updateUser(oldUser, userData)
         model.addAttribute("user", userData)
-        return "editprofile"
+        return "edit_profile"
     }
 
     data class UserData (
-            var username: String = "",
-            var email: String = "",
-            var password: String = "",
-            var firstName: String? = "",
-            var lastName: String? = "",
-            var avatar: String? = "",
-            var birthday: Date? = Date()
+            var username: String? = null,
+            var email: String? = null,
+            var password: String? = null,
+            var firstName: String? = null,
+            var lastName: String? = null,
+            var avatar: String? = null,
+            var birthday: Date? = null
     )
         fun fromUser(user: User) : UserData = UserData(user.username, user.email, user.password,
                     user.person.firstName, user.person.lastName, user.person.avatar, user.person.birthday)

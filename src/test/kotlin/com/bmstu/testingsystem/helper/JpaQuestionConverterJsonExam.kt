@@ -11,7 +11,7 @@ class JpaQuestionConverterJsonExam {
 
     private val q = listOf(Question(0,"123", QuestionType.SINGLE_ANSWER, listOf("1"), listOf(0)))
 
-    private val s = "[{\"id\":0,\"questionText\":\"123\",\"type\":\"SINGLE_ANSWER\",\"variants\":[\"1\"],\"correctVariantsId\":[0],\"correctInputAnswer\":\"\"}]"
+    private val s = "[{\"id\":0,\"questionText\":\"123\",\"type\":\"SINGLE_ANSWER\",\"variants\":[\"1\"],\"correctVariantsId\":[0],\"correctInputAnswer\":null}]"
 
     @Test
     fun convertToDatabaseColumn() {
