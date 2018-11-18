@@ -1,4 +1,4 @@
-package com.bmstu.testingsystem.domain
+package com.bmstu.testingsystem.form_data
 
 
 data class UserAnswers (

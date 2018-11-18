@@ -1,9 +1,9 @@
 package com.bmstu.testingsystem.services
 
-import com.bmstu.testingsystem.controller.EditProfile
 import com.bmstu.testingsystem.controller.SignUp
 import com.bmstu.testingsystem.domain.Person
 import com.bmstu.testingsystem.domain.User
+import com.bmstu.testingsystem.form_data.UserData
 import com.bmstu.testingsystem.repositiry.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -29,7 +29,7 @@ class UserServiceImpl : UserService {
         return newUser
     }
 
-    override fun updateUser(user: User, newUserData: EditProfile.UserData): Boolean {
+    override fun updateUser(user: User, newUserData: UserData): Boolean {
         newUserData.username?: throw IllegalStateException()
         newUserData.email?: throw IllegalStateException()
         newUserData.password?: throw IllegalStateException()

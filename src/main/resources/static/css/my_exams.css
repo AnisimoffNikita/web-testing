@@ -1,0 +1,17 @@
+
+.list-group-hover .list-group-item:hover {
+    border-color: lightblue;
+    border-width: 2px;
+    cursor: pointer;
+}
+
+
+.pass-count-icon {
+    width: 21px; height: 23px;
+    background: url('/img/humans_icon.png');
+    display: inline-block;
+}
+.pass-count-value {
+    font-size: 14px;
+    display: inline-block;
+}

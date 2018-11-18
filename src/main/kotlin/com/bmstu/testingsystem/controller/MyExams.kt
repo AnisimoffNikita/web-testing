@@ -1,5 +1,7 @@
 package com.bmstu.testingsystem.controller
 
+import com.bmstu.testingsystem.form_data.getApproveReject
+import com.bmstu.testingsystem.form_data.getPassStatisticDelete
 import com.bmstu.testingsystem.security.AppUserPrincipal
 import com.bmstu.testingsystem.services.AuthenticationServiceImpl
 import com.bmstu.testingsystem.services.ExamServiceImpl
@@ -19,18 +21,29 @@ class MyExams {
     private lateinit var userService: UserServiceImpl
 
     @Autowired
-    private lateinit var testService: ExamServiceImpl
+    private lateinit var examService: ExamServiceImpl
 
     @Autowired
     private lateinit var authService: AuthenticationServiceImpl
 
     @GetMapping("/my_exams")
-    fun getMyTests(model: Model, authentication: Authentication): String {
+    fun getMyExams(model: Model, authentication: Authentication): String {
         val tst = (authentication.principal as AppUserPrincipal?)
         println(tst?.authorities)
 
         val user = authService.getUser(authentication)
+
+        model.addAttribute("title", "Мои тесты")
+        model.addAttribute("examLink", "exam_view")
         model.addAttribute("exams", user.exams)
+        model.addAttribute("btns", getPassStatisticDelete())
+
+        return "my_exams"
+    }
+
+    @GetMapping("/new_exams")
+    fun getNewExams(model: Model, authentication: Authentication): String {
+        fillModelForAdmin(model)
         return "my_exams"
     }
 
@@ -38,18 +51,32 @@ class MyExams {
     @GetMapping("/my_exams/delete/{id}")
     fun deleteTest(@PathVariable id: UUID, model: Model, authentication: Authentication?): String {
         val user = authService.getUser(authentication)
-        val test = testService.findById(id)
+        val test = examService.findById(id)
         if (test != null)
-            testService.removeExam(test)
+            examService.removeExam(test)
         model.addAttribute("exams", user.exams)
         return "my_exams"
     }
 
-    // todo реализовать и перенести в контроллер для табличек
-    @GetMapping("/my_exams/statistic/{id}")
-    fun getStatistic(@PathVariable id: UUID, model: Model, authentication: Authentication?): String {
-        val user = authService.getUser(authentication)
-        model.addAttribute("exams", user.exams)
+    // todo и не обновляется тоже, Никита почини
+    @GetMapping("/approve/{id}")
+    fun approveExam(@PathVariable id: UUID, model: Model, authentication: Authentication): String {
+        examService.approveExam(id)
+        fillModelForAdmin(model)
         return "my_exams"
+    }
+
+    @GetMapping("/reject/{id}")
+    fun rejectExam(@PathVariable id: UUID, model: Model, authentication: Authentication): String {
+        examService.rejectExam(id)
+        fillModelForAdmin(model)
+        return "my_exams"
+    }
+
+    private fun fillModelForAdmin(model: Model) {
+        model.addAttribute("title", "Новые тесты")
+        model.addAttribute("examLink", "exam_view_admin")
+        model.addAttribute("exams", examService.getAllPendingExams())
+        model.addAttribute("btns", getApproveReject())
     }
 }

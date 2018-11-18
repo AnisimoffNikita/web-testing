@@ -1,18 +1,17 @@
 package com.bmstu.testingsystem.services
 
 import com.bmstu.testingsystem.domain.*
-import com.bmstu.testingsystem.repositiry.ExamRepository
+import com.bmstu.testingsystem.form_data.UserAnswer
+import com.bmstu.testingsystem.form_data.UserAnswers
 import com.bmstu.testingsystem.repositiry.ExamResultRepository
 import org.junit.Assert
 import org.junit.Test
 
-import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
-import java.util.*
 import java.sql.Date
 
 @RunWith(MockitoJUnitRunner::class)
@@ -37,10 +36,10 @@ class ExamResultServiceImplTest {
 
     @Test
     fun passTestGood() {
-        val a1 = UserAnswer(0,null, "ans")
+        val a1 = UserAnswer(0, null, "ans")
         val a2 = UserAnswer(1, mutableListOf(0), null)
-        val a3 = UserAnswer(2,mutableListOf(1,2), null)
-        val userAnswers = UserAnswers(mutableListOf(a1,a2,a3))
+        val a3 = UserAnswer(2, mutableListOf(1, 2), null)
+        val userAnswers = UserAnswers(mutableListOf(a1, a2, a3))
 
         val result = examResultService.passTest(exam, user, userAnswers)
 
@@ -51,10 +50,10 @@ class ExamResultServiceImplTest {
 
     @Test
     fun passTestBad() {
-        val a1 = UserAnswer(0, null,"bad")
+        val a1 = UserAnswer(0, null, "bad")
         val a2 = UserAnswer(1, mutableListOf(1), null)
-        val a3 = UserAnswer(2, mutableListOf(1,2), null)
-        val userAnswers = UserAnswers(mutableListOf(a1,a2,a3))
+        val a3 = UserAnswer(2, mutableListOf(1, 2), null)
+        val userAnswers = UserAnswers(mutableListOf(a1, a2, a3))
 
         val result = examResultService.passTest(exam, user, userAnswers)
 
@@ -65,10 +64,10 @@ class ExamResultServiceImplTest {
 
     @Test(expected = IllegalStateException::class)
     fun passTestBadState() {
-        val a1 = UserAnswer(0, mutableListOf(1),"bad")
+        val a1 = UserAnswer(0, mutableListOf(1), "bad")
         val a2 = UserAnswer(1, mutableListOf(1), "")
-        val a3 = UserAnswer(2, mutableListOf(1,2), "")
-        val userAnswers = UserAnswers(mutableListOf(a1,a2,a3))
+        val a3 = UserAnswer(2, mutableListOf(1, 2), "")
+        val userAnswers = UserAnswers(mutableListOf(a1, a2, a3))
 
         examResultService.passTest(exam, user, userAnswers)
     }

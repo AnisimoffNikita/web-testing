@@ -1,13 +1,12 @@
 package com.bmstu.testingsystem.services
 
-import com.bmstu.testingsystem.controller.ExamData
 import com.bmstu.testingsystem.domain.Exam
 import com.bmstu.testingsystem.domain.ExamStatus
 import com.bmstu.testingsystem.domain.User
+import com.bmstu.testingsystem.form_data.ExamData
 import com.bmstu.testingsystem.repositiry.ExamRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.lang.IllegalArgumentException
 
 import java.util.UUID
 
@@ -36,12 +35,24 @@ class ExamServiceImpl : ExamService {
         } . take(count)
     }
 
+    override fun getAllPendingExams(): List<Exam> {
+        return examRepository.findByStatus(ExamStatus.PENDING)
+    }
+
     override fun addExam(exam: ExamData, owner: User) : Exam {
         return examRepository.save(exam.toExam(owner))
     }
 
     override fun removeExam(exam: Exam) {
         examRepository.delete(exam)
+    }
+
+    override fun approveExam(id: UUID) {
+        examRepository.setApprovedById(id)
+    }
+
+    override fun rejectExam(id: UUID) {
+        examRepository.setRejectedById(id)
     }
 
     override fun incPasses(exam: Exam) {
