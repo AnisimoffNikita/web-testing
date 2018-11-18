@@ -1,6 +1,7 @@
 package com.bmstu.testingsystem.controller
 
-import com.bmstu.testingsystem.domain.*
+import com.bmstu.testingsystem.form_data.UserAnswer
+import com.bmstu.testingsystem.form_data.UserAnswers
 import com.bmstu.testingsystem.services.AuthenticationServiceImpl
 import com.bmstu.testingsystem.services.ExamResultServiceImpl
 import com.bmstu.testingsystem.services.ExamServiceImpl
@@ -19,7 +20,7 @@ import java.util.*
 class ExamPage {
 
     @Autowired
-    lateinit var testService: ExamServiceImpl
+    lateinit var examService: ExamServiceImpl
 
     @Autowired
     lateinit var resultService: ExamResultServiceImpl
@@ -39,7 +40,7 @@ class ExamPage {
 
     @GetMapping("exam_page/{id}")
     fun getTestPage(@PathVariable id: UUID, model: Model, authentication: Authentication): String {
-        val test = testService.findById(id) ?: return "redirect:/main_page"
+        val test = examService.findById(id) ?: return "redirect:/main_page"
         val ua = UserAnswers(arrayOfNulls<UserAnswer>(test.questions.size).toMutableList())
 
         model.addAttribute("userAnswers",  ua)
@@ -53,10 +54,10 @@ class ExamPage {
                      authentication: Authentication,
                      model: Model): String {
         val user = authService.getUser(authentication)
-        val test = testService.findById(id) ?: return "redirect:/main_page"
+        val test = examService.findById(id) ?: return "redirect:/main_page"
 
         val testResult = resultService.passTest(test, user, userAnswers)
-        testService.incPasses(test)
+        examService.incPasses(test)
 
         model.addAttribute("res", testResult)
         return "result"

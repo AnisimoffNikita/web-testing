@@ -1,18 +1,17 @@
 package com.bmstu.testingsystem.controller
 
+import com.bmstu.testingsystem.services.AuthenticationServiceImpl
 import com.bmstu.testingsystem.services.ExamServiceImpl
-import com.bmstu.testingsystem.services.UserServiceImpl
+import com.bmstu.testingsystem.services.TableServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.propertyeditors.CustomDateEditor
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.ui.set
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.annotation.PathVariable
-import java.sql.Date
 import java.text.DateFormat
 import java.util.*
 
@@ -20,10 +19,13 @@ import java.util.*
 class Table {
 
     @Autowired
-    private lateinit var userService: UserServiceImpl
+    private lateinit var tableService: TableServiceImpl
 
     @Autowired
-    private lateinit var testService: ExamServiceImpl
+    private lateinit var authService: AuthenticationServiceImpl
+
+    @Autowired
+    private lateinit var examService: ExamServiceImpl
 
     @InitBinder
     fun initBinder(binder: WebDataBinder) {
@@ -34,43 +36,18 @@ class Table {
 
     @GetMapping("/my_passed_exams")
     fun getMyPassedExams(model: Model, authentication: Authentication?): String {
-        if (authentication == null)
-            return "redirect:/sign_in"
+        val user = authService.getUser(authentication)
         model.addAttribute("title", "Пройденные тесты")
+        model.addAttribute("table", tableService.getPassTableForUser(user))
+        return "table"
+    }
 
-
-        var table = TableData()
-        table.headers.add("h1")
-        table.headers.add("h2")
-
-        var row1 = Row()
-        row1.cells.add(Cell("row1", "my_exams"))
-        row1.cells.add(Cell("row2", "my_exams"))
-
-        var row2 = Row()
-        row2.cells.add(Cell(Date(System.currentTimeMillis())))
-        row2.cells.add(Cell(Date(System.currentTimeMillis())))
-
-        table.rows.add(row1)
-        table.rows.add(row2)
-
-        model.addAttribute("table", table)
-
+    @GetMapping("/my_exams/results/{id}")
+    fun getStatistic(@PathVariable id: UUID, model: Model, authentication: Authentication?): String {
+        //val user = authService.getUser(authentication)
+        val exam = examService.findById(id) ?: return "redirect:/my_exams"
+        model.addAttribute("title", "Результаты теста \"" + exam.name + "\"")
+        model.addAttribute("table", tableService.getPassTableForExam(exam))
         return "table"
     }
 }
-
-
-data class TableData (
-        var headers: MutableList<String> = arrayListOf(),
-        var rows: MutableList<Row> = arrayListOf()
-)
-
-data class Row (
-    var cells: MutableList<Cell> = arrayListOf()
-)
-
-data class Cell (
-        var data: Any = "",
-        var link: String = ""
-)

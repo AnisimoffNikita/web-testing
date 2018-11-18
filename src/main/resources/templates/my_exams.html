@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Главная страница</title>
+    <title th:text="${title}"></title>
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/css/common.css" rel="stylesheet">
+    <link href="/css/my_exams.css" rel="stylesheet">
 </head>
 
 <body>
@@ -34,11 +35,16 @@
             <li class="nav-item">
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/main_page'}">Главная</a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/create_exam'}">Создать тест</a>
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/create_exam'}">Создать
+                    тест</a>
             </li>
-            <li class="nav-item dropdown active">
-                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+            <li class="nav-item dropdown"
+                th:classappend="${__${#httpServletRequest.requestURI.contains('/my_exams')}__ ||
+                                 __${#httpServletRequest.requestURI.contains('/my_passed_exams')}__} ? active : ''">
+                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown01" data-toggle="dropdown"
+                   aria-haspopup="true"
                    aria-expanded="false">
                     <span class="caret"></span>
                     Мои тесты
@@ -49,7 +55,8 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown02" data-toggle="dropdown" aria-haspopup="true"
+                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown02" data-toggle="dropdown"
+                   aria-haspopup="true"
                    aria-expanded="false">
                     <span class="caret"></span>
                     Мой профиль
@@ -57,6 +64,22 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdown02">
                     <a class="dropdown-item" th:href="@{'/edit_profile'}">Редактировать</a>
                     <a class="dropdown-item" th:href="@{'/sign_in'}">Выход</a>
+                </ul>
+            </li>
+
+            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')"
+                th:classappend="${__${#httpServletRequest.requestURI.contains('/all_users')}__ ||
+                                  __${#httpServletRequest.requestURI.contains('/all_exams')}__ ||
+                                  __${#httpServletRequest.requestURI.contains('/new_exams')}__} ? active : ''">
+                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown00" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
+                    <span class="caret"></span>
+                    Управление
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown00">
+                    <a class="dropdown-item" th:href="@{'/all_users'}">Пользователи</a>
+                    <a class="dropdown-item" th:href="@{'/all_exams'}">Все тесты</a>
+                    <a class="dropdown-item" th:href="@{'/new_exams'}">Новые тесты</a>
                 </ul>
             </li>
         </ul>
@@ -67,39 +90,88 @@
 
 
 <div class="container">
-    <h2 class="display-6 mt-3 mb-4">Мои тесты</h2>
+    <h2 class="display-6 mt-3 mb-4" th:text="${title}"></h2>
 </div>
 
 <div class="container">
     <div class="row" id="row">
-        <div class="card-deck mb-3 text-left" th:each="exam: ${exams}">
+        <div class="col-lg-12">
+            <div class="list-group list-group-hover">
+                <th:block th:each="exam, i: ${exams}">
+                    <div class="list-group-item mb-2" th:onclick="'showButtons(' + ${i.index} + ')'">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">
+                                <a th:href="@{'/' + ${examLink} + '/' + ${exam.id}}"
+                                   th:text="${exam.name}" target="_blank"></a>
+                            </h5>
+                            <small style="color:blue" th:if="${exam.status.toString()} == 'PENDING'">Ожидает</small>
+                            <small style="color:red" th:if="${exam.status.toString()} == 'REJECTED'">Отклонен</small>
+                            <small style="color:green" th:if="${exam.status.toString()} == 'APPROVED'">Добавлен</small>
+                        </div>
 
-            <div class="col-lg-12 col-sm-12 col-md-12 col-12 col-xl-12">
-                <div class="card mb-4 gradient border-secondary">
+                        <p class="list-group-item-text" style="color:black" th:text="${exam.description}"></p>
+                        <span class="pass-count-value mt-3 float-right" th:text="${exam.passCount}"></span>
+                        <span class="pass-count-icon mt-3 float-right" title="Количество прохождений"></span>
+
+                        <small style="color:black"><em>Создан [[${exam.createdAt}]]</em></small> <br>
+                        <small style="color:black"><em>Автор @[[${exam.user.username}]]</em></small>
+                        <div class="btn-block mt-3" style="display: none">
+                            <p>
+                                <th:block th:each="btn, k: ${btns}">
+                                        <button type="button" th:class="'btn ' + ${btn.type} + ' mr-3'"
+                                                th:text="${btn.text}"
+                                                th:data1="${btn.actionUrl}"
+                                                th:data2="${exam.id}"
+                                                th:onclick="location.href='/'+this.getAttribute('data1')+'/'+this.getAttribute('data2')">
+                                        </button>
+
+                                </th:block>
+                            </p>
+                        </div>
+
+                    </div>
+                </th:block>
+            </div>
+        </div>
+
+        <!--<div class="col-lg-7" id="questionList">
+            <th:block th:each="exam, i: ${exams}">
+            <div class="card-deck mb-3 text-left" th:id="${i.index}" style="overflow:scroll; max-height:500px; display:none;">
+                <div class="card mb-4">
                     <div class="card-body">
-                        <p>
-                            <span class="card-title font-weight-normal" style="font-size: 24px" th:text="${exam.name}"></span>
-                            <a th:href="@{'/my_exams/delete/' + ${exam.id}}" class="float-right">Удалить</a>
-                        </p>
-                        <div class="my-0 card-text">
-                            <span th:text="'Дата создания: ' + ${#dates.format(exam.createdAt, 'yyyy-MM-dd')}"></span>
-                        </div>
-                        <div class="my-0 card-text">
-                            <span th:text="'Статус: ' + ${exam.status}"></span>
-                        </div>
-                        <div class="my-0 card-text">
-                            <span th:text="'Описание: ' + ${exam.description}"></span>
-                        </div>
-                        <a th:href="@{'/exam_page/' + ${exam.id}}" class="exam-link mr-4">Пройти</a>
-                        <a th:href="@{'/my_exams/statistic/' + ${exam.id}}" class="exam-link">Просмотреть статистику</a>
+                        <th:block th:each="question, i: ${exam.questions}">
+                            <div th:if="${question.type.toString() != 'NO_ANSWER'}">
+                                <h4 class="card-title mt-0 mb-3 font-weight-normal"
+                                    th:text="${question.questionText}"></h4>
+                                <div class="form-check" th:each="variant, j : ${question.variants}">
+                                    <input class="form-check-input"
+                                           th:type="${question.type.toString() == 'SINGLE_ANSWER' ? 'radio' : 'checkbox'}"
+                                           th:name="'questions[' + ${i.index} + ']'"
+                                           th:checked="${question.correctVariantsId.contains(__${j.index}__)}"
+                                           disabled/>
+                                    <label class="form-check-label"> <span
+                                            th:text="${variant}"></span></label>
+                                </div>
+                                <hr>
+                            </div>
+                            <div th:if="${question.type.toString() == 'NO_ANSWER'}">
+                                <h4 class="card-title mt-0 mb-3 font-weight-normal"
+                                    th:text="${question.questionText}"></h4>
+                                <div class="form-group">
+                                    <input type="text" th:value="${question.correctInputAnswer}" disabled />
+                                </div>
+                                <hr>
+                            </div>
+                        </th:block>
 
                     </div>
                 </div>
-            </div>
-
         </div>
-    </div>
+            </th:block>
 
+        </div>-->
+    </div>
+</div>
 
 
 <!-- Bootstrap core JavaScript
@@ -109,6 +181,35 @@
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
 <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+<script th:inline="javascript">
+    function showButtons(examId) {
+        /*var list = document.getElementById("questionList");
+        var childNodes = list.children;
+        for (var i = 0; i < childNodes.length; i++) {
+            var node = childNodes[i];
+            node.style.display = 'none';
+        }*/
+
+        /*childNodes[examId].style.display = 'block';*/
+
+        var buttons = document.getElementsByClassName("btn-block");
+        for (var i = 0; i < buttons.length; i++) {
+            var button = buttons[i];
+            button.style.display = 'none';
+        }
+        buttons[examId].style.display = 'block';
+
+        /*var items = document.getElementsByClassName("list-group-item");
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            item.className = "list-group-item";
+        }
+        items[examId].className = "list-group-item list-group-item-info";*/
+
+    };
+
+</script>
 
 </body>
 </html>

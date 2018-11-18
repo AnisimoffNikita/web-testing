@@ -1,10 +1,10 @@
 package com.bmstu.testingsystem.services
 
 import com.bmstu.testingsystem.domain.*
+import com.bmstu.testingsystem.form_data.UserAnswers
 import com.bmstu.testingsystem.repositiry.ExamResultRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service("examResultService")
 class ExamResultServiceImpl : ExamResultService {
