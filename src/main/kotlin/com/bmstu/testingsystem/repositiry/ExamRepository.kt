@@ -10,14 +10,9 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Repository
+@Transactional
 interface ExamRepository : CrudRepository<Exam, UUID> {
     fun findByStatus(status: ExamStatus): List<Exam>
-
-//    хотелось по красоте, но не судьба :(
-//    @Modifying
-//    @Query("update exams set status = ?1 where id = ?2",
-//            nativeQuery = true)
-//    fun updateStateById(status: ExamStatus, id: UUID)
 
     @Modifying
     @Query("update exams set status = 'DELETED' where id = ?1",

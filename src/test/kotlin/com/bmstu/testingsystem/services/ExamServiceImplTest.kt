@@ -1,7 +1,7 @@
 package com.bmstu.testingsystem.services
 
-import com.bmstu.testingsystem.controller.ExamData
-import com.bmstu.testingsystem.controller.QuestionData
+import com.bmstu.testingsystem.form_data.ExamData
+import com.bmstu.testingsystem.form_data.QuestionData
 import com.bmstu.testingsystem.domain.*
 import com.bmstu.testingsystem.repositiry.ExamRepository
 import org.junit.Assert

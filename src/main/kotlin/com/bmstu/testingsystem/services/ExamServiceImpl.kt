@@ -56,7 +56,7 @@ class ExamServiceImpl : ExamService {
     }
 
     override fun incPasses(exam: Exam) {
-        exam.passCount.inc()
+        exam.passCount += 1
         examRepository.save(exam)
     }
 }

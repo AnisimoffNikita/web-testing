@@ -47,7 +47,9 @@ class EditProfile {
         val user = authService.getUser(authentication)
         val avatar = userService.getAvatar(user)
 
-        model.addAttribute("user", fromUser(user))
+        val ud = UserData(user)
+
+        model.addAttribute("user", UserData(user))
         model.addAttribute("avatar", avatar)
         return "edit_profile"
     }
