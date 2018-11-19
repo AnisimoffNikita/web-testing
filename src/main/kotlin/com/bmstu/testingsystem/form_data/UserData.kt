@@ -9,9 +9,8 @@ data class UserData (
         var password: String? = null,
         var firstName: String? = null,
         var lastName: String? = null,
-        var avatar: String? = null,
         var birthday: Date? = null
 )
 
 fun fromUser(user: User) : UserData = UserData(user.username, user.email, user.password,
-        user.person.firstName, user.person.lastName, user.person.avatar, user.person.birthday)
+        user.person.firstName, user.person.lastName, user.person.birthday)

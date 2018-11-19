@@ -34,8 +34,6 @@ class EditProfile {
     @Autowired
     private lateinit var authService: AuthenticationServiceImpl
 
-    @Autowired
-    private lateinit var storageService: StorageService
 
     @InitBinder
     fun initBinder(binder: WebDataBinder) {
@@ -47,21 +45,31 @@ class EditProfile {
     @GetMapping("/edit_profile")
     fun getEditProfile(model: Model, authentication: Authentication): String {
         val user = authService.getUser(authentication)
-        model.addAttribute("user", fromUser(user))
         val avatar = userService.getAvatar(user)
+
+        model.addAttribute("user", fromUser(user))
         model.addAttribute("avatar", avatar)
         return "edit_profile"
     }
 
     @PostMapping("/edit_profile")
-    fun postEditProfile(@ModelAttribute userData: UserData, model: Model, authentication: Authentication): String {
+    fun postEditProfile(@RequestParam("file") file: MultipartFile,
+                        @ModelAttribute userData: UserData,
+                        @ModelAttribute avatarData: String,
+                        model: Model, authentication: Authentication): String {
         val oldUser = authService.getUser(authentication)
+
         userService.updateUser(oldUser, userData)
+        userService.updateAvatar(oldUser, avatarData, file)
+
+        val avatar = userService.getAvatar(oldUser)
+
         model.addAttribute("user", userData)
+        model.addAttribute("avatar", avatar)
         return "edit_profile"
     }
 
-    @PostMapping("/edit_profile/avatar")
+    /*@PostMapping("/edit_profile/avatar")
     fun handleFileUpload(@RequestParam("file") file: MultipartFile, authentication: Authentication): String {
 
         val user = authService.getUser(authentication)
@@ -69,5 +77,5 @@ class EditProfile {
         userService.updateAvatar(user, filename)
 
         return "redirect:/edit_profile"
-    }
+    }*/
 }

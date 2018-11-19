@@ -7,12 +7,16 @@ import com.bmstu.testingsystem.form_data.UserData
 import com.bmstu.testingsystem.repositiry.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
 
 @Service("userService")
 class UserServiceImpl : UserService {
 
     @Autowired
     private lateinit var userRepository: UserRepository
+
+    @Autowired
+    private lateinit var storageService: StorageService
 
     override fun findByUsername(username: String): User? {
         return userRepository.findByUsername(username)
@@ -47,7 +51,7 @@ class UserServiceImpl : UserService {
         if (user.password != newUserData.password)
             user.password = newUserData.password!!
 
-        val newPerson = Person(newUserData.firstName, newUserData.lastName, newUserData.birthday, newUserData.avatar)
+        val newPerson = Person(newUserData.firstName, newUserData.lastName, newUserData.birthday)
         val oldPerson = user.person
 
         if (oldPerson.firstName != newPerson.firstName)
@@ -66,9 +70,12 @@ class UserServiceImpl : UserService {
         return true
     }
 
-    override fun updateAvatar(user: User, path: String) {
-        user.person.avatar = path
-        userRepository.save(user)
+    override fun updateAvatar(user: User, newAvatar: String, file: MultipartFile) {
+        if (newAvatar != getAvatar(user)) {
+            val filename = storageService.storeAs(file, user.id.toString())
+            user.person.avatar = filename
+            userRepository.save(user)
+        }
     }
 
     override fun getAvatar(user: User): String {

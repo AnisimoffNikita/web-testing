@@ -14,6 +14,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/common.css" rel="stylesheet">
+    <link href="/css/edit_profile.css" rel="stylesheet">
 </head>
 
 <body>
@@ -85,20 +86,20 @@
 </div>
 
 <div class="container">
-
+    <form class="needs-validation" enctype="multipart/form-data"
+          th:action="@{/edit_profile}" th:object="${user}" method="post" novalidate>
     <div class="row">
-        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 mb-4">
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-4">
             <div class="text-center">
-                <img th:src="${avatar}" class="avatar img-circle img-thumbnail" alt="avatar">
-                <form method="POST" enctype="multipart/form-data" th:action="@{/edit_profile/avatar}">
-                    <input type="file" name="file" accept="image/*" required >
-                    <input type="submit" class="btn btn-secondary" >
-                </form>
+                <img th:src="${avatar}" class="avatar mb-4" alt="avatar">
+                <!--<form method="POST" enctype="multipart/form-data" th:action="@{/edit_profile/avatar}">-->
+                    <input type="file" class="file-upload" name="file" accept="image/*" required >
+                    <!--<input type="submit" class="btn btn-secondary" >-->
+                <!--</form>-->
             </div>
         </div>
 
-        <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-            <form class="needs-validation" th:action="@{/edit_profile}" th:object="${user}" method="post" novalidate>
+        <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstName">Имя</label>
@@ -162,9 +163,9 @@
                 <button class="btn btn-success mr-3" type="submit">Сохранить</button>
                 <button class="btn btn-secondary" type="button">Отмена</button>
 
-            </form>
         </div>
     </div>
+    </form>
 </div>
 
 <!-- Bootstrap core JavaScript
@@ -175,6 +176,9 @@
         crossorigin="anonymous"></script>
 <script src="/js/holder.min.js"></script>
 <script src="/js/popper.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/upload_avatar.js"></script>
+
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
@@ -196,13 +200,4 @@
     })();
 </script>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="/bootstrap/js/bootstrap.min.js"></script>
-
-<script src="/js/upload_avatar.js"></script>
 </body>

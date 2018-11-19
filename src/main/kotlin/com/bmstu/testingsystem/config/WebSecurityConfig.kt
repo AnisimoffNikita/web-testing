@@ -43,7 +43,7 @@ class WebSecurityConfig: WebSecurityConfigurerAdapter() {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/sign_up", "/bootstrap/**", "/css/**", "/js/**", "/img/**").permitAll()
-                .antMatchers("/avatar/..").authenticated()
+                .antMatchers("/avatar/*").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
