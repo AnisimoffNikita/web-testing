@@ -112,4 +112,31 @@ public class ExamRepositoryTest {
         assertEquals(Optional.of(exam), fromDBExam);
     }
 
+    @Test
+    public void markApproved() {
+        Exam exam = new Exam(user, "тест главный", "большое описание со словом математика",
+                new java.sql.Date(1195333200000L), new ArrayList<>());
+        exam.setStatus(ExamStatus.APPROVED);
+        UUID id = UUID.fromString("0596c2c0-a70a-47dd-81c8-31411a5b132a");
+        examRepository.setApprovedById(id);
+
+        Optional<Exam> fromDBExam = examRepository.findById(id);
+
+        assertEquals(Optional.of(exam), fromDBExam);
+    }
+
+    @Test
+    public void markRejected() {
+        Exam exam = new Exam(user, "тест главный", "большое описание со словом математика",
+                new java.sql.Date(1195333200000L), new ArrayList<>());
+        exam.setStatus(ExamStatus.REJECTED);
+        UUID id = UUID.fromString("0596c2c0-a70a-47dd-81c8-31411a5b132a");
+        examRepository.setRejectedById(id);
+
+        Optional<Exam> fromDBExam = examRepository.findById(id);
+
+        assertEquals(Optional.of(exam), fromDBExam);
+    }
+
+
 }

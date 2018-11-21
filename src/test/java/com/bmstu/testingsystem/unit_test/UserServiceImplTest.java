@@ -3,6 +3,7 @@ package com.bmstu.testingsystem.unit_test;
 import com.bmstu.testingsystem.controller.EditProfile;
 import com.bmstu.testingsystem.controller.SignUp;
 import com.bmstu.testingsystem.domain.User;
+import com.bmstu.testingsystem.form_data.UserData;
 import com.bmstu.testingsystem.repositiry.UserRepository;
 import com.bmstu.testingsystem.services.UserServiceImpl;
 import org.junit.Assert;
@@ -26,7 +27,7 @@ public class UserServiceImplTest {
     private UserServiceImpl userService;
 
     private User user;
-    private EditProfile.UserData userData;
+    private UserData userData;
     private SignUp.RegistrationData registrationData;
 
     @Before
@@ -86,7 +87,7 @@ public class UserServiceImplTest {
 
     @Test
     public void updateUser() {
-        userData = new EditProfile().fromUser(user);
+        userData = new UserData(user);
         userData.setUsername("newUsername");
         userData.setEmail("newEmail");
         userData.setPassword("newPassword");
@@ -109,7 +110,7 @@ public class UserServiceImplTest {
     @Test
     public void updateUserNameFail() {
         User user2 = new User("newUsername", "", "");
-        userData = new EditProfile().fromUser(user);
+        userData = new UserData(user);
         userData.setUsername("newUsername");
 
         Mockito.when(repositoryMock.findByUsername("newUsername")).thenReturn(user2);
@@ -125,10 +126,9 @@ public class UserServiceImplTest {
 
     @Test
     public void updatePerson() {
-        userData = new EditProfile().fromUser(user);
+        userData = new UserData(user);
         userData.setFirstName("newFirstName");
         userData.setLastName("newLastName");
-        userData.setAvatar("newAvatar");
         Date date = new Date();
         userData.setBirthday(date);
 
@@ -138,7 +138,6 @@ public class UserServiceImplTest {
 
         Assert.assertEquals("newFirstName", user.getPerson().getFirstName());
         Assert.assertEquals("newLastName", user.getPerson().getLastName());
-        Assert.assertEquals("newAvatar", user.getPerson().getAvatar());
         Assert.assertEquals(date, user.getPerson().getBirthday());
 
         Mockito.verify(repositoryMock, Mockito.times(1)).findByUsername(userData.getUsername());

@@ -10,7 +10,7 @@ data class UserData (
         var firstName: String? = null,
         var lastName: String? = null,
         var birthday: Date? = null
-)
-
-fun fromUser(user: User) : UserData = UserData(user.username, user.email, user.password,
-        user.person.firstName, user.person.lastName, user.person.birthday)
+) {
+    constructor(user: User): this(user.username, user.email, user.password,
+            user.person.firstName, user.person.lastName, user.person.birthday)
+}

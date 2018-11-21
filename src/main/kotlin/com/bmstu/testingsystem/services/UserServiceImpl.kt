@@ -8,6 +8,7 @@ import com.bmstu.testingsystem.repositiry.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import java.util.*
 
 @Service("userService")
 class UserServiceImpl : UserService {
@@ -72,7 +73,8 @@ class UserServiceImpl : UserService {
 
     override fun updateAvatar(user: User, newAvatar: String, file: MultipartFile) {
         if (newAvatar != getAvatar(user)) {
-            val filename = storageService.storeAs(file, user.id.toString())
+            val id = UUID.randomUUID()
+            val filename = storageService.storeAs(file, id.toString())
             user.person.avatar = filename
             userRepository.save(user)
         }
