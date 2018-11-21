@@ -47,30 +47,26 @@ class MyExams {
         return "my_exams"
     }
 
-    // todo не удаляется тест
     @GetMapping("/my_exams/delete/{id}")
     fun deleteTest(@PathVariable id: UUID, model: Model, authentication: Authentication?): String {
         val user = authService.getUser(authentication)
-        val test = examService.findById(id)
-        if (test != null)
-            examService.removeExam(test)
+        examService.removeExam(id)
         model.addAttribute("exams", user.exams)
-        return "my_exams"
+        return "redirect:/my_exams"
     }
 
-    // todo и не обновляется тоже, Никита почини
     @GetMapping("/approve/{id}")
     fun approveExam(@PathVariable id: UUID, model: Model, authentication: Authentication): String {
         examService.approveExam(id)
         fillModelForAdmin(model)
-        return "my_exams"
+        return "redirect:/my_exams"
     }
 
     @GetMapping("/reject/{id}")
     fun rejectExam(@PathVariable id: UUID, model: Model, authentication: Authentication): String {
         examService.rejectExam(id)
         fillModelForAdmin(model)
-        return "my_exams"
+        return "redirect:/my_exams"
     }
 
     private fun fillModelForAdmin(model: Model) {

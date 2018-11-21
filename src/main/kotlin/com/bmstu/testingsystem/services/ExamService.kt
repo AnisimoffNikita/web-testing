@@ -17,7 +17,7 @@ interface ExamService {
 
     fun addExam(exam: ExamData, owner: User) : Exam
 
-    fun removeExam(exam: Exam)
+    fun removeExam(id: UUID)
 
     fun approveExam(id: UUID)
 
