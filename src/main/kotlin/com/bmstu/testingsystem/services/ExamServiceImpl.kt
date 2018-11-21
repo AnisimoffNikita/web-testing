@@ -43,8 +43,8 @@ class ExamServiceImpl : ExamService {
         return examRepository.save(exam.toExam(owner))
     }
 
-    override fun removeExam(exam: Exam) {
-        examRepository.delete(exam)
+    override fun removeExam(id: UUID) {
+        examRepository.setDeletedById(id)
     }
 
     override fun approveExam(id: UUID) {

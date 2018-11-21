@@ -63,8 +63,8 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown02">
                     <a class="dropdown-item" th:href="@{'/edit_profile'}">Редактировать</a>
-                    <form class="dropdown-item"  th:action="@{/logout}" method="post">
-                        <input class="btn btn-link" type="submit" value="Выход"/>
+                    <form th:action="@{/logout}" method="post">
+                        <input class="dropdown-item btn btn-link" type="submit" value="Выход"/>
                     </form>
                 </ul>
             </li>
@@ -136,42 +136,6 @@
             </div>
         </div>
 
-        <!--<div class="col-lg-7" id="questionList">
-            <th:block th:each="exam, i: ${exams}">
-            <div class="card-deck mb-3 text-left" th:id="${i.index}" style="overflow:scroll; max-height:500px; display:none;">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <th:block th:each="question, i: ${exam.questions}">
-                            <div th:if="${question.type.toString() != 'NO_ANSWER'}">
-                                <h4 class="card-title mt-0 mb-3 font-weight-normal"
-                                    th:text="${question.questionText}"></h4>
-                                <div class="form-check" th:each="variant, j : ${question.variants}">
-                                    <input class="form-check-input"
-                                           th:type="${question.type.toString() == 'SINGLE_ANSWER' ? 'radio' : 'checkbox'}"
-                                           th:name="'questions[' + ${i.index} + ']'"
-                                           th:checked="${question.correctVariantsId.contains(__${j.index}__)}"
-                                           disabled/>
-                                    <label class="form-check-label"> <span
-                                            th:text="${variant}"></span></label>
-                                </div>
-                                <hr>
-                            </div>
-                            <div th:if="${question.type.toString() == 'NO_ANSWER'}">
-                                <h4 class="card-title mt-0 mb-3 font-weight-normal"
-                                    th:text="${question.questionText}"></h4>
-                                <div class="form-group">
-                                    <input type="text" th:value="${question.correctInputAnswer}" disabled />
-                                </div>
-                                <hr>
-                            </div>
-                        </th:block>
-
-                    </div>
-                </div>
-        </div>
-            </th:block>
-
-        </div>-->
     </div>
 </div>
 
