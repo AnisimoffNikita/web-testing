@@ -122,16 +122,16 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-12 mt-3 answers-list add-answer-block"></div>
-                                    <div class="col-10 add-answer-block">
-                                        <input type="text" class="form-control mb-3 answer-input"
-                                               placeholder="Вариант ответа">
+                                    <div class="col-10 add-answer-block inputAnswer">
+                                        <input type="text" class="form-control mt-3 answer-input" placeholder="Вариант ответа">
                                     </div>
 
                                     <div class="col-2 add-answer-block">
-                                        <button type="button" class="btn btn-outline-primary" id="addAnswer"
-                                                onclick="onAddAnswerClick(0)">Добавить
-                                        </button>
+                                        <button type="button" class="btn btn-outline-primary mt-3" onclick="onAddAnswerClick(0)">Добавить</button>
+                                    </div>
+
+                                    <div class="col-12 del-answer-block">
+                                        <button type="button" class="btn btn-outline-danger mt-3" onclick="document.getElementById('question0').remove()">Удалить вопрос</button>
                                     </div>
                                 </div>
 

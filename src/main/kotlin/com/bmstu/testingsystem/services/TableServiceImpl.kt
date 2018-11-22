@@ -49,10 +49,9 @@ private lateinit var userRepository: UserRepository
         for (res in user.results) {
             val date = res.passedAt
             val exam = examRepository.findById(res.testId)
-            val author = userRepository.findById(res.userId)
-            if (exam.isPresent && author.isPresent) {
+            if (exam.isPresent) {
                 val examGet = exam.get()
-                val authorGet = author.get()
+                val authorGet = examGet.user
                 val row = Row(arrayListOf(
                         Cell(date),
                         Cell(examGet.name, "/exam_page/" + examGet.id),

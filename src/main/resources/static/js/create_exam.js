@@ -18,7 +18,7 @@ function onSelectChange(questionId) {
     if (selectedIndex < 2) {
         for (var i = 0; i < elems.length; i++) {
             var checkbox = document.createElement('input');
-            checkbox.className = "form-check-input";
+            checkbox.className = "form-check-input mt-2";
             if (selectedIndex === 0)
                 checkbox.type = "radio";
             else
@@ -32,15 +32,12 @@ function onSelectChange(questionId) {
 
             var row = questionCard.getElementsByClassName("row")[0];
 
-            var col12 = document.createElement('div');
-            col12.className = "col-12 mt-3 answers-list add-answer-block";
-
             var col10 = document.createElement('div');
-            col10.className = "col-10 add-answer-block";
+            col10.className = "col-10 add-answer-block inputAnswer";
 
             var inputAns = document.createElement('input');
             inputAns.type = "text";
-            inputAns.className = "form-control mb-3 answer-input";
+            inputAns.className = "form-control mt-3 answer-input";
             inputAns.placeholder = "Вариант ответа";
 
             col10.appendChild(inputAns);
@@ -50,26 +47,31 @@ function onSelectChange(questionId) {
 
             var button = document.createElement('button');
             button.type = "button";
-            button.className = "btn btn-outline-primary";
+            button.className = "btn mt-3 btn-outline-primary";
             button.innerHTML = "Добавить";
 
-            button.addEventListener("click", function(){ onAddAnswerClick(questionId) });  // костыль Тиена
+            button.addEventListener("click", function(){ onAddAnswerClick(questionId) });
 
             col2.appendChild(button);
 
-            row.appendChild(col12);
-            row.appendChild(col10);
-            row.appendChild(col2);
+            row.insertBefore(col2, row.getElementsByClassName("del-answer-block")[0]);
+            row.insertBefore(col10, col2);
 
         }
     }
 
     else if (selectedIndex === 2) {
-        var removeElems = questionCard.getElementsByClassName("add-answer-block");
+        var removeElems = questionCard.getElementsByClassName("ans-list");
 
         while (removeElems.length > 0) {
             removeElems[0].remove();
         }
+
+        var removeInput = questionCard.getElementsByClassName("add-answer-block");
+        while (removeInput.length > 0) {
+            removeInput[0].remove();
+        }
+
 
         var row = questionCard.getElementsByClassName("row")[0];
 
@@ -78,12 +80,12 @@ function onSelectChange(questionId) {
 
         var inputAns = document.createElement('input');
         inputAns.type = "text";
-        inputAns.className = "form-control my-3 right-answer-input";
+        inputAns.className = "form-control mt-3 right-answer-input";
         inputAns.placeholder = "Правильный ответ";
 
         col12.appendChild(inputAns);
 
-        row.appendChild(col12);
+        row.insertBefore(col12, row.getElementsByClassName("del-answer-block")[0]);
 
     }
 };
@@ -99,7 +101,7 @@ function onAddAnswerClick(questionId){
         return;
 
     var checkbox = document.createElement('input');
-    checkbox.className = "form-check-input";
+    checkbox.className = "form-check-input mt-2";
     checkbox.setAttribute('name', questionId);
 
     var selectedIndex = questionCard.getElementsByTagName('select')[0].options.selectedIndex;
@@ -110,7 +112,18 @@ function onAddAnswerClick(questionId){
 
 
     var div = document.createElement('div');
-    div.className = "form-check mb-1";
+    div.className = "form-check col-10 mt-3 ans-list";
+
+    var btnDiv = document.createElement('div');
+    btnDiv.className = "col-2 mt-3 ans-list";
+
+    var buttonDel = document.createElement('button');
+    buttonDel.setAttribute('type', 'button');
+    buttonDel.className="btn btn-outline-danger";
+    buttonDel.textContent="Удалить";
+    buttonDel.addEventListener("click", function(){ var prev = this.parentNode.previousSibling; prev.remove(); this.parentNode.remove(); });
+
+    btnDiv.appendChild(buttonDel);
 
     var v = document.createElement('input');
     v.className = "form-control variant";
@@ -119,7 +132,10 @@ function onAddAnswerClick(questionId){
     div.appendChild(checkbox);
     div.appendChild(v);
 
-    questionCard.getElementsByClassName("answers-list")[0].appendChild(div);
+    var row = questionCard.getElementsByClassName("row")[0];
+    var inputField = row.getElementsByClassName("inputAnswer")[0];
+    row.insertBefore(div, inputField);
+    row.insertBefore(btnDiv, inputField);
 
     answerInput[0].value = "";
 };
@@ -177,15 +193,12 @@ function onAddQuestionClick () {
 
     col3.appendChild(select);
 
-    var col12 = document.createElement('div');
-    col12.className = "col-12 mt-3 answers-list add-answer-block";
-
     var col10 = document.createElement('div');
-    col10.className = "col-10 add-answer-block";
+    col10.className = "col-10 add-answer-block inputAnswer";
 
     var inputAns = document.createElement('input');
     inputAns.type = "text";
-    inputAns.className = "form-control mb-3 answer-input";
+    inputAns.className = "form-control mt-3 answer-input";
     inputAns.placeholder = "Вариант ответа";
 
     col10.appendChild(inputAns);
@@ -195,22 +208,32 @@ function onAddQuestionClick () {
 
     var button = document.createElement('button');
     button.type = "button";
-    button.className = "btn btn-outline-primary";
+    button.className = "btn btn-outline-primary mt-3";
     button.innerHTML = "Добавить";
 
     col2.appendChild(button);
 
+    var delAnsBlock = document.createElement('div');
+    delAnsBlock.className="col-12 del-answer-block";
+
+    var delAnsBtn = document.createElement('button');
+    delAnsBtn.className="btn btn-outline-danger mt-3";
+    delAnsBtn.addEventListener("click", function(){ document.getElementById(questionCard.id).remove() });
+    delAnsBtn.textContent="Удалить вопрос";
+
+    delAnsBlock.appendChild(delAnsBtn);
+
     row.appendChild(col9);
     row.appendChild(col3);
-    row.appendChild(col12);
     row.appendChild(col10);
     row.appendChild(col2);
+    row.appendChild(delAnsBlock);
 
     container.appendChild(row);
     cardBody.appendChild(container);
     questionCard.appendChild(cardBody);
 
-    button.addEventListener("click", function(){ onAddAnswerClick(id) });  // костыль Тиена
+    button.addEventListener("click", function(){ onAddAnswerClick(id) });
 
     document.getElementById("questionList").appendChild(questionCard);
 
