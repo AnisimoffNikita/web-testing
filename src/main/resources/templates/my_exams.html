@@ -72,7 +72,7 @@
             <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')"
                 th:classappend="${__${#httpServletRequest.requestURI.contains('/all_users')}__ ||
                                   __${#httpServletRequest.requestURI.contains('/all_exams')}__ ||
-                                  __${#httpServletRequest.requestURI.contains('/new_exams')}__} ? active : ''">
+                                  __${#httpServletRequest.requestURI.contains('/admin/new_exams')}__} ? active : ''">
                 <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown00" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">
                     <span class="caret"></span>
@@ -81,7 +81,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdown00">
                     <a class="dropdown-item" th:href="@{'/all_users'}">Пользователи</a>
                     <a class="dropdown-item" th:href="@{'/all_exams'}">Все тесты</a>
-                    <a class="dropdown-item" th:href="@{'/new_exams'}">Новые тесты</a>
+                    <a class="dropdown-item" th:href="@{'/admin/new_exams'}">Новые тесты</a>
                 </ul>
             </li>
         </ul>

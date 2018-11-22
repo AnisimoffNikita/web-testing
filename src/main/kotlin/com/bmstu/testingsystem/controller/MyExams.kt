@@ -1,5 +1,6 @@
 package com.bmstu.testingsystem.controller
 
+import com.bmstu.testingsystem.domain.UserRole
 import com.bmstu.testingsystem.form_data.getApproveReject
 import com.bmstu.testingsystem.form_data.getPassStatisticDelete
 import com.bmstu.testingsystem.security.AppUserPrincipal
@@ -41,28 +42,30 @@ class MyExams {
         return "my_exams"
     }
 
-    @GetMapping("/new_exams")
-    fun getNewExams(model: Model, authentication: Authentication): String {
+    @GetMapping("/admin/new_exams")
+    fun getNewExams(model: Model): String {
         fillModelForAdmin(model)
         return "my_exams"
     }
 
     @GetMapping("/my_exams/delete/{id}")
-    fun deleteTest(@PathVariable id: UUID, model: Model, authentication: Authentication?): String {
+    fun deleteTest(@PathVariable id: UUID, model: Model, authentication: Authentication): String {
         val user = authService.getUser(authentication)
+        if (!user.exams.map { it.id }.contains(id) && !authentication.authorities.contains(UserRole.ADMIN))
+            return "redirect:/main_page"
         examService.removeExam(id)
         model.addAttribute("exams", user.exams)
         return "redirect:/my_exams"
     }
 
-    @GetMapping("/approve/{id}")
+    @GetMapping("/admin/approve/{id}")
     fun approveExam(@PathVariable id: UUID, model: Model, authentication: Authentication): String {
         examService.approveExam(id)
         fillModelForAdmin(model)
         return "redirect:/my_exams"
     }
 
-    @GetMapping("/reject/{id}")
+    @GetMapping("/admin/reject/{id}")
     fun rejectExam(@PathVariable id: UUID, model: Model, authentication: Authentication): String {
         examService.rejectExam(id)
         fillModelForAdmin(model)
@@ -71,7 +74,7 @@ class MyExams {
 
     private fun fillModelForAdmin(model: Model) {
         model.addAttribute("title", "Новые тесты")
-        model.addAttribute("examLink", "exam_view_admin")
+        model.addAttribute("examLink", "/admin/exam_view")
         model.addAttribute("exams", examService.getAllPendingExams())
         model.addAttribute("btns", getApproveReject())
     }

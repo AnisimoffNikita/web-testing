@@ -26,9 +26,6 @@ class ExamPage {
     lateinit var resultService: ExamResultServiceImpl
 
     @Autowired
-    lateinit var userService: UserServiceImpl
-
-    @Autowired
     private lateinit var authService: AuthenticationServiceImpl
 
     @InitBinder

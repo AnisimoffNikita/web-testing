@@ -43,8 +43,10 @@ class WebSecurityConfig: WebSecurityConfigurerAdapter() {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/sign_up", "/bootstrap/**", "/css/**", "/js/**", "/img/**").permitAll()
-                .antMatchers("/avatar/*").authenticated()
+                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
+                .and()
+                .exceptionHandling().accessDeniedPage("/")
                 .and()
                 .formLogin()
                 .loginPage("/sign_in").defaultSuccessUrl("/main_page").permitAll()

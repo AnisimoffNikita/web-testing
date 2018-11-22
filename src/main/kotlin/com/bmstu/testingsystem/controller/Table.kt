@@ -35,7 +35,7 @@ class Table {
     }
 
     @GetMapping("/my_passed_exams")
-    fun getMyPassedExams(model: Model, authentication: Authentication?): String {
+    fun getMyPassedExams(model: Model, authentication: Authentication): String {
         val user = authService.getUser(authentication)
         model.addAttribute("title", "Пройденные тесты")
         model.addAttribute("table", tableService.getPassTableForUser(user))
@@ -43,8 +43,7 @@ class Table {
     }
 
     @GetMapping("/my_exams/results/{id}")
-    fun getStatistic(@PathVariable id: UUID, model: Model, authentication: Authentication?): String {
-        //val user = authService.getUser(authentication)
+    fun getStatistic(@PathVariable id: UUID, model: Model): String {
         val exam = examService.findById(id) ?: return "redirect:/my_exams"
         model.addAttribute("title", "Результаты теста \"" + exam.name + "\"")
         model.addAttribute("table", tableService.getPassTableForExam(exam))
