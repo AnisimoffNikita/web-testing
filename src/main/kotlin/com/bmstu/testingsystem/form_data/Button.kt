@@ -8,8 +8,8 @@ data class Button (
 
 fun getApproveReject() : List<Button> {
     val buttons: MutableList<Button> = arrayListOf()
-    buttons.add(Button("btn-success", "Принять", "approve"))
-    buttons.add(Button("btn-danger", "Отклонить", "reject"))
+    buttons.add(Button("btn-success", "Принять", "admin/approve"))
+    buttons.add(Button("btn-danger", "Отклонить", "admin/reject"))
     return buttons
 }
 

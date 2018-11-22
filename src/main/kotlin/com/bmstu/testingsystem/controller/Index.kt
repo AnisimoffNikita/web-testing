@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping
 @Controller
 class Index {
 
-    @Autowired
-    lateinit var userRepository: UserRepository
 
     @GetMapping("/")
     fun index(authentication: Authentication?): String {
-        val username = authentication?.name
-        return "index"
+        return if (authentication == null)
+            "redirect:/sign_in"
+        else
+            "redirect:/main_page"
     }
 }

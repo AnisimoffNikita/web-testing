@@ -15,6 +15,8 @@ class MvcConfig : WebMvcConfigurer {
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         registry.addResourceHandler("/bootstrap/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/bootstrap/4.0.0/")
+        registry.addResourceHandler("/avatar/**")
+                .addResourceLocations("file:/home/nikita/Projects/labs/Web/testing_system/src/main/resources/static/avatar/") //sorry
     }
 
 }

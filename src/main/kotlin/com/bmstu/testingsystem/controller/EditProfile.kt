@@ -47,8 +47,6 @@ class EditProfile {
         val user = authService.getUser(authentication)
         val avatar = userService.getAvatar(user)
 
-        val ud = UserData(user)
-
         model.addAttribute("user", UserData(user))
         model.addAttribute("avatar", avatar)
         return "edit_profile"
@@ -71,13 +69,4 @@ class EditProfile {
         return "edit_profile"
     }
 
-    /*@PostMapping("/edit_profile/avatar")
-    fun handleFileUpload(@RequestParam("file") file: MultipartFile, authentication: Authentication): String {
-
-        val user = authService.getUser(authentication)
-        val filename = storageService.storeAs(file, user.id.toString())
-        userService.updateAvatar(user, filename)
-
-        return "redirect:/edit_profile"
-    }*/
 }
