@@ -1,5 +1,6 @@
 package com.bmstu.testingsystem.controller
 
+import com.bmstu.testingsystem.domain.ExamStatus
 import com.bmstu.testingsystem.domain.UserRole
 import com.bmstu.testingsystem.form_data.getApproveReject
 import com.bmstu.testingsystem.form_data.getPassStatisticDelete
@@ -36,7 +37,7 @@ class MyExams {
 
         model.addAttribute("title", "Мои тесты")
         model.addAttribute("examLink", "exam_view")
-        model.addAttribute("exams", user.exams)
+        model.addAttribute("exams", user.exams.filter { it.status != ExamStatus.DELETED })
         model.addAttribute("btns", getPassStatisticDelete())
 
         return "my_exams"
