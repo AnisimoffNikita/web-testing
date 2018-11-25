@@ -34,14 +34,14 @@ class UserServiceImpl : UserService {
         return newUser
     }
 
-    override fun updateUser(user: User, newUserData: UserData): Boolean {
+    override fun updateUser(user: User, newUserData: UserData): User {
         newUserData.username?: throw IllegalStateException()
         newUserData.email?: throw IllegalStateException()
         newUserData.password?: throw IllegalStateException()
 
         val findByUsername = userRepository.findByUsername(newUserData.username!!)
         if (findByUsername != null && findByUsername.id != user.id)
-            return false
+            return user
 
         if (user.username != newUserData.username)
             user.username = newUserData.username!!
@@ -68,11 +68,11 @@ class UserServiceImpl : UserService {
             oldPerson.birthday = newPerson.birthday
 
         userRepository.save(user)
-        return true
+        return user
     }
 
     override fun updateAvatar(user: User, newAvatar: String, file: MultipartFile) {
-        if (newAvatar != getAvatar(user)) {
+        if (!file.isEmpty && newAvatar != getAvatar(user)) {
             val id = UUID.randomUUID()
             val filename = storageService.storeAs(file, id.toString())
             user.person.avatar = filename

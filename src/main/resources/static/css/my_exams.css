@@ -1,10 +1,8 @@
-
 .list-group-hover .list-group-item:hover {
     border-color: lightblue;
     border-width: 2px;
     cursor: pointer;
 }
-
 
 .pass-count-icon {
     width: 21px; height: 23px;
@@ -13,5 +11,22 @@
 }
 .pass-count-value {
     font-size: 14px;
+    color: blue;
     display: inline-block;
+}
+
+.red-text {
+    color: red;
+}
+
+.blue-text {
+    color: blue;
+}
+
+.green-text {
+    color: green;
+}
+
+.btn-block {
+    display: none;
 }

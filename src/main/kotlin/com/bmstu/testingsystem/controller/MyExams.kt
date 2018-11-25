@@ -2,7 +2,9 @@ package com.bmstu.testingsystem.controller
 
 import com.bmstu.testingsystem.domain.UserRole
 import com.bmstu.testingsystem.form_data.getApproveReject
+import com.bmstu.testingsystem.form_data.getCreatedPassed
 import com.bmstu.testingsystem.form_data.getPassStatisticDelete
+import com.bmstu.testingsystem.form_data.getUsersExamsNewExams
 import com.bmstu.testingsystem.security.AppUserPrincipal
 import com.bmstu.testingsystem.services.AuthenticationServiceImpl
 import com.bmstu.testingsystem.services.ExamServiceImpl
@@ -38,6 +40,7 @@ class MyExams {
         model.addAttribute("examLink", "exam_view")
         model.addAttribute("exams", user.exams)
         model.addAttribute("btns", getPassStatisticDelete())
+        model.addAttribute("sidebar", getCreatedPassed(0))
 
         return "my_exams"
     }
@@ -62,20 +65,21 @@ class MyExams {
     fun approveExam(@PathVariable id: UUID, model: Model, authentication: Authentication): String {
         examService.approveExam(id)
         fillModelForAdmin(model)
-        return "redirect:/my_exams"
+        return "redirect:/admin/new_exams"
     }
 
     @GetMapping("/admin/reject/{id}")
     fun rejectExam(@PathVariable id: UUID, model: Model, authentication: Authentication): String {
         examService.rejectExam(id)
         fillModelForAdmin(model)
-        return "redirect:/my_exams"
+        return "redirect:/admin/new_exams"
     }
 
     private fun fillModelForAdmin(model: Model) {
         model.addAttribute("title", "Новые тесты")
-        model.addAttribute("examLink", "/admin/exam_view")
+        model.addAttribute("examLink", "admin/exam_view")
         model.addAttribute("exams", examService.getAllPendingExams())
         model.addAttribute("btns", getApproveReject())
+        model.addAttribute("sidebar", getUsersExamsNewExams(2))
     }
 }

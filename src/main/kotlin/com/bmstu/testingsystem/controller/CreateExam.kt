@@ -1,6 +1,7 @@
 package com.bmstu.testingsystem.controller
 
 import com.bmstu.testingsystem.form_data.ExamData
+import com.bmstu.testingsystem.form_data.getPassStatisticDelete
 import com.bmstu.testingsystem.services.AuthenticationServiceImpl
 import com.bmstu.testingsystem.services.ExamServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
@@ -42,10 +43,9 @@ class CreateTest {
     @PostMapping("/create_exam")
     fun postCreateTest(model: Model, @ModelAttribute exam: ExamData, authentication: Authentication): String {
         val owner = authService.getUser(authentication)
-
         val addExam = examService.addExam(exam, owner)
-
         model.addAttribute("exam", addExam)
-        return "exam_view"
+        model.addAttribute("btns", getPassStatisticDelete())
+        return "redirect:/exam_view/${addExam.id}"
     }
 }

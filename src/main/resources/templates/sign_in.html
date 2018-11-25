@@ -8,31 +8,31 @@
     <meta name="author" content="">
     <title>Авторизация</title>
 
-    <!-- Bootstrap core CSS -->
     <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/css/auth.css" rel="stylesheet">
+    <link th:href="@{/css/auth.css}" rel="stylesheet">
 </head>
+
 <body class="text-center">
 <form class="form-signin" th:action="@{/sign_in}" method="post">
     <h1 class="h3 mb-4 font-weight-normal">Вход в систему</h1>
     <label for="inputUsername" class="sr-only">Имя пользователя</label>
-    <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Имя пользователя" required autofocus>
+    <input type="text" name="username" id="inputUsername"
+           class="form-control" placeholder="Имя пользователя" required autofocus>
     <label for="inputPassword" class="sr-only">Пароль</label>
     <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
 
     <div th:if="${param.error}" align="center">
-        Invalid username and password.
+        Неверные логин и пароль
     </div>
     <div th:if="${param.logout}" align="center">
-        You have been logged out.
+        Вы вышли из системы
     </div>
 
     <button class="btn my-4 btn-lg btn-primary btn-block" type="submit">Войти</button>
     <label> Еще нет аккаунта?
-        <a href = "sign_up"> Зарегистрируйтесь!</a>
+        <a href="sign_up"> Зарегистрируйтесь!</a>
     </label>
 </form>
 </body>
+
 </html>

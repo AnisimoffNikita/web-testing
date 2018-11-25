@@ -9,12 +9,9 @@
 
     <title>Редактирование профиля</title>
 
-    <!-- Bootstrap core CSS -->
     <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/css/common.css" rel="stylesheet">
-    <link href="/css/edit_profile.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/edit_profile.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -36,22 +33,21 @@
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/main_page'}">Главная</a>
             </li>
 
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/admin/new_exams'}">Управление</a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/create_exam'}">Создать тест</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-                    <span class="caret"></span>
-                    Мои тесты
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" th:href="@{'/my_exams'}">Созданные</a>
-                    <a class="dropdown-item" th:href="@{'/my_passed_exams'}">Пройденные</a>
-                </ul>
+
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/my_exams'}">Мои тесты</a>
             </li>
+
             <li class="nav-item dropdown active">
-                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown02" data-toggle="dropdown" aria-haspopup="true"
+                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown02" data-toggle="dropdown"
+                   aria-haspopup="true"
                    aria-expanded="false">
                     <span class="caret"></span>
                     Мой профиль
@@ -63,23 +59,8 @@
                     </form>
                 </ul>
             </li>
-
-            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown00" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-                    <span class="caret"></span>
-                    Управление
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown00">
-                    <a class="dropdown-item" th:href="@{'/all_users'}">Пользователи</a>
-                    <a class="dropdown-item" th:href="@{'/all_exams'}">Все тесты</a>
-                    <a class="dropdown-item" th:href="@{'/admin/new_exams'}">Новые тесты</a>
-                </ul>
-            </li>
         </ul>
-
     </div>
-
 </nav>
 
 
@@ -88,20 +69,16 @@
 </div>
 
 <div class="container">
-    <form class="needs-validation" enctype="multipart/form-data"
-          th:action="@{/edit_profile}" th:object="${user}" method="post" novalidate>
-    <div class="row">
-        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-4">
-            <div class="text-center">
-                <img th:src="${avatar}" class="avatar mb-4" alt="avatar">
-                <!--<form method="POST" enctype="multipart/form-data" th:action="@{/edit_profile/avatar}">-->
-                    <input type="file" class="file-upload" name="file" accept="image/*" required >
-                    <!--<input type="submit" class="btn btn-secondary" >-->
-                <!--</form>-->
+    <form enctype="multipart/form-data" th:action="@{/edit_profile}" th:object="${user}" method="post">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-4">
+                <div class="text-center">
+                    <img th:src="${avatar}" class="avatar mb-4" alt="avatar">
+                    <input type="file" class="file-upload" name="file" accept="image/*">
+                </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+            <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstName">Имя</label>
@@ -121,12 +98,10 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">@</span>
                         </div>
-                        <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="Имя пользователя"
+                        <input type="text" th:field="*{username}" class="form-control" id="username"
+                               placeholder="Имя пользователя"
                                th:value="*{username}"
                                required>
-                        <div class="invalid-feedback" style="width: 100%;">
-                            Обязательное поле: имя пользователя
-                        </div>
                     </div>
                 </div>
 
@@ -136,11 +111,9 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">*</span>
                         </div>
-                        <input type="text" th:field="*{password}" class="form-control" id="password" placeholder="********"
+                        <input type="text" th:field="*{password}" class="form-control" id="password"
+                               placeholder="********"
                                th:value="*{password}" required>
-                        <div class="invalid-feedback" style="width: 100%;">
-                            Обязательное поле: пароль
-                        </div>
                     </div>
                 </div>
 
@@ -149,9 +122,6 @@
                     <input type="email" th:field="*{email}" class="form-control" id="inputEmail"
                            placeholder="you@example.com"
                            th:value="*{email}" required>
-                    <div class="invalid-feedback" style="width: 100%;">
-                        Обязательное поле: эл. адрес вида you@example.com
-                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -163,43 +133,20 @@
                 <hr class="mb-4">
 
                 <button class="btn btn-success mr-3" type="submit">Сохранить</button>
-                <button class="btn btn-secondary" type="button">Отмена</button>
 
+            </div>
         </div>
-    </div>
     </form>
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/holder.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/upload_avatar.js}"></script>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
-<script src="/js/holder.min.js"></script>
-<script src="/js/popper.min.js"></script>
-<script src="/bootstrap/js/bootstrap.min.js"></script>
-<script src="/js/upload_avatar.js"></script>
-
-<script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function () {
-        'use strict';
-        window.addEventListener('load', function () {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-</script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 
 </body>
+</html>
