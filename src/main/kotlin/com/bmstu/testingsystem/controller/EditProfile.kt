@@ -1,6 +1,7 @@
 package com.bmstu.testingsystem.controller
 
 import com.bmstu.testingsystem.domain.User
+import com.bmstu.testingsystem.domain.UserRole
 import com.bmstu.testingsystem.form_data.*
 import com.bmstu.testingsystem.security.AppUserPrincipal
 import com.bmstu.testingsystem.services.AuthenticationServiceImpl
@@ -9,6 +10,7 @@ import com.bmstu.testingsystem.services.UserServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.propertyeditors.CustomDateEditor
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.WebDataBinder
@@ -21,6 +23,11 @@ import java.text.SimpleDateFormat
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.bind.annotation.RequestParam
+import org.apache.tomcat.jni.User.username
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+
+
 
 
 
@@ -61,6 +68,11 @@ class EditProfile {
 
         val updatedUser = userService.updateUser(oldUser, userData)
         userService.updateAvatar(oldUser, avatarData, file)
+
+        val nowAuthorities = SecurityContextHolder
+                .getContext().authentication.authorities as Collection<UserRole>
+        val a = UsernamePasswordAuthenticationToken(updatedUser.username, updatedUser.password, nowAuthorities)
+        SecurityContextHolder.getContext().authentication = a
 
         val avatar = userService.getAvatar(oldUser)
 

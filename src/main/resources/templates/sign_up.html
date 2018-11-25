@@ -19,14 +19,14 @@
     <h1 class="h3 mb-4 font-weight-normal">Регистрация</h1>
     <label for="inputUsername" class="sr-only">Имя пользователя</label>
     <input type="text" th:field="*{username}" id="inputUsername" class="form-control" placeholder="Имя пользователя"
-           required autofocus>
+           required autofocus maxlength="25">
     <div th:if="${param.exist}" align="center">
         Это имя уже занято
     </div>
-    <label for="inputEmail" class="sr-only">Эл. адрес</label>
-    <input type="email" th:field="*{email}" id="inputEmail" class="form-control" placeholder="Эл. адрес" required>
+    <label for="inputEmail" class="sr-only" >Эл. адрес</label>
+    <input type="email" th:field="*{email}" id="inputEmail" class="form-control" placeholder="Эл. адрес" required maxlength="25">
     <label for="inputPassword" class="sr-only">Пароль</label>
-    <input type="password" th:field="*{password}" id="inputPassword" class="form-control" placeholder="Пароль" required>
+    <input type="password" th:field="*{password}" id="inputPassword" class="form-control" placeholder="Пароль" required maxlength="25">
     <div th:if="${param.error}" align="center">
         Ошибка регистрации
     </div>

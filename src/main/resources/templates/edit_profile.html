@@ -83,12 +83,12 @@
                     <div class="col-md-6 mb-3">
                         <label for="firstName">Имя</label>
                         <input type="text" th:field="*{firstName}" class="form-control" id="firstName"
-                               placeholder="" th:value="*{firstName}">
+                               placeholder="" th:value="*{firstName}" maxlength="25">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="lastName">Фамилия</label>
                         <input type="text" th:field="*{lastName}" class="form-control" id="lastName"
-                               placeholder="" th:value="*{lastName}">
+                               placeholder="" th:value="*{lastName}" maxlength="25">
                     </div>
                 </div>
 
@@ -101,7 +101,7 @@
                         <input type="text" th:field="*{username}" class="form-control" id="username"
                                placeholder="Имя пользователя"
                                th:value="*{username}"
-                               required>
+                               required maxlength="25">
                     </div>
                 </div>
 
@@ -113,7 +113,7 @@
                         </div>
                         <input type="text" th:field="*{password}" class="form-control" id="password"
                                placeholder="********"
-                               th:value="*{password}" required>
+                               th:value="*{password}" required maxlength="25">
                     </div>
                 </div>
 
@@ -121,7 +121,7 @@
                     <label for="inputEmail">Эл. адрес</label>
                     <input type="email" th:field="*{email}" class="form-control" id="inputEmail"
                            placeholder="you@example.com"
-                           th:value="*{email}" required>
+                           th:value="*{email}" required maxlength="25">
                 </div>
 
                 <div class="mb-3">

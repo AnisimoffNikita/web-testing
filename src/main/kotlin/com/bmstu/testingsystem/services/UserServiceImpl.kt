@@ -63,7 +63,7 @@ class UserServiceImpl : UserService {
         if (oldPerson.lastName != newPerson.lastName)
             oldPerson.lastName = newPerson.lastName
 
-        if (oldPerson.avatar != newPerson.avatar)
+        if (oldPerson.avatar != newPerson.avatar && newPerson.avatar != null)
             oldPerson.avatar = newPerson.avatar
 
         if (oldPerson.birthday == null || oldPerson.birthday != newPerson.birthday)
