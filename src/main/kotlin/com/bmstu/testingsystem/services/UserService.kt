@@ -12,7 +12,7 @@ interface UserService {
 
     fun registerUser(registrationData: SignUp.RegistrationData): User?
 
-    fun updateUser(user: User, newUserData: UserData): Boolean
+    fun updateUser(user: User, newUserData: UserData): User
 
     fun updateAvatar(user: User, newAvatar: String, file: MultipartFile)
 

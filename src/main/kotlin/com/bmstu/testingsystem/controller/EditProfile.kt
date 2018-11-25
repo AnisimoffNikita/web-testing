@@ -59,12 +59,12 @@ class EditProfile {
                         model: Model, authentication: Authentication): String {
         val oldUser = authService.getUser(authentication)
 
-        userService.updateUser(oldUser, userData)
+        val updatedUser = userService.updateUser(oldUser, userData)
         userService.updateAvatar(oldUser, avatarData, file)
 
         val avatar = userService.getAvatar(oldUser)
 
-        model.addAttribute("user", userData)
+        model.addAttribute("user", UserData(updatedUser))
         model.addAttribute("avatar", avatar)
         return "edit_profile"
     }

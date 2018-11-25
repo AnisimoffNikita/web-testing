@@ -1,7 +1,3 @@
-.border-ellipse {
-border-radius: 15px;
-}
-
 .pass-count-icon {
 	width: 21px; height: 23px;
 	background: url('/img/humans_icon.png');
@@ -9,15 +5,10 @@ border-radius: 15px;
 }
 .pass-count-value {
 	font-size: 14px;
+	color: blue;
     display: inline-block;
 }
 
-a.test-link {
-    color: red;/* ÷вет ссылок */
-   }
-   a.test-link:visited {
-    color: white; /* ÷вет посещенных ссылок */
-   }
-   a.test-link:active {
-    color: white; /* ÷вет активных ссылок */
-   }
+.card-footer {
+	border: none;
+}

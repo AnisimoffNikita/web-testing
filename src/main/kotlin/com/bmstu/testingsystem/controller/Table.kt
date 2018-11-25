@@ -1,5 +1,6 @@
 package com.bmstu.testingsystem.controller
 
+import com.bmstu.testingsystem.form_data.getCreatedPassed
 import com.bmstu.testingsystem.services.AuthenticationServiceImpl
 import com.bmstu.testingsystem.services.ExamServiceImpl
 import com.bmstu.testingsystem.services.TableServiceImpl
@@ -39,6 +40,7 @@ class Table {
         val user = authService.getUser(authentication)
         model.addAttribute("title", "Пройденные тесты")
         model.addAttribute("table", tableService.getPassTableForUser(user))
+        model.addAttribute("sidebar", getCreatedPassed(1))
         return "table"
     }
 

@@ -9,14 +9,9 @@
 
     <title>Новый тест</title>
 
-    <!-- Bootstrap core CSS -->
     <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/css/common.css" rel="stylesheet">
-    <link href="/css/create_exam.css" rel="stylesheet">
-
-    <script src="/js/create_exam.js"></script>
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/create_exam.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -38,23 +33,21 @@
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/main_page'}">Главная</a>
             </li>
 
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/admin/new_exams'}">Управление</a>
+            </li>
+
             <li class="nav-item active">
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'#'}">Создать тест</a>
             </li>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-                    <span class="caret"></span>
-                    Мои тесты
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" th:href="@{'/my_exams'}">Созданные</a>
-                    <a class="dropdown-item" th:href="@{'/my_passed_exams'}">Пройденные</a>
-                </ul>
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/my_exams'}">Мои тесты</a>
             </li>
+
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown02" data-toggle="dropdown" aria-haspopup="true"
+                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown02" data-toggle="dropdown"
+                   aria-haspopup="true"
                    aria-expanded="false">
                     <span class="caret"></span>
                     Мой профиль
@@ -66,22 +59,8 @@
                     </form>
                 </ul>
             </li>
-
-            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown00" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-                    <span class="caret"></span>
-                    Управление
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown00">
-                    <a class="dropdown-item" th:href="@{'/all_users'}">Пользователи</a>
-                    <a class="dropdown-item" th:href="@{'/all_exams'}">Все тесты</a>
-                    <a class="dropdown-item" th:href="@{'/admin/new_exams'}">Новые тесты</a>
-                </ul>
-            </li>
         </ul>
     </div>
-
 </nav>
 
 
@@ -95,25 +74,24 @@
     <div class="row">
 
         <div class="col col-lg-offset-4 well">
-
-            <form th:object="${exam}" th:action="@{'create_exam'}" method="post">
+            <form th:object="${exam}" th:action="@{/create_exam}" method="post" onsubmit="return validateAndPrepare()">
                 <input type="text" class="form-control mb-3" id="testName" placeholder="Название теста"
-                       th:field="*{name}">
+                       th:field="*{name}" maxlength="50" required>
                 <textarea class="form-control mb-3"
-                          id="text" placeholder="Описание теста" th:field="*{description}" rows="5">
+                          id="text" placeholder="Описание теста" th:field="*{description}" rows="5" maxlength="400"
+                          required>
                 </textarea>
-
-
                 <div id="questionList">
                     <div class="card mb-4 question" id="question0">
                         <div class="card-body">
                             <div class="container">
-
                                 <div class="row">
+
                                     <div class="col-9">
                                         <input type="text" class="form-control questionText"
-                                               placeholder="Текст вопроса">
+                                               placeholder="Текст вопроса" required>
                                     </div>
+
                                     <div class="col-3">
                                         <select class="form-control" onchange="onSelectChange(0)">
                                             <option value="SINGLE_ANSWER">Один ответ</option>
@@ -123,89 +101,52 @@
                                     </div>
 
                                     <div class="col-10 add-answer-block inputAnswer">
-                                        <input type="text" class="form-control mt-3 answer-input" placeholder="Вариант ответа">
+                                        <input type="text" class="form-control mt-3 answer-input"
+                                               placeholder="Вариант ответа">
                                     </div>
 
                                     <div class="col-2 add-answer-block">
-                                        <button type="button" class="btn btn-outline-primary mt-3" onclick="onAddAnswerClick(0)">Добавить</button>
+                                        <button type="button" class="btn btn-outline-primary mt-3"
+                                                onclick="onAddAnswerClick(0)">Добавить
+                                        </button>
                                     </div>
 
                                     <div class="col-12 del-answer-block">
-                                        <button type="button" class="btn btn-outline-danger mt-3" onclick="document.getElementById('question0').remove()">Удалить вопрос</button>
+                                        <button type="button" class="btn btn-outline-danger mt-3"
+                                                onclick="document.getElementById('question0').remove()">Удалить вопрос
+                                        </button>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-primary" id="addQuestion" onclick="onAddQuestionClick()"> Добавить
-                    вопрос
+                <button type="button" class="btn btn-primary" id="addQuestion"
+                        onclick="onAddQuestionClick()"> Добавить вопрос
                 </button>
 
                 <hr>
+
                 <p>
                     <button type="submit" class="btn btn-success mr-3" onclick="prepareForm()">Предложить тест</button>
                     <button type="button" class="btn btn-secondary">Отмена</button>
                 </p>
+
             </form>
-
-        </div><!-- /.col-lg-4 col-lg-offset-4 well -->
-    </div><!-- /.row -->
-
-</div><!-- /.container -->
+        </div>
+    </div>
+</div>
 
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/create_exam.js}"></script>
+<script th:src="@{/js/create_exam_validate.js}"></script>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-
-<script src="/bootstrap/js/bootstrap.min.js"></script>
-
-<script>
-    function prepareForm () {
-        var questions = document.getElementsByClassName("question");
-        for (var i = 0; i < questions.length; i++) {
-            var text = questions[i].getElementsByClassName("questionText")[0];
-            text.setAttribute('name', 'questions[' + i + '].questionText');
-
-            // правильный ответ
-            var inputs = questions[i].getElementsByClassName("right-answer-input");
-            if (inputs.length !== 0) {
-                var input = inputs[0];
-                input.setAttribute('name', 'questions[' + i + '].correctInputAnswer');
-            }
-
-            // варианты ответа
-            var variants = questions[i].getElementsByClassName("variant");
-            if (variants.length !== 0) {
-                for (var j = 0; j < variants.length; j++) {
-                    var variant = variants[j];
-                    variant.setAttribute('name', 'questions[' + i + '].variants[' + j + ']');
-                }
-            }
-
-            // правильные варианты
-            var rightVariants = questions[i].getElementsByClassName("form-check-input");
-            if (rightVariants.length !== 0) {
-                for (var j = 0; j < rightVariants.length; j++) {
-                    var correctVariant = rightVariants[j];
-                    correctVariant.setAttribute('name', 'questions[' + i + '].correctVariants');
-                    correctVariant.setAttribute('value', j);
-                }
-            }
-
-            // тип вопроса
-            var types = questions[i].getElementsByTagName("select")[0];
-            types.setAttribute('name', 'questions[' + i + '].type');
-        }
-    }
-</script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 
 </body>
+</html>

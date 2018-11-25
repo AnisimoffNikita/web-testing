@@ -1,12 +1,3 @@
-/*$('#question').click(function(){
-   if ( $( "#answers" ).is( ":hidden" ) ) {
-    $( "#answers" ).show('200');
-  } else {
-    $( "#answers" ).hide('200');
-  }
-}); */
-
-
 function onSelectChange(questionId) {
 
     var questionCard = document.getElementById('question' + questionId);
@@ -82,6 +73,7 @@ function onSelectChange(questionId) {
         inputAns.type = "text";
         inputAns.className = "form-control mt-3 right-answer-input";
         inputAns.placeholder = "Правильный ответ";
+        inputAns.required = true;
 
         col12.appendChild(inputAns);
 
@@ -128,6 +120,7 @@ function onAddAnswerClick(questionId){
     var v = document.createElement('input');
     v.className = "form-control variant";
     v.value = answer;
+    v.required = true;
 
     div.appendChild(checkbox);
     div.appendChild(v);
@@ -164,6 +157,7 @@ function onAddQuestionClick () {
     input.type = "text";
     input.className = "form-control questionText";
     input.placeholder = "Текст вопроса";
+    input.required = true;
 
     col9.appendChild(input);
 
@@ -238,3 +232,4 @@ function onAddQuestionClick () {
     document.getElementById("questionList").appendChild(questionCard);
 
 };
+
