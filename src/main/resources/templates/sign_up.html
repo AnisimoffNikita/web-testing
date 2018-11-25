@@ -20,10 +20,16 @@
     <label for="inputUsername" class="sr-only">Имя пользователя</label>
     <input type="text" th:field="*{username}" id="inputUsername" class="form-control" placeholder="Имя пользователя"
            required autofocus>
+    <div th:if="${param.exist}" align="center">
+        Это имя уже занято
+    </div>
     <label for="inputEmail" class="sr-only">Эл. адрес</label>
     <input type="email" th:field="*{email}" id="inputEmail" class="form-control" placeholder="Эл. адрес" required>
     <label for="inputPassword" class="sr-only">Пароль</label>
     <input type="password" th:field="*{password}" id="inputPassword" class="form-control" placeholder="Пароль" required>
+    <div th:if="${param.error}" align="center">
+        Ошибка регистрации
+    </div>
     <button class="btn my-4 btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
     <label> Есть аккаунт?
         <a href="sign_in">Вход</a>

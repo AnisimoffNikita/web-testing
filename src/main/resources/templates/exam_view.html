@@ -95,9 +95,15 @@
 
                 <div class="btn-block mt-3">
                     <p>
-                        <th:block th:each="btn: ${btns}">
+                        <th:block th:each="btn, k: ${btnsForApproved}" th:if="${exam.status.toString()} == 'APPROVED'">
                             <a th:class="'btn ' + ${btn.type} + ' mr-3'" th:text="${btn.text}"
-                               th:href="'/' + ${btn.actionUrl} + '/' + ${exam.id}"></a>
+                               th:href="'/' + ${btn.actionUrl} + '/' + ${exam.id}">
+                            </a>
+                        </th:block>
+                        <th:block th:each="btn, k: ${btnsForOthers}" th:if="${exam.status.toString()} != 'APPROVED'">
+                            <a th:class="'btn ' + ${btn.type} + ' mr-3'" th:text="${btn.text}"
+                               th:href="'/' + ${btn.actionUrl} + '/' + ${exam.id}">
+                            </a>
                         </th:block>
                     </p>
                 </div>

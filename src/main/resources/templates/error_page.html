@@ -7,11 +7,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Главная страница</title>
+    <title>Информация</title>
 
     <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/common.css}" rel="stylesheet">
-    <link th:href="@{/css/mainpage.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -21,7 +20,6 @@
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="get">
         <input class="form-control mr-lg-2" name="keyword" id="inputKeyword" type="text" placeholder="Поиск">
         <button class="btn btn-light my-2 my-lg-0" id="searchButton" type="submit">Найти</button>
@@ -29,7 +27,7 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/main_page'}">Главная</a>
             </li>
 
@@ -64,40 +62,8 @@
     </div>
 </nav>
 
-
 <div class="container">
-    <h2 class="display-6 mt-3 mb-4" th:text="${title}"></h2>
-    <div class="row text-left flex-row">
-        <th:block th:each="exam : ${exams}">
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                <div class="card card-body mx-2 my-2">
-                    <h4 class="card-title font-weight-normal">
-                        <span th:text="${exam.name}"></span>
-                    </h4>
-                    <h6 class="card-subtitle text-muted">
-                        <span th:text="'Создан ' + ${#dates.format(exam.createdAt, 'yyyy-MM-dd')}"></span><br>
-                        <span>Автор: <a th:text="${exam.user.username}" th:href="@{'/profile_view/' + ${exam.user.username}}"></a></span>
-                    </h6>
-
-                    <div class="my-2 card-text">
-                        <span th:text="${exam.description}"></span>
-                    </div>
-
-                    <div>
-                        <a class="btn btn-primary" th:href="@{'/exam_page/' + ${exam.id}}">Пройти</a>
-                        <span class="pass-count-value mt-2 ml-1 float-right" th:text="${exam.passCount}"></span>
-                        <span class="pass-count-icon mt-2 float-right" title="Количество прохождений"></span>
-                    </div>
-                </div>
-            </div>
-        </th:block>
-    </div>
+    <h6 class="alert alert-info mt-4" th:text="${info}"></h6>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-
 </body>
 </html>
