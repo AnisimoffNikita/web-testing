@@ -3,12 +3,13 @@ package com.bmstu.testingsystem.services
 import com.bmstu.testingsystem.domain.Exam
 import com.bmstu.testingsystem.domain.ExamStatus
 import com.bmstu.testingsystem.domain.User
+import com.bmstu.testingsystem.exception.DeletedExamException
+import com.bmstu.testingsystem.exception.NoExamException
 import com.bmstu.testingsystem.form_data.ExamData
 import com.bmstu.testingsystem.repositiry.ExamRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-
-import java.util.UUID
+import java.util.*
 
 @Service("examService")
 class ExamServiceImpl : ExamService {
@@ -16,11 +17,12 @@ class ExamServiceImpl : ExamService {
     @Autowired
     private lateinit var examRepository: ExamRepository
 
-    override fun findById(id: UUID): Exam? {
-        val test = examRepository.findById(id)
-        if (!test.isPresent)
-            return null
-        return test.get()
+    override fun findById(id: UUID): Exam {
+        val exam = examRepository.findById(id)
+        if (!exam.isPresent) throw NoExamException()
+        val examGet = exam.get()
+        if (examGet.status == ExamStatus.DELETED) throw DeletedExamException()
+        return examGet
     }
 
     override fun findByKeyword(keyword: String): List<Exam> {

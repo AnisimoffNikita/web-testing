@@ -3,6 +3,7 @@ package com.bmstu.testingsystem.services
 import com.bmstu.testingsystem.controller.SignUp
 import com.bmstu.testingsystem.domain.Person
 import com.bmstu.testingsystem.domain.User
+import com.bmstu.testingsystem.exception.NoUserException
 import com.bmstu.testingsystem.form_data.UserData
 import com.bmstu.testingsystem.repositiry.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,8 +20,9 @@ class UserServiceImpl : UserService {
     @Autowired
     private lateinit var storageService: StorageService
 
-    override fun findByUsername(username: String): User? {
-        return userRepository.findByUsername(username)
+    override fun findByUsername(username: String): User {
+        val user = userRepository.findByUsername(username) ?: throw NoUserException()
+        return user
     }
 
     override fun registerUser(registrationData: SignUp.RegistrationData): User? {

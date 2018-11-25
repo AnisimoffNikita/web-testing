@@ -12,15 +12,22 @@ data class SidebarItem (
 
 fun getCreatedPassed(active: Int) : Sidebar {
     val sidebarItems: MutableList<SidebarItem> = arrayListOf()
-    sidebarItems.add(SidebarItem("Созданные", "my_exams"))
-    sidebarItems.add(SidebarItem("Пройденные", "my_passed_exams"))
+    sidebarItems.add(SidebarItem("Созданные", "/my_exams"))
+    sidebarItems.add(SidebarItem("Пройденные", "/my_passed_exams"))
+    return Sidebar(active, sidebarItems)
+}
+
+fun adminGetCreatedPassed(active: Int, username: String) : Sidebar {
+    val sidebarItems: MutableList<SidebarItem> = arrayListOf()
+    sidebarItems.add(SidebarItem("Созданные", "/admin/user_exams/${username}"))
+    sidebarItems.add(SidebarItem("Пройденные", "/admin/user_passed_exams/${username}"))
     return Sidebar(active, sidebarItems)
 }
 
 fun getUsersExamsNewExams(active: Int) : Sidebar {
     val sidebarItems: MutableList<SidebarItem> = arrayListOf()
-    sidebarItems.add(SidebarItem( "Все пользователи", "admin/all_users"))
-    sidebarItems.add(SidebarItem( "Все тесты", "admin/all_exams"))
-    sidebarItems.add(SidebarItem("Новые тесты", "admin/new_exams"))
+    sidebarItems.add(SidebarItem( "Все пользователи", "/admin/all_users"))
+    sidebarItems.add(SidebarItem( "Все тесты", "/admin/all_exams"))
+    sidebarItems.add(SidebarItem("Новые тесты", "/admin/new_exams"))
     return Sidebar(active, sidebarItems)
 }

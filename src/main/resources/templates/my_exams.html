@@ -99,10 +99,19 @@
 
                         <small><em>Создан [[${exam.createdAt}]]</em></small>
                         <br>
-                        <small><em>Автор @[[${exam.user.username}]]</em></small>
+                        <small>
+                            <em>Автор:
+                                <a th:text="${exam.user.username}" th:href="@{'/profile_view/' + ${exam.user.username}}"></a>
+                            </em>
+                        </small>
                         <div class="btn-block mt-3">
                             <p>
-                                <th:block th:each="btn, k: ${btns}">
+                                <th:block th:each="btn, k: ${btnsForApproved}" th:if="${exam.status.toString()} == 'APPROVED'">
+                                    <a th:class="'btn ' + ${btn.type} + ' mr-3'" th:text="${btn.text}"
+                                       th:href="'/' + ${btn.actionUrl} + '/' + ${exam.id}">
+                                    </a>
+                                </th:block>
+                                <th:block th:each="btn, k: ${btnsForOthers}" th:if="${exam.status.toString()} != 'APPROVED'">
                                     <a th:class="'btn ' + ${btn.type} + ' mr-3'" th:text="${btn.text}"
                                        th:href="'/' + ${btn.actionUrl} + '/' + ${exam.id}">
                                     </a>
@@ -118,7 +127,7 @@
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item" th:each="item, k: ${sidebar.items}">
                     <a class="nav-link" th:classappend="${sidebar.activeItem} == __${k.index}__ ? active : ''"
-                       th:href="@{'/' + ${item.link}}">[[${item.text}]]</a>
+                       th:href="@{${item.link}}">[[${item.text}]]</a>
                 </li>
             </ul>
         </nav>

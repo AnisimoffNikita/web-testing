@@ -20,3 +20,9 @@ fun getPassStatisticDelete() : List<Button> {
     buttons.add(Button("btn-danger", "Удалить", "my_exams/delete"))
     return buttons
 }
+
+fun getDelete() : List<Button> {
+    val buttons: MutableList<Button> = arrayListOf()
+    buttons.add(Button("btn-danger", "Удалить", "my_exams/delete"))
+    return buttons
+}
