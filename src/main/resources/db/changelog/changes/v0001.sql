@@ -19,9 +19,9 @@ INSERT INTO person_data (id, first_name, last_name) VALUES ('b040df7e-5d36-4c08-
 CREATE TABLE users (
   id UUID PRIMARY KEY NOT NULL,
   person_id UUID NOT NULL REFERENCES person_data(id),
-  username VARCHAR(50) NOT NULL UNIQUE,
-  email VARCHAR(50) NOT NULL,
-  password VARCHAR(50) NOT NULL,
+  username VARCHAR(100) NOT NULL UNIQUE,
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(100) NOT NULL,
   role user_role NOT NULL
 );
 
@@ -37,8 +37,8 @@ CREATE TYPE exam_status AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'DELETED');
 CREATE TABLE exams (
   id UUID PRIMARY KEY NOT NULL,
   user_id UUID NOT NULL REFERENCES users(id),
-  name VARCHAR(50),
-  description VARCHAR(400),
+  name VARCHAR(100),
+  description VARCHAR(800),
   pass_count INT NOT NULL,
   status exam_status NOT NULL,
   created_at DATE,
