@@ -109,7 +109,7 @@ class ExamServiceImplTest {
         val exam = exams.first()
         Mockito.doNothing().`when`<ExamRepository>(repositoryMock).delete(exam)
 
-        examService.removeExam(exam)
+        examService.removeExam(exam.id)
 
         Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).delete(exam)
         Mockito.verifyNoMoreInteractions(repositoryMock)
