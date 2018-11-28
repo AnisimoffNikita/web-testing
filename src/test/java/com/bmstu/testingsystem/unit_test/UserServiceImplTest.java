@@ -3,6 +3,7 @@ package com.bmstu.testingsystem.unit_test;
 import com.bmstu.testingsystem.controller.EditProfile;
 import com.bmstu.testingsystem.controller.SignUp;
 import com.bmstu.testingsystem.domain.User;
+import com.bmstu.testingsystem.exception.NoUserException;
 import com.bmstu.testingsystem.form_data.UserData;
 import com.bmstu.testingsystem.repositiry.UserRepository;
 import com.bmstu.testingsystem.services.UserServiceImpl;
@@ -46,15 +47,11 @@ public class UserServiceImplTest {
         Mockito.verifyNoMoreInteractions(repositoryMock);
     }
 
-    @Test
+    @Test(expected = NoUserException.class)
     public void findByUsernameIfNotExist() {
         Mockito.when(repositoryMock.findByUsername("username")).thenReturn(null);
 
-        User user = userService.findByUsername("username");
-
-        Assert.assertNull(user);
-        Mockito.verify(repositoryMock, Mockito.times(1)).findByUsername(Mockito.anyString());
-        Mockito.verifyNoMoreInteractions(repositoryMock);
+        userService.findByUsername("username");
     }
 
     @Test

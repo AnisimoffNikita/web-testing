@@ -27,9 +27,10 @@ class ExamServiceImplTest {
 
     private var exams: List<Exam>
     private var id1: UUID
+    private var user: User
 
     init {
-        val user = User("username", "email", "password")
+        user = User("username", "email", "password")
         val q1 = Question(0, "q1", QuestionType.NO_ANSWER, emptyList(), emptyList(), "ans")
         val exam1 = Exam(user,"тест", "небольшое описание", Date(123),  listOf(q1))
         exam1.passCount = 1
@@ -93,15 +94,21 @@ class ExamServiceImplTest {
 
     @Test
     fun addTest() {
-//        val exam = exams.first()
-//        Mockito.`when`<Exam>(repositoryMock.save(exam)).thenReturn(exam)
-//
-//        val examData = ExamData(exam.name, exam.description, exam.questions);
-//
-//        examService.addExam(exam)
-//
-//        Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).save(exam)
-//        Mockito.verifyNoMoreInteractions(repositoryMock)
+        val exam = exams.first()
+        val questions = exam.questions.map {
+            QuestionData(it.questionText,
+                    it.type,
+                    it.variants?.toMutableList(),
+                    it.correctVariantsId?.toMutableList(),
+                    it.correctInputAnswer) }.toMutableList()
+        Mockito.`when`<Exam>(repositoryMock.save(exam)).thenReturn(exam)
+
+        val examData = ExamData(exam.name, exam.description, questions);
+
+        examService.addExam(examData, user)
+
+        Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).save(exam)
+        Mockito.verifyNoMoreInteractions(repositoryMock)
     }
 
     @Test
