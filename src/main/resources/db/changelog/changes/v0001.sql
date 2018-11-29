@@ -52,7 +52,7 @@ INSERT INTO exams (id, user_id, name, description, pass_count, status, created_a
 INSERT INTO exams (id, user_id, name, description, pass_count, status, created_at, questions)
     VALUES ('66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '7c803c41-ca5f-4e66-9483-7e361db72917', 'тест номер два', 'описание теста номер два', 10, 'APPROVED', to_timestamp(1195333200), '[]'::json);
 INSERT INTO exams (id, user_id, name, description, pass_count, status, created_at, questions)
-    VALUES ('446ae2f3-eb60-44cb-b889-22f14ef06d82', 'be7b8ae6-5368-40f1-9b07-b33027acf43f', 'тестик', 'много слов', 3, 'APPROVED', to_timestamp(1195333200), '[]'::json);
+    VALUES ('446ae2f3-eb60-44cb-b889-22f14ef06d82', 'be7b8ae6-5368-40f1-9b07-b33027acf43f', 'тестик', 'много слов', 3, 'APPROVED', to_timestamp(1195333200), '[{"id":0,"questionText":"1+1","type":"SINGLE_ANSWER","variants":["1","2"],"correctVariantsId":[1],"correctInputAnswer":null}]'::json);
 
 
 CREATE TABLE exam_results (
