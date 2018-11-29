@@ -14,6 +14,7 @@ CREATE TABLE person_data (
 INSERT INTO person_data (id, first_name, last_name) VALUES ('e22e6ce8-406e-4618-9d9e-44114ac13697', 'admin', 'admin');
 INSERT INTO person_data (id, first_name, last_name) VALUES ('833f9d04-9d81-4983-9dae-b69a89d9efe7', 'admin2', 'admin2');
 INSERT INTO person_data (id, first_name, last_name) VALUES ('b040df7e-5d36-4c08-9252-521a5461485c', 'admin3', 'admin3');
+INSERT INTO person_data (id, first_name, last_name) VALUES ('9a932257-bd92-4e87-ade0-046006fe134f', 'user', 'user');
 
 
 CREATE TABLE users (
@@ -28,6 +29,7 @@ CREATE TABLE users (
 INSERT INTO users (id, person_id, username, email, password, role) VALUES ('12412cdb-398f-4def-9cec-325b11968b56', 'e22e6ce8-406e-4618-9d9e-44114ac13697', 'admin', 'admin', 'admin', 'ADMIN');
 INSERT INTO users (id, person_id, username, email, password, role) VALUES ('7c803c41-ca5f-4e66-9483-7e361db72917', '833f9d04-9d81-4983-9dae-b69a89d9efe7', 'admin2', 'admin2', 'admin2', 'ADMIN');
 INSERT INTO users (id, person_id, username, email, password, role) VALUES ('a4c7eb02-1c79-48df-a1a7-7701bb500dcf', 'b040df7e-5d36-4c08-9252-521a5461485c', 'admin3', 'admin3', 'admin3', 'ADMIN');
+INSERT INTO users (id, person_id, username, email, password, role) VALUES ('be7b8ae6-5368-40f1-9b07-b33027acf43f', '9a932257-bd92-4e87-ade0-046006fe134f', 'user', 'user', 'user', 'USER');
 
 
 
@@ -46,9 +48,11 @@ CREATE TABLE exams (
 );
 
 INSERT INTO exams (id, user_id, name, description, pass_count, status, created_at, questions)
-    VALUES ('0596c2c0-a70a-47dd-81c8-31411a5b132a', '12412cdb-398f-4def-9cec-325b11968b56', 'тест главный', 'большое описание со словом математика', 0, 'APPROVED', to_timestamp(1195333200), '[]'::json);
+    VALUES ('0596c2c0-a70a-47dd-81c8-31411a5b132a', '12412cdb-398f-4def-9cec-325b11968b56', 'тест главный', 'большое описание со словом математика', 8, 'APPROVED', to_timestamp(1195333200), '[]'::json);
 INSERT INTO exams (id, user_id, name, description, pass_count, status, created_at, questions)
-    VALUES ('66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '7c803c41-ca5f-4e66-9483-7e361db72917', 'тест номер два', 'описание теста номер два', 1, 'APPROVED', to_timestamp(1195333200), '[]'::json);
+    VALUES ('66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '7c803c41-ca5f-4e66-9483-7e361db72917', 'тест номер два', 'описание теста номер два', 10, 'APPROVED', to_timestamp(1195333200), '[]'::json);
+INSERT INTO exams (id, user_id, name, description, pass_count, status, created_at, questions)
+    VALUES ('446ae2f3-eb60-44cb-b889-22f14ef06d82', 'be7b8ae6-5368-40f1-9b07-b33027acf43f', 'тестик', 'много слов', 3, 'APPROVED', to_timestamp(1195333200), '[]'::json);
 
 
 CREATE TABLE exam_results (
@@ -64,3 +68,5 @@ INSERT INTO exam_results  (id, user_id, test_id, result, passed_at)
 
 INSERT INTO exam_results  (id, user_id, test_id, result, passed_at)
     VALUES ('9d7c4fc9-56bb-4e39-b359-f23d56c3bfe2', '7c803c41-ca5f-4e66-9483-7e361db72917', '66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '12', to_timestamp(1195333200));
+INSERT INTO exam_results  (id, user_id, test_id, result, passed_at)
+    VALUES ('5f4f4ac2-bd8f-4193-847c-7fef7bb4c7ab', 'be7b8ae6-5368-40f1-9b07-b33027acf43f', '66bcd4a3-a3d5-409e-9a38-e0d7b029a020', '1/2', to_timestamp(1195333200));
