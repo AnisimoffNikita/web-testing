@@ -1,12 +1,10 @@
 package com.bmstu.testingsystem.selenium
 
-import org.openqa.selenium.WebElement
-import org.openqa.selenium.support.FindBy
-import org.openqa.selenium.support.PageFactory
-
 class LoginPage {
 
-    private val config: SeleniumConfig? = null
+    // я тут все поломала, соре
+
+/*    private val config: SeleniumConfig? = null
 
     @FindBy(id = ".header--menu > a")
     private val title: WebElement? = null
@@ -28,5 +26,5 @@ class LoginPage {
         PageFactory.initElements(config.driver, startHerePage)
 
         return startHerePage
-    }
+    }*/
 }
