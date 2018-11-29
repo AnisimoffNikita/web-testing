@@ -5,17 +5,17 @@ import com.bmstu.testingsystem.domain.User
 import com.bmstu.testingsystem.domain.UserRole
 import com.bmstu.testingsystem.security.AppUserPrincipal
 import org.hamcrest.Matchers
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestPropertySource
-import org.springframework.test.context.junit4.SpringRunner
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
+import org.springframework.test.context.TestPropertySource
+import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
@@ -23,8 +23,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.context.WebApplicationContext
 import javax.servlet.Filter
+import org.springframework.mock.web.MockMultipartFile
+
+
+
 
 @RunWith(SpringRunner::class)
 @TestPropertySource(locations=["classpath:test.properties"])
@@ -32,7 +37,7 @@ import javax.servlet.Filter
 @AutoConfigureMockMvc
 @WebAppConfiguration
 @Transactional
-class CreateExamTest {
+class EditProfileTest{
 
 
     @Autowired
@@ -52,31 +57,54 @@ class CreateExamTest {
     }
 
     @Test
-    fun postCreateTestGood() {
+    fun getEditProfileGood() {
         this.mvc.perform(
-                MockMvcRequestBuilders.post("/create_exam")
+                MockMvcRequestBuilders.get("/edit_profile")
                         .with(SecurityMockMvcRequestPostProcessors.user("admin")
                                 .password("admin")
                                 .roles("ADMIN")
                                 .authorities(UserRole.ADMIN))
                         .with(SecurityMockMvcRequestPostProcessors.csrf().asHeader())
-                        .param("name", "test")
-                        .param("description","test")
-                        .param("questions[0].questionText","123")
-                        .param("questions[0].type","NO_ANSWER")
-                        .param("questions[0].correctInputAnswer","123")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         )
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
-                .andExpect(MockMvcResultMatchers.redirectedUrlPattern("/exam_view/**"))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("admin")))
     }
 
     @Test
-    fun postCreateTestEmpty() {
+    fun postEditProfileGood() {
+        val ava = MockMultipartFile("file", "ava", "image/png", "data".toByteArray())
         this.mvc.perform(
-                MockMvcRequestBuilders.post("/create_exam")
-                        .with(SecurityMockMvcRequestPostProcessors.user(AppUserPrincipal(User("admin", "admin", "admin")))).with(SecurityMockMvcRequestPostProcessors.csrf().asHeader())
+                MockMvcRequestBuilders.multipart("/edit_profile").file(ava)
+                        .with(SecurityMockMvcRequestPostProcessors.user("admin")
+                                .password("admin")
+                                .roles("ADMIN")
+                                .authorities(UserRole.ADMIN))
+                        .with(SecurityMockMvcRequestPostProcessors.csrf().asHeader())
+                        .param("username", "user1")
+                        .param("email","user2")
+                        .param("password","user3")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("user1")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("user2")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("user3")))
+    }
+
+    @Test
+    fun postEditProfileBadAva() {
+        this.mvc.perform(
+                MockMvcRequestBuilders.post("/edit_profile")
+                        .with(SecurityMockMvcRequestPostProcessors.user("admin")
+                                .password("admin")
+                                .roles("ADMIN")
+                                .authorities(UserRole.ADMIN))
+                        .with(SecurityMockMvcRequestPostProcessors.csrf().asHeader())
+                        .param("username", "user1")
+                        .param("email","user2")
+                        .param("password","user3")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         )
                 .andDo(MockMvcResultHandlers.print())

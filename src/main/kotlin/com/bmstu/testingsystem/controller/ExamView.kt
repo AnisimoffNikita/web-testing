@@ -13,11 +13,13 @@ import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.WebDataBinder
+import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.annotation.PathVariable
 import java.text.DateFormat
 import java.util.*
+import javax.servlet.http.HttpServletResponse
 
 
 @Controller
@@ -61,5 +63,12 @@ class ExamView {
         model.addAttribute("btnsForOthers", getApproveReject())
 
         return "exam_view"
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun exceptionHandler(model: Model,response: HttpServletResponse): String{
+        model.addAttribute("info", "Некорректный запрос")
+        response.status = HttpServletResponse.SC_BAD_REQUEST
+        return "error_page"
     }
 }

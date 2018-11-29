@@ -26,10 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.apache.tomcat.jni.User.username
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
-
-
-
-
+import org.springframework.web.bind.annotation.ExceptionHandler
+import javax.servlet.http.HttpServletResponse
 
 
 @Controller
@@ -81,4 +79,11 @@ class EditProfile {
         return "edit_profile"
     }
 
+
+    @ExceptionHandler(Exception::class)
+    fun exceptionHandler(model: Model,response: HttpServletResponse): String{
+        model.addAttribute("info", "Некорректный запрос")
+        response.status = HttpServletResponse.SC_BAD_REQUEST
+        return "error_page"
+    }
 }
