@@ -30,7 +30,7 @@ class SeleniumConfig {
             try {
                 val profileDropdown = driver.findElement(By.id("dropdown02"))
                 profileDropdown.click()
-                val exitButton = profileDropdown.findElement(By.id("exitButton"))
+                val exitButton = driver.findElement(By.id("exitButton"))
                 exitButton.click()
             } catch (ex: NoSuchElementException) {
                 ex.printStackTrace()

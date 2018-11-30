@@ -120,7 +120,7 @@ public class CreateExamTest {
     }
 
     private void addVariant() {
-        WebElement addAnswerButton = driver.findElement(By.className("add-answer-block"));
+        WebElement addAnswerButton = driver.findElement(By.className("add-button")).findElement(By.tagName("button"));
         addAnswerButton.click();
     }
 

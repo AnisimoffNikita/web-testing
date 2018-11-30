@@ -82,7 +82,7 @@
                     </div>
 
                     <div th:if="${question.type.toString() == 'NO_ANSWER'}">
-                        <h4 class="card-title mt-0 mb-3 font-weight-normal" th:id="'question' + ${i.count} + 'Text" th:text="${question.questionText}"></h4>
+                        <h4 class="card-title mt-0 mb-3 font-weight-normal" th:id="'question' + ${i.count} + 'Text'" th:text="${question.questionText}"></h4>
                         <div class="form-group">
                             <input type="text" class="form-control" th:id="'question' + ${i.count} + 'Answer'" th:value="${question.correctInputAnswer}" disabled/>
                         </div>

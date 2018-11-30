@@ -15,7 +15,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 public class ExamResultViewTest {
     private static WebDriver driver;
-    private static final String PAGE = "http://localhost:8080/my_exams/results/446ae2f3-eb60-44cb-b889-22f14ef06d82";
+    private static final String PAGE = "http://localhost:8080/my_exams/results/6c8d5358-4111-4d28-a12e-fecfa3c1ce78";
     private static final String PAGE_BANNED = "http://localhost:8080/my_exams/results/0596c2c0-a70a-47dd-81c8-31411a5b132a";
 
     @BeforeClass
