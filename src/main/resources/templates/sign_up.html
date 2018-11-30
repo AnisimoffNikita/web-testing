@@ -20,7 +20,7 @@
     <label for="inputUsername" class="sr-only">Имя пользователя</label>
     <input type="text" th:field="*{username}" id="inputUsername" class="form-control" placeholder="Имя пользователя"
            required autofocus maxlength="50">
-    <div th:if="${param.exist}" align="center">
+    <div th:if="${param.exist}" id="existingLogin" align="center">
         Это имя уже занято
     </div>
     <label for="inputEmail" class="sr-only" >Эл. адрес</label>

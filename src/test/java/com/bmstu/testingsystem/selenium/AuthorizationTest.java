@@ -1,6 +1,7 @@
 package com.bmstu.testingsystem.selenium;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -32,7 +33,9 @@ public class AuthorizationTest {
             WebElement loginButton = driver.findElement(By.id("loginButton"));
             loginButton.click();
 
-            driver.findElement(By.id("invalidUser"));
+            WebElement invalidUser = driver.findElement(By.id("invalidUser"));
+
+            Assert.assertEquals("Неверные логин и пароль", invalidUser.getText());
         }
 
         @After
