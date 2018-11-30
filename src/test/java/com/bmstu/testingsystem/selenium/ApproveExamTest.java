@@ -25,7 +25,7 @@ public class ApproveExamTest {
     @Test
     public void approveTest() {
         driver.get(PAGE_NEW_EXAMS);
-        WebElement examCard = driver.findElement(By.id("e17b57b3-232f-4405-82e7-f21f9ef93c1a"));
+        WebElement examCard = driver.findElement(By.id("a7f330fb-9a1a-492f-a52c-3a5be37ccff4"));
         examCard.click();
         WebElement approveExam = driver.findElement(By.linkText("Принять"));
         approveExam.click();
