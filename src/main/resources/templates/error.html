@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Результат</title>
+
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="get">
+        <input class="form-control mr-lg-2" name="keyword" id="inputKeyword" type="text" placeholder="Поиск">
+        <button class="btn btn-light my-2 my-lg-0" id="searchButton" type="submit">Найти</button>
+    </form>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/main_page'}">Главная</a>
+            </li>
+
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/admin/new_exams'}">Управление</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/create_exam'}">Создать
+                    тест</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" aria-haspopup="true" aria-expanded="false" th:href="@{'/my_exams'}">Мои тесты</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" th:href="@{'#'}" id="dropdown02" data-toggle="dropdown"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                    <span class="caret"></span>
+                    Мой профиль
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown02">
+                    <a class="dropdown-item" th:href="@{'/edit_profile'}">Редактировать</a>
+                    <form th:action="@{/logout}" method="post">
+                        <input class="dropdown-item btn btn-link" type="submit" value="Выход"/>
+                    </form>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h2 class="display-6 mt-3 mb-4">Ошибка</h2>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

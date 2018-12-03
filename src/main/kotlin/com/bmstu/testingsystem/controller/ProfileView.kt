@@ -7,11 +7,13 @@ import org.springframework.beans.propertyeditors.CustomDateEditor
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.WebDataBinder
+import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.annotation.PathVariable
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.servlet.http.HttpServletResponse
 
 @Controller
 class ProfileView {
@@ -35,5 +37,12 @@ class ProfileView {
         model.addAttribute("avatar", avatar)
 
         return "profile_view"
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun exceptionHandler(model: Model,response: HttpServletResponse): String{
+        model.addAttribute("info", "Некорректный запрос")
+        response.status = HttpServletResponse.SC_BAD_REQUEST
+        return "error_page"
     }
 }

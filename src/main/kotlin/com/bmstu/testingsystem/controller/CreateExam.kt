@@ -10,12 +10,14 @@ import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.WebDataBinder
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.InitBinder
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.ExceptionHandler
+import java.lang.NullPointerException
 import java.text.DateFormat
 import java.util.*
+import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpServletResponse
+
 
 @Controller
 class CreateTest {
@@ -41,11 +43,18 @@ class CreateTest {
     }
 
     @PostMapping("/create_exam")
-    fun postCreateTest(model: Model, @ModelAttribute exam: ExamData, authentication: Authentication): String {
+    fun postCreateTest(model: Model, @ModelAttribute("exam")  exam: ExamData, authentication: Authentication): String {
         val owner = authService.getUser(authentication)
         val addExam = examService.addExam(exam, owner)
         model.addAttribute("exam", addExam)
         model.addAttribute("btns", getPassStatisticDelete())
         return "redirect:/exam_view/${addExam.id}"
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun exceptionHandler(model: Model,response: HttpServletResponse): String{
+        model.addAttribute("info", "Некорректный запрос")
+        response.status = HttpServletResponse.SC_BAD_REQUEST
+        return "error_page"
     }
 }
