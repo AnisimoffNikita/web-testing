@@ -15,14 +15,14 @@ class SeleniumConfig {
         private val LOGIN : String = "http://localhost:8080/sign_in"
 
         init {
-            System.setProperty("webdriver.gecko.driver", findFile("geckodriver.exe"))
+            System.setProperty("webdriver.gecko.driver", findFile("geckodriver"))
         }
 
         fun initDriver() : WebDriver {
             val driver: WebDriver
             val capabilities = FirefoxOptions()
             driver = FirefoxDriver(capabilities)
-            driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS)
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
             return driver
         }
 

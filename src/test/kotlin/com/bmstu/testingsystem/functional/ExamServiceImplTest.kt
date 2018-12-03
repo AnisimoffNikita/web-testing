@@ -45,7 +45,9 @@ class ExamServiceImplTest {
         exam1.id = UUID.fromString("0596c2c0-a70a-47dd-81c8-31411a5b132a")
         val exam2 = Exam(user2,"тест номер два", "описание теста номер два",  Date(1195333200000), listOf())
         exam2.id = UUID.fromString("66bcd4a3-a3d5-409e-9a38-e0d7b029a020")
-        exams = listOf(exam1, exam2)
+        val exam3 = Exam(User("user2", "user2","user2"), "тест второго юзера", "длинное описание", Date(1195333200000), listOf())
+        val exam4 = Exam(User("admin2", "admin2","admin2"), "тест номер два", "описание теста номер два", Date(1195333200000), listOf())
+        exams = listOf(exam1, exam2, exam3, exam4)
     }
 
 
@@ -61,7 +63,7 @@ class ExamServiceImplTest {
     fun findByKeywordSomething() {
         val found = examService.findByKeyword("описание").toSet()
 
-        Assert.assertEquals(found, setOf(exams[0], exams[1]))
+        Assert.assertEquals(found, setOf(exams[0], exams[1], exams[2]))
     }
 
     @Test
@@ -75,8 +77,8 @@ class ExamServiceImplTest {
     fun getTopPopularTest() {
         val found = examService.getTopPopularExam(2)
 
-        Assert.assertEquals(found[0], exams[1])
-        Assert.assertEquals(found[1], exams[0])
+        Assert.assertEquals(found[0], exams[3])
+        Assert.assertEquals(found[1], exams[2])
     }
 
     @Test

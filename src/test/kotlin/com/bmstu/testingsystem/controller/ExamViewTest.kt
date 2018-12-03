@@ -78,7 +78,7 @@ class ExamViewTest{
         )
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk)
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("0596c2c0-a70a-47dd-81c8-31411a5b132a")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("ууу0596c2c0-a70a-47dd-81c8-31411a5b132a")))
     }
 
     @Test

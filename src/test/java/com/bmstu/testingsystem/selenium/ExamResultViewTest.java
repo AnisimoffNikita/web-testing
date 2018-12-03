@@ -38,7 +38,7 @@ public class ExamResultViewTest {
     public void viewResultsFail() {
         driver.get(PAGE_BANNED);
         WebElement alert = driver.findElement(By.className("alert"));
-        Assert.assertEquals(alert.getText(), "Вы не можете просматривать эту страницу");
+        Assert.assertEquals(alert.getText(), "Некорректный запрос");
     }
 
     @AfterClass
