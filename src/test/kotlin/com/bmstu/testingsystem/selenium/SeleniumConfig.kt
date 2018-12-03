@@ -1,44 +1,55 @@
 package com.bmstu.testingsystem.selenium
 
-import org.openqa.selenium.Capabilities
+import org.openqa.selenium.By
+import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
-import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxOptions
-import org.openqa.selenium.remote.DesiredCapabilities
 
 import java.io.File
 import java.util.concurrent.TimeUnit
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 class SeleniumConfig {
 
-    val driver: WebDriver
-
-    init {
-        val capabilities = FirefoxOptions()
-        driver = FirefoxDriver(capabilities)
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS)
-    }
-
-    fun close() {
-        driver.close()
-    }
-
-    fun navigateTo(url: String) {
-        driver.navigate().to(url)
-    }
-
-    fun clickElement(element: WebElement) {
-        element.click()
-    }
-
     companion object {
+        private val LOGIN : String = "http://localhost:8080/sign_in"
 
         init {
-            System.setProperty("webdriver.gecko.driver", findFile("geckodriver"))
+            System.setProperty("webdriver.gecko.driver", findFile("geckodriver.exe"))
+        }
+
+        fun initDriver() : WebDriver {
+            val driver: WebDriver
+            val capabilities = FirefoxOptions()
+            driver = FirefoxDriver(capabilities)
+            driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS)
+            return driver
+        }
+
+        fun logout(driver: WebDriver) {
+            try {
+                val profileDropdown = driver.findElement(By.id("dropdown02"))
+                profileDropdown.click()
+                val exitButton = driver.findElement(By.id("exitButton"))
+                exitButton.click()
+            } catch (ex: NoSuchElementException) {
+                ex.printStackTrace()
+            }
+        }
+
+        fun login(driver: WebDriver, login: String, password: String) {
+            driver.get(LOGIN)
+
+            val loginField = driver.findElement(By.id("inputUsername"))
+            loginField.sendKeys(login)
+
+            val passwordField = driver.findElement(By.id("inputPassword"))
+            passwordField.sendKeys(password)
+
+            val loginButton = driver.findElement(By.id("loginButton"))
+            loginButton.click()
+
+            driver.findElement(By.className("navbar"))
         }
 
         private fun findFile(filename: String): String {

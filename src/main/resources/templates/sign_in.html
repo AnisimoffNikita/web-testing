@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,14 +21,14 @@
     <label for="inputPassword" class="sr-only">Пароль</label>
     <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
 
-    <div th:if="${param.error}" align="center">
+    <div th:if="${param.error}" align="center" id = "invalidUser">
         Неверные логин и пароль
     </div>
     <div th:if="${param.logout}" align="center">
         Вы вышли из системы
     </div>
 
-    <button class="btn my-4 btn-lg btn-primary btn-block" type="submit">Войти</button>
+    <button class="btn my-4 btn-lg btn-primary btn-block" id="loginButton" type="submit">Войти</button>
     <label> Еще нет аккаунта?
         <a href="sign_up"> Зарегистрируйтесь!</a>
     </label>

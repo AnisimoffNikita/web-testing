@@ -1,18 +1,10 @@
 package com.bmstu.testingsystem.selenium
 
 
-import org.junit.AfterClass
-import org.junit.BeforeClass
-import org.junit.Test
-
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertTrue
-
 class SeleniumWithJUnitLiveTest {
     private val expectedTitle = "Baeldung | Java, Spring and Web Development tutorials"
 
-    @Test
+    /*@Test
     fun whenAboutBaeldungIsLoaded_thenAboutEugenIsMentionedOnPage() {
         seleniumExample!!.getAboutBaeldungPage()
         val actualTitle = seleniumExample!!.title
@@ -36,6 +28,6 @@ class SeleniumWithJUnitLiveTest {
         fun tearDown() {
             seleniumExample!!.closeWindow()
         }
-    }
+    }*/
 
 }

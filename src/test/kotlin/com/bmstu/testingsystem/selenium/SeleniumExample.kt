@@ -1,16 +1,9 @@
 package com.bmstu.testingsystem.selenium
 
 
-import org.openqa.selenium.By
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
-import org.openqa.selenium.firefox.FirefoxDriver
-import org.openqa.selenium.interactions.Actions
-import java.util.concurrent.TimeUnit
-
 class SeleniumExample {
 
-    private val config: SeleniumConfig
+    /*private val config: SeleniumConfig
     private val url = "http://www.baeldung.com/"
 
     val title: String
@@ -53,5 +46,5 @@ class SeleniumExample {
         val builder = Actions(config.driver)
         val element = this.config.driver.findElement(By.partialLinkText("About Baeldung."))
         builder.moveToElement(element).build().perform()
-    }
+    }*/
 }
