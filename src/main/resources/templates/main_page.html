@@ -56,7 +56,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdown02">
                     <a class="dropdown-item" th:href="@{'/edit_profile'}">Редактировать</a>
                     <form th:action="@{/logout}" method="post">
-                        <input class="dropdown-item btn btn-link" type="submit" value="Выход"/>
+                        <input class="dropdown-item btn btn-link" id="exitButton" type="submit" value="Выход"/>
                     </form>
                 </ul>
             </li>

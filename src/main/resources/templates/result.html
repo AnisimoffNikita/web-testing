@@ -54,7 +54,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdown02">
                     <a class="dropdown-item" th:href="@{'/edit_profile'}">Редактировать</a>
                     <form th:action="@{/logout}" method="post">
-                        <input class="dropdown-item btn btn-link" type="submit" value="Выход"/>
+                        <input class="dropdown-item btn btn-link" type="submit" id="exitButton" value="Выход"/>
                     </form>
                 </ul>
             </li>
@@ -64,7 +64,7 @@
 
 <div class="container">
     <h2 class="display-6 mt-3 mb-4">Результат теста</h2>
-    <strong th:text="'Ваш результат: ' + ${res.result}"></strong>
+    <strong id="result" th:text="'Ваш результат: ' + ${res.result}"></strong>
     <div class="mt-3">
         <a class="btn btn-success mr-3" th:href="@{'/exam_page/' + ${res.testId}}">Пройти еще раз</a>
         <a class="btn btn-primary" th:href="@{'/my_passed_exams'}">Все мои результаты</a>
