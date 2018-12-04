@@ -49,7 +49,7 @@ class ExamResultServiceImplTest {
     }
 
     @Test
-    fun passTestBad() {
+    fun passTestMiddle() {
         val a1 = UserAnswer(0, null, "bad")
         val a2 = UserAnswer(1, mutableListOf(1), null)
         val a3 = UserAnswer(2, mutableListOf(1, 2), null)
@@ -58,6 +58,19 @@ class ExamResultServiceImplTest {
         val result = examResultService.passTest(exam, user, userAnswers)
 
         Assert.assertEquals(result.result, "1/3")
+        Mockito.verify<ExamResultRepository>(repositoryMock, Mockito.times(1)).save(Mockito.any())
+        Mockito.verifyNoMoreInteractions(repositoryMock)
+    }
+
+    fun passTestBad() {
+        val a1 = UserAnswer(0, null, "bad")
+        val a2 = UserAnswer(1, mutableListOf(1), null)
+        val a3 = UserAnswer(2, mutableListOf(0), null)
+        val userAnswers = UserAnswers(mutableListOf(a1, a2, a3))
+
+        val result = examResultService.passTest(exam, user, userAnswers)
+
+        Assert.assertEquals(result.result, "0/3")
         Mockito.verify<ExamResultRepository>(repositoryMock, Mockito.times(1)).save(Mockito.any())
         Mockito.verifyNoMoreInteractions(repositoryMock)
     }

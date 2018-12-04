@@ -3,6 +3,8 @@ package com.bmstu.testingsystem.services
 import com.bmstu.testingsystem.form_data.ExamData
 import com.bmstu.testingsystem.form_data.QuestionData
 import com.bmstu.testingsystem.domain.*
+import com.bmstu.testingsystem.exception.DeletedExamException
+import com.bmstu.testingsystem.exception.NoExamException
 import com.bmstu.testingsystem.repositiry.ExamRepository
 import org.junit.Assert
 import org.junit.Before
@@ -15,6 +17,8 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 import java.util.*
 import java.sql.Date
+import kotlin.IllegalArgumentException
+import kotlin.math.exp
 
 @RunWith(MockitoJUnitRunner::class)
 class ExamServiceImplTest {
@@ -53,8 +57,38 @@ class ExamServiceImplTest {
 
         val found = examService.findById(id1)
 
-        Assert.assertEquals(found, exam)
+        Assert.assertEquals(exam, found)
         Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).findById(id1)
+        Mockito.verifyNoMoreInteractions(repositoryMock)
+    }
+
+    @Test(expected = DeletedExamException::class)
+    fun findByIdDeleted() {
+        val exam = exams.first()
+        val deletedExam = exam.copy()
+        deletedExam.status = ExamStatus.DELETED
+
+        Mockito.`when`<Optional<Exam>>(repositoryMock.findById(id1)).thenReturn(Optional.of(deletedExam))
+
+        examService.findById(id1)
+    }
+
+    @Test(expected = NoExamException::class)
+    fun findByIdNotExist() {
+
+        Mockito.`when`<Optional<Exam>>(repositoryMock.findById(id1)).thenReturn(Optional.empty())
+
+        examService.findById(id1)
+    }
+
+    @Test
+    fun findByEmptyKeyword() {
+        Mockito.`when`<Iterable<Exam>>(repositoryMock.findByStatus(ExamStatus.APPROVED)).thenReturn(exams)
+
+        val found = examService.findByKeyword("").toSet()
+
+        Assert.assertEquals(found, exams.toSet())
+        Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).findByStatus(ExamStatus.APPROVED)
         Mockito.verifyNoMoreInteractions(repositoryMock)
     }
 
@@ -64,7 +98,7 @@ class ExamServiceImplTest {
 
         val found = examService.findByKeyword("описание").toSet()
 
-        Assert.assertEquals(found, setOf(exams[0], exams[1]))
+        Assert.assertEquals(setOf(exams[0], exams[1]), found)
         Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).findByStatus(ExamStatus.APPROVED)
         Mockito.verifyNoMoreInteractions(repositoryMock)
     }
@@ -75,7 +109,7 @@ class ExamServiceImplTest {
 
         val found = examService.findByKeyword("слово").toSet()
 
-        Assert.assertEquals(found, emptySet<Exam>())
+        Assert.assertEquals(emptySet<Exam>(), found)
         Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).findByStatus(ExamStatus.APPROVED)
         Mockito.verifyNoMoreInteractions(repositoryMock)
     }
@@ -93,45 +127,74 @@ class ExamServiceImplTest {
     }
 
     @Test
-    fun addTest() {
-        val exam = exams.first()
-        val questions = exam.questions.map {
-            QuestionData(it.questionText,
-                    it.type,
-                    it.variants?.toMutableList(),
-                    it.correctVariantsId?.toMutableList(),
-                    it.correctInputAnswer) }.toMutableList()
-        Mockito.`when`<Exam>(repositoryMock.save(Mockito.any())).thenReturn(exam)
+    fun getTopPopularTestOver() {
+        Mockito.`when`<Iterable<Exam>>(repositoryMock.findByStatus(ExamStatus.APPROVED)).thenReturn(exams)
 
-        val examData = ExamData(exam.name, exam.description, questions);
+        val found = examService.getTopPopularExam(4)
 
-        examService.addExam(examData, user)
-
-        Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).save(Mockito.any())
+        Assert.assertEquals(found[0], exams[2])
+        Assert.assertEquals(found[1], exams[1])
+        Assert.assertEquals(found[2], exams[0])
+        Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).findByStatus(ExamStatus.APPROVED)
         Mockito.verifyNoMoreInteractions(repositoryMock)
     }
 
-    @Test
-    fun removeTest() {
-        val exam = exams.first()
-        Mockito.doNothing().`when`<ExamRepository>(repositoryMock).setDeletedById(exam.id)
-
-        examService.removeExam(exam.id)
-
-        Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).setDeletedById(exam.id)
-        Mockito.verifyNoMoreInteractions(repositoryMock)
+    @Test(expected = IllegalArgumentException::class)
+    fun getTopPopularTestNegativ() {
+        val found = examService.getTopPopularExam(-1)
+        Assert.assertEquals(found, emptySet<Exam>())
     }
+
+//    @Test
+//    fun addTest() {
+//        val exam = exams.first()
+//        val questions = exam.questions.map {
+//            QuestionData(it.questionText,
+//                    it.type,
+//                    it.variants?.toMutableList(),
+//                    it.correctVariantsId?.toMutableList(),
+//                    it.correctInputAnswer) }.toMutableList()
+//        Mockito.`when`<Exam>(repositoryMock.save(Mockito.any())).thenReturn(exam)
+//
+//        val examData = ExamData(exam.name, exam.description, questions);
+//
+//        examService.addExam(examData, user)
+//
+//        Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).save(Mockito.any())
+//        Mockito.verifyNoMoreInteractions(repositoryMock)
+//    }
+//
+//    @Test
+//    fun removeTest() {
+//        val exam = exams.first()
+//        Mockito.doNothing().`when`<ExamRepository>(repositoryMock).setDeletedById(exam.id)
+//
+//        examService.removeExam(exam.id)
+//
+//        Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).setDeletedById(exam.id)
+//        Mockito.verifyNoMoreInteractions(repositoryMock)
+//    }
 
     @Test
     fun incPasses() {
         val exam = exams.first()
         val examInc = exam.copy()
         examInc.passCount.inc()
+        Mockito.`when`<Optional<Exam>>(repositoryMock.findById(exam.id)).thenReturn(Optional.of(exam))
         Mockito.`when`<Exam>(repositoryMock.save(examInc)).thenReturn(examInc)
 
         examService.incPasses(exam)
 
+        Assert.assertEquals(2, exam.passCount)
         Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).save(examInc)
+        Mockito.verify<ExamRepository>(repositoryMock, Mockito.times(1)).findById(exam.id)
         Mockito.verifyNoMoreInteractions(repositoryMock)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun incPassesNotExist() {
+        val exam = exams.first()
+        Mockito.`when`<Optional<Exam>>(repositoryMock.findById(exam.id)).thenReturn(Optional.empty())
+        examService.incPasses(exam)
     }
 }

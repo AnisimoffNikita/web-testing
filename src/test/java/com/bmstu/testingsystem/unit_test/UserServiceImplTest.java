@@ -112,9 +112,10 @@ public class UserServiceImplTest {
 
         Mockito.when(repositoryMock.findByUsername("newUsername")).thenReturn(user2);
 
+        User oldUser = new User(user.getUsername(), user.getEmail(), user.getPassword());
         User res = userService.updateUser(user, userData);
 
-        //Assert.assertFalse(res);
+        Assert.assertEquals(oldUser, res);
 
         Mockito.verify(repositoryMock, Mockito.times(1)).findByUsername(userData.getUsername());
         Mockito.verify(repositoryMock, Mockito.times(0)).save(Mockito.any(User.class));
