@@ -3,6 +3,7 @@ package com.bmstu.testingsystem.services
 import com.bmstu.testingsystem.controller.SignUp
 import com.bmstu.testingsystem.domain.Person
 import com.bmstu.testingsystem.domain.User
+import com.bmstu.testingsystem.exception.BadUserDataException
 import com.bmstu.testingsystem.exception.NoUserException
 import com.bmstu.testingsystem.form_data.UserData
 import com.bmstu.testingsystem.repositiry.UserRepository
@@ -26,6 +27,11 @@ class UserServiceImpl : UserService {
     }
 
     override fun registerUser(registrationData: SignUp.RegistrationData): User? {
+        if (registrationData.email == "" ||
+                registrationData.password == "" ||
+                registrationData.username == "")
+            throw BadUserDataException()
+
         val user = userRepository.findByUsername(registrationData.username)
         if (user != null) {
             return null
@@ -37,6 +43,11 @@ class UserServiceImpl : UserService {
     }
 
     override fun updateUser(user: User, newUserData: UserData): User {
+//        if (newUserData.email == "" ||
+//                newUserData.password == "" ||
+//                newUserData.username == "")
+//            throw BadUserDataException()
+
         newUserData.username?: throw IllegalStateException()
         newUserData.email?: throw IllegalStateException()
         newUserData.password?: throw IllegalStateException()

@@ -3,6 +3,7 @@ package com.bmstu.testingsystem.unit_test;
 import com.bmstu.testingsystem.controller.EditProfile;
 import com.bmstu.testingsystem.controller.SignUp;
 import com.bmstu.testingsystem.domain.User;
+import com.bmstu.testingsystem.exception.BadUserDataException;
 import com.bmstu.testingsystem.exception.NoUserException;
 import com.bmstu.testingsystem.form_data.UserData;
 import com.bmstu.testingsystem.repositiry.UserRepository;
@@ -141,4 +142,21 @@ public class UserServiceImplTest {
         Mockito.verify(repositoryMock, Mockito.times(1)).save(Mockito.any(User.class));
         Mockito.verifyNoMoreInteractions(repositoryMock);
     }
+
+    @Test(expected = BadUserDataException.class)
+    public  void registerEmptyUser() {
+        registrationData = new SignUp.RegistrationData("","","");
+        userService.registerUser(registrationData);
+    }
+
+//    @Test(expected = BadUserDataException.class)
+//    public void updateEmptyPerson() {
+//        userData = new UserData(user);
+//        userData.setEmail("");
+//        userData.setPassword("");
+//        userData.setEmail("");
+//
+//        userService.updateUser(user, userData);
+//    }
+
 }

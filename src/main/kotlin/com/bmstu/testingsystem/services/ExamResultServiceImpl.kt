@@ -13,6 +13,8 @@ class ExamResultServiceImpl : ExamResultService {
     private lateinit var examResultRepository: ExamResultRepository
 
     override fun passTest(exam: Exam, user: User, userAnswers: UserAnswers): ExamResult {
+//        if (exam.status != ExamStatus.APPROVED)
+//            throw IllegalStateException()
         val resultString = userAnswers.list?.map { mua ->
             mua?.let { ua ->
                 val mq = exam.questions.find { q -> q.id == ua.questionId  }
