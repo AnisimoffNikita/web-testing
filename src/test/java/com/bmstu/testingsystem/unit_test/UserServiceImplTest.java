@@ -149,14 +149,14 @@ public class UserServiceImplTest {
         userService.registerUser(registrationData);
     }
 
-//    @Test(expected = BadUserDataException.class)
-//    public void updateEmptyPerson() {
-//        userData = new UserData(user);
-//        userData.setEmail("");
-//        userData.setPassword("");
-//        userData.setEmail("");
-//
-//        userService.updateUser(user, userData);
-//    }
+    @Test(expected = BadUserDataException.class)
+    public void updateEmptyPerson() {
+        userData = new UserData(user);
+        userData.setEmail("");
+        userData.setPassword("");
+        userData.setEmail("");
+
+        userService.updateUser(user, userData);
+    }
 
 }

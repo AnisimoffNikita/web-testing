@@ -43,10 +43,10 @@ class UserServiceImpl : UserService {
     }
 
     override fun updateUser(user: User, newUserData: UserData): User {
-//        if (newUserData.email == "" ||
-//                newUserData.password == "" ||
-//                newUserData.username == "")
-//            throw BadUserDataException()
+        if (newUserData.email == "" ||
+                newUserData.password == "" ||
+                newUserData.username == "")
+            throw BadUserDataException()
 
         newUserData.username?: throw IllegalStateException()
         newUserData.email?: throw IllegalStateException()
