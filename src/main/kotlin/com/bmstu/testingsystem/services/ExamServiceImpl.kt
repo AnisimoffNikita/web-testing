@@ -10,6 +10,7 @@ import com.bmstu.testingsystem.repositiry.ExamRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
+import kotlin.IllegalArgumentException
 
 @Service("examService")
 class ExamServiceImpl : ExamService {
@@ -32,6 +33,7 @@ class ExamServiceImpl : ExamService {
     }
 
     override fun getTopPopularExam(count: Int): List<Exam> {
+        if (count < 0) throw IllegalArgumentException()
         return examRepository.findByStatus(ExamStatus.APPROVED).sortedByDescending {
             it.passCount
         } . take(count)
@@ -58,6 +60,7 @@ class ExamServiceImpl : ExamService {
     }
 
     override fun incPasses(exam: Exam) {
+        if (!examRepository.findById(exam.id).isPresent) throw IllegalArgumentException()
         exam.passCount += 1
         examRepository.save(exam)
     }
