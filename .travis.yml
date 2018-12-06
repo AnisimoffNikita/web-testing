@@ -5,3 +5,7 @@ services:
 - postgresql
 before_script:
 - psql -c "create database testsystem; create user testadmin with encrypted password 'testadmin'; grant all privileges on database testsystem to testadmin; ALTER USER testadmin WITH SUPERUSER;" -U postgres
+
+install:
+- psql -c "create user testadmin with CREATEDB SUPERUSER PASSWORD 'testadmin';" -U postgres
+- PGPASSWORD=testadmin createdb -Utestadmin testsystem
