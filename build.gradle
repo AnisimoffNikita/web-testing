@@ -41,6 +41,13 @@ repositories {
 	mavenCentral()
 }
 
+test {
+	testLogging {
+		events "passed", "skipped", "failed"
+		exceptionFormat "full"
+	}
+}
+
 
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
