@@ -98,19 +98,7 @@ class TableTest{
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("Некорректный запрос")))
     }
 
-    @Test
-    fun getStatistic() {
-        this.mvc.perform(
-                MockMvcRequestBuilders.get("/my_exams/results/0596c2c0-a70a-47dd-81c8-31411a5b132a")
-                        .with(SecurityMockMvcRequestPostProcessors.csrf().asHeader())
-                        .with(SecurityMockMvcRequestPostProcessors.user("admin")
-                                .password("admin")
-                                .roles("ADMIN")
-                                .authorities(UserRole.ADMIN))
-        )
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk)
-    }
+
 
     @Test
     fun getStatisticBad() {

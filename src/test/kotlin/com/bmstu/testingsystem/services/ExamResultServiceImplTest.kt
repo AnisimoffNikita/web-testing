@@ -32,6 +32,7 @@ class ExamResultServiceImplTest {
         val q2 = Question(1, "q2", QuestionType.SINGLE_ANSWER, listOf("1","2","3"), listOf(0), "")
         val q3 = Question(2, "q2", QuestionType.MULTIPLE_ANSWER, listOf("1","2","3"), listOf(1,2),"")
         exam = com.bmstu.testingsystem.domain.Exam(user,"тест", "небольшое описание", Date(123), listOf(q1, q2, q3))
+        exam.status = ExamStatus.APPROVED
     }
 
     @Test
@@ -83,5 +84,18 @@ class ExamResultServiceImplTest {
         val userAnswers = UserAnswers(mutableListOf(a1, a2, a3))
 
         examResultService.passTest(exam, user, userAnswers)
+    }
+
+    @Test(expected = IllegalStateException::class)
+    fun passPendingTest() {
+        val a1 = UserAnswer(0, mutableListOf(1), "bad")
+        val a2 = UserAnswer(1, mutableListOf(1), "")
+        val a3 = UserAnswer(2, mutableListOf(1, 2), "")
+        val userAnswers = UserAnswers(mutableListOf(a1, a2, a3))
+
+        exam.status = ExamStatus.PENDING
+
+        examResultService.passTest(exam, user, userAnswers)
+
     }
 }
