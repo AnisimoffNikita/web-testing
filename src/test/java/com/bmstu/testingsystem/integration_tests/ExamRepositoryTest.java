@@ -122,6 +122,7 @@ public class ExamRepositoryTest {
 
         Optional<Exam> fromDBExam = examRepository.findById(id);
 
+        assertEquals(exam.getCreatedAt(), fromDBExam.get().getCreatedAt());
         assertEquals(Optional.of(exam), fromDBExam);
     }
 
