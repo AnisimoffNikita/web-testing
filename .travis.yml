@@ -9,3 +9,4 @@ services:
 install:
 - psql -c "create user testadmin with CREATEDB SUPERUSER PASSWORD 'testadmin';" -U postgres
 - PGPASSWORD=testadmin createdb -Utestadmin testsystem
+- PGPASSWORD=testadmin psql -1 -f src/main/resources/db/changelog/changes/v0001.sql -Utestadmin testsystem
