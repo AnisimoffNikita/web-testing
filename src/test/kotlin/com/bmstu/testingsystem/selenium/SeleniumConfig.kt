@@ -8,6 +8,17 @@ import org.openqa.selenium.firefox.FirefoxOptions
 
 import java.io.File
 import java.util.concurrent.TimeUnit
+import org.openqa.selenium.chrome.ChromeOptions
+import org.openqa.selenium.remote.DesiredCapabilities
+import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.support.ui.ExpectedConditions
+import org.openqa.selenium.support.ui.WebDriverWait
+
+
+
+
+
+
 
 class SeleniumConfig {
 
@@ -19,13 +30,26 @@ class SeleniumConfig {
         }
 
         fun initDriver() : WebDriver {
-            val driver: WebDriver
-            val capabilities = FirefoxOptions()
-            capabilities.setHeadless(true)
-            capabilities.addArguments("--safe-mode")
-            driver = FirefoxDriver(capabilities)
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
-            return driver
+//            val driver: WebDriver
+//            val capabilities = FirefoxOptions()
+//            capabilities.setHeadless(true)
+//            driver = FirefoxDriver(capabilities)
+//            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
+//            return driver
+            val chromeOptions = ChromeOptions()
+            chromeOptions.setBinary("/usr/bin/google-chrome-stable")
+            chromeOptions.addArguments("--headless")
+            chromeOptions.addArguments("--disable-gpu")
+            chromeOptions.addArguments("--window-size=1920,1080")
+
+            val dc = DesiredCapabilities()
+            dc.isJavascriptEnabled = true
+            dc.setCapability(
+                    ChromeOptions.CAPABILITY, chromeOptions
+            )
+
+            val chrome = ChromeDriver(dc)
+            return chrome
         }
 
         fun logout(driver: WebDriver) {

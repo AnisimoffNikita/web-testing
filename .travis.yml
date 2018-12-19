@@ -1,15 +1,24 @@
 language: java
 jdk:
-- oraclejdk9
+  - oraclejdk9
 services:
-- postgresql
+  - postgresql
 #before_script:
 #- psql -c "create database testsystem; create user testadmin with encrypted password 'testadmin'; grant all privileges on database testsystem to testadmin; ALTER USER testadmin WITH SUPERUSER;" -U postgres
 
 before_script:
-- export TZ=Europe/Moscow
+  - export TZ=Europe/Moscow
 
 install:
-- psql -c "create user testadmin with CREATEDB SUPERUSER PASSWORD 'testadmin';" -U postgres
-- PGPASSWORD=testadmin createdb -Utestadmin testsystem
+  - psql -c "create user testadmin with CREATEDB SUPERUSER PASSWORD 'testadmin';" -U postgres
+  - PGPASSWORD=testadmin createdb -Utestadmin testsystem
+  - wget -N http://chromedriver.storage.googleapis.com/2.30/chromedriver_linux64.zip -P ~/
+  - unzip ~/chromedriver_linux64.zip -d ~/
+  - rm ~/chromedriver_linux64.zip
+  - sudo mv -f ~/chromedriver /usr/local/share/
+  - sudo chmod +x /usr/local/share/chromedriver
+  - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 #- PGPASSWORD=testadmin psql -1 -f src/main/resources/db/changelog/changes/v0001.sql -Utestadmin testsystem
+
+addons: # get google-chrome-stable
+  chrome: stable
