@@ -21,6 +21,7 @@ class SeleniumConfig {
         fun initDriver() : WebDriver {
             val driver: WebDriver
             val capabilities = FirefoxOptions()
+            capabilities.setHeadless(true)
             driver = FirefoxDriver(capabilities)
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
             return driver
