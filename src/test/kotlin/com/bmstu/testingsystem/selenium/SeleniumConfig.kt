@@ -47,7 +47,7 @@ class SeleniumConfig {
             dc.setCapability(
                     ChromeOptions.CAPABILITY, chromeOptions
             )
-
+            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
             val chrome = ChromeDriver(dc)
             return chrome
         }
