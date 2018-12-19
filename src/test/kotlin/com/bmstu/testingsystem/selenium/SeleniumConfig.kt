@@ -22,6 +22,7 @@ class SeleniumConfig {
             val driver: WebDriver
             val capabilities = FirefoxOptions()
             capabilities.setHeadless(true)
+            capabilities.addArguments("--safe-mode")
             driver = FirefoxDriver(capabilities)
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
             return driver
