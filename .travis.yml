@@ -22,3 +22,7 @@ install:
 
 addons: # get google-chrome-stable
   chrome: stable
+
+script:
+  - whereis google-chrome-stable
+  - whereis chromedriver
