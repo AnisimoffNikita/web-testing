@@ -37,6 +37,13 @@ compileTestKotlin {
 	}
 }
 
+test {
+	testLogging {
+		events "passed", "skipped", "failed"
+		exceptionFormat "full"
+	}
+}
+
 repositories {
 	mavenCentral()
 }
