@@ -38,6 +38,7 @@ compileTestKotlin {
 }
 
 test {
+	exclude 'com/bmstu/testingsystem/selenium/**'
 	testLogging {
 		events "passed", "skipped", "failed"
 		exceptionFormat "full"
